@@ -107,4 +107,9 @@ pair<alpha, beta> colaPriorA<alpha, beta>::obtenerTupla(pair<alpha, map<beta, Na
     return iesimo;
 }
 
-asognsagnguisnagiui
+if(hola){
+    nada
+}
+else{
+    chau
+}
