@@ -44,25 +44,32 @@ bool colaPriorA<alpha,beta>::vacia(colaPriorA cola){
 }
 
 template<class alpha, class beta>
-colaPriorA& colaPriorA<alpha,beta>::heapifyUp(colaPriorA cola, int indice){
+colaPriorA& colaPriorA<alpha,beta>::heapifyUp(colaPriorA cola, int index){
     if(indice>0){
-        alpha primeroIndex = _heap[indice].first();
-        beta segundoIndex = _heap[indice].second().first();
+        alpha primeroIndex = _heap[index].first();
+        beta segundoIndex = _heap[index].second().first();
         pair<alpha,beta> tuplaIndex= <primeroIndex,segundoIndex>;
 
         int indexPadre = floor((indice-1)/2);
         alpha primeroPadre = _heap[indexPadre].first();
-        beta segundoIndex = _heap[indice].second().first();
-        pair<alpha,beta> tuplaIndex= <primeroIndex,segundoIndex>;
+        beta segundoPadre = _heap[indexPadre].second().first();
+        pair<alpha,beta> tuplaPadre= <primeroPadre,segundoPadre>;
 
-        while _heap[indice] >
+        while (tuplaIndex > tuplaPadre){
+            
+        }
     }
 }
 
 template<class alpha, class beta>
 colaPriorA& colaPriorA<alpha,beta>::heapifyDown(colaPriorA cola, int indice){
     largo = _longitud;
-    while(i < la){
+    while(indice < largo){
+        hijoIzq = 2*indice + 1;
+        hijoDer = 2*indice + 2;
+        maximo = i;
+        if(hijoIzq < largo && heap[hijoIzq] > heap){
 
+        }
     }
 }

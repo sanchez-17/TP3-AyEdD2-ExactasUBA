@@ -19,7 +19,7 @@ private:
     Nat _cota;
 
     colaPriorA& heapifyUp(colaPriorA cola,int index);
-    colaPriorA& heapifyDown(colaPriorA cola,int indice);
+    colaPriorA& heapifyDown(colaPriorA cola,int index);
 };
 
 template<class alpha, class beta>
