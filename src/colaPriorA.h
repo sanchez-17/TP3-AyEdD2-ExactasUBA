@@ -9,13 +9,14 @@ template<class alpha, class beta>
 class colaPriorA{
 public:
     colaPriorA(int cota); //constructor
+    ~colaPriorA();//destructor
     const pair<alpha,beta>& proximo(colaPriorA& cola);
     alpha* encolar(colaPriorA& cola, pair<alpha, beta> tupla);
     void desencolar(colaPriorA& cola);
     bool vacia(colaPriorA cola);
 
 private:
-    vector<pair<alpha, typename map<beta,Nat>::iterator>> heap;
+        vector<pair<alpha, typename map<beta,Nat>::iterator>> heap;
     map<beta, Nat> _indices;
     Nat _longitud;
     Nat _cota;
@@ -24,6 +25,8 @@ private:
     Nat heapifyDown(colaPriorA cola,int index);
     pair<alpha, beta> obtenerTupla(pair<alpha, typename map<beta,Nat>::iterator> t)
 };
+
+
 
 template<class alpha, class beta>
 bool pair<alpha, beta>::operator>(typename pair<alpha, beta> t) {
