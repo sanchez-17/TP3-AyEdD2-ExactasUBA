@@ -1,5 +1,5 @@
 template<class alpha, class beta>
-colaPriorA<alpha,beta>::colaPriorA(int cota):_cota(cota),_longitud(0),_indices(map<beta, Nat>){}
+colaPriorA<alpha,beta>::colaPriorA(int cota):_heap(vector<pair<alpha, typename map<beta,Nat>::iterator>>(cota)),_cota(cota),_longitud(0),_indices(map<beta, Nat>){}
 
 template<class alpha, class beta>
 pair<alpha,beta> colaPriorA<alpha,beta>::proximo(colaPriorA& cola){
