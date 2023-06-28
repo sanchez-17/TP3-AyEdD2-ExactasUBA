@@ -5,9 +5,18 @@
 #include <map>
 #include <vector>
 #include <list>
+#include <set>
 template<class T>
 class puesto{
 public:
+    puesto crearPuesto(Menu m,Stock s,Promociones prms);
+    void vender(Persona per, Producto p, Nat cant);
+    set<Producto> menu();
+    Nat precio(Producto p);
+    Nat stock(Producto p);
+    Nat descuento(Producto p, Nat cant);
+    Nat gastosDe(Persona per);
+
 
 private:
     using itLista = list<tuple<Producto,Nat>>::iterator;
