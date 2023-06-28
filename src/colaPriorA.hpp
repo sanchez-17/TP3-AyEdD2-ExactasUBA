@@ -111,5 +111,5 @@ if(hola){
     nada
 }
 else{
-    chau
+    adios
 }
