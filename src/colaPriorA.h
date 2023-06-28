@@ -1,3 +1,5 @@
+#ifndef COLA_H
+#define COLA_H
 #include "tipos.h"
 #include <string>
 #include <map>
@@ -18,8 +20,9 @@ private:
     Nat _longitud;
     Nat _cota;
 
-    colaPriorA& heapifyUp(colaPriorA cola,int index);
-    colaPriorA& heapifyDown(colaPriorA cola,int index);
+    Nat heapifyUp(colaPriorA cola,int index);
+    Nat heapifyDown(colaPriorA cola,int index);
+    pair<alpha, beta> obtenerTupla(pair<alpha, typename map<beta,Nat>::iterator> t)
 };
 
 template<class alpha, class beta>
@@ -27,4 +30,6 @@ bool pair<alpha, beta>::operator>(typename pair<alpha, beta> t) {
     return (this.first > t.first) || (this.first == t.first && this.second == t.second)
 }
 
-#include "colaPriorA.cpp"
+#include "colaPriorA.hpp"
+
+#endif // COLA_H
