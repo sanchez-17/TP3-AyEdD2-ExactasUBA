@@ -83,6 +83,7 @@ Nat colaPriorA<alpha,beta>::heapifyDown(colaPriorA cola, Nat index) {
             heap[iHijoDer].second().second() = iMaximo;
             iMaximo = iHijoIzq;
         } else {
+            
             if(iHijoDer < largo && tuplaDer > tuplaMax){
                 heap[iMaximo].second().second() = iHijoIzq;
                 heap[iHijoDer].second().second() = iMaximo;
@@ -105,3 +106,5 @@ pair<alpha, beta> colaPriorA<alpha, beta>::obtenerTupla(pair<alpha, map<beta, Na
     pair<alpha, beta> iesimo = make_pair(t.first, t.second.first);
     return iesimo;
 }
+
+asognsagnguisnagiui
