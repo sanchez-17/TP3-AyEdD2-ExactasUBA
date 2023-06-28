@@ -83,7 +83,7 @@ Nat colaPriorA<alpha,beta>::heapifyDown(colaPriorA cola, Nat index) {
             heap[iHijoDer].second().second() = iMaximo;
             iMaximo = iHijoIzq;
         } else {
-            
+
             if(iHijoDer < largo && tuplaDer > tuplaMax){
                 heap[iMaximo].second().second() = iHijoIzq;
                 heap[iHijoDer].second().second() = iMaximo;
