@@ -5,7 +5,8 @@ _menu(menu),
 _stock(stock),
 _descuentos(promos),
 _ventasSinDesc(),
-_ventas()
+_ventas(),
+_gastosDe()
 {}
 
 map<Producto, map<Nat, Nat>>;
@@ -49,29 +50,29 @@ void puesto::vender(Persona per, Producto producto, Nat cant) {
     }
 }
 
-Menu puesto::menuPuesto(){
-    return _menu;
-}
-
 set<Producto> puesto::menu() {
-    Menu menuA = menuPuesto();
-    for (Menu::iterator it = menuA.begin(); it != menuA.end(); ++it) {
-
+    set<Producto> conjMenu;
+    for (Menu::iterator it = _menu.begin(); it != _menu.end(); ++it) {
+        conjMenu.insert(it->first);
     }
-
+    return conjMenu;
 }
 Nat puesto::precio(Producto p){
-
+    return _menu[p];
 }
 
 Nat puesto::stock(Producto p){
-
+    return _stock[p];
 }
 
 Nat puesto::descuento(Producto p, Nat cant){
-
+    if(_descuentos.count(p)>0){
+        return _descuentos[p][cant];
+    }else{
+        return 0;
+    }
 }
 
 Nat puesto::gastosDe(Persona per){
-
+    return _gastosDe[per];
 }

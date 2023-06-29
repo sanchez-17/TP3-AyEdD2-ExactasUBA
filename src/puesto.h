@@ -28,7 +28,6 @@ private:
     map<Producto, vector<Nat>> _descuentos;
     map<Persona,map<Producto,ventasDeProd>>  _ventasSinDesc;
     map<Persona,list<tuple<Producto,Nat>>> _ventas;
-    Menu menuPuesto();
 };
 
 //#include "puesto.hpp"
