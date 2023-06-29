@@ -10,32 +10,32 @@ _ventas()
 
 map<Producto, map<Nat, Nat>>;
 puesto puesto::crearPuesto(Menu menu, Stock stock, Promociones promos){
-    _descuentos = map<Producto, vector<Nat>>();
+    map<Producto, vector<Nat>> promociones;
     for (Promociones::iterator it = promos.begin(); it != promos.end(); ++it){
-        Nat stockInicial = stock[it->first];
-        vector<Nat> arr = vector<Nat>(stockInicial);
-        _descuentos[it->first] = arr;
-        map<Nat, Nat> cantidades = it->second;
-        map<Nat, Nat>::iterator itPrm = cantidades.begin();
-        Nat i = 0;
-        Nat ultI = i;
-        Nat minPromo = itPrm->second;
-        while(i<=stockInicial) {
+        Nat stockItem = stock[it->first];
+        vector<Nat> arr = vector<Nat>(stockItem+1);
+        map<Nat, Nat> promosPorCant = it->second;
+        map<Nat, Nat>::iterator itCantXPrm = promosPorCant.begin();//primera clave es la minima
+        Nat cant = 1;
+        Nat minPromo = itCantXPrm->second;
+        Nat ultCant = minPromo;//ver
+        while(cant<=stockItem) {
             //El array son todos ceros hasta hallar alguna promo para alguna cant i.
-            if(i < minPromo){
-                arr[i] = 0;
+            if(cant < minPromo){
+                arr[cant] = 0;
             }else {
-                if (cantidades.count(i) == 1) {
-                    arr[i] = cantidades[i];
-                    ultI = i;
+                if (promosPorCant.count(cant) == 1) {
+                    arr[cant] = promosPorCant[cant];
+                    ultCant = cant;
                 } else {
-                    arr[i] = cantidades[ultI];
+                    arr[cant] = promosPorCant[ultCant];
                 }
             }
-            i++;
+            cant++;
         }
+        _descuentos[it->first] = arr;
     }
-    return puesto(menu,stock,);
+    return puesto(menu,stock,promociones);
 }
 
 void puesto::vender(Persona per, Producto p, Nat cant) {
