@@ -10,10 +10,21 @@
 template<class alpha, class beta>
 class colaPriorA{
 public:
-    colaPriorA(int cota); //constructor
+    // Constructor. Genera una cola vacía de cota posiciones.
+    colaPriorA(int cota);
+
+    // Obtiene una referencia constante al próximo elemento.
     const pair<alpha,beta>& proximo(colaPriorA& cola);
+
+    // Encola un elemento en la cola.
+    // PRE: No hay "cota" cantidad de elementos en la cola.
     alpha* encolar(colaPriorA& cola, pair<alpha, beta> tupla);
+
+    // Desencola el próximo elemento de la cola.
+    // PRE: Hay al menos un elemento en la cola.
     void desencolar(colaPriorA& cola);
+
+    // Decide si la cola esta vacía o no.
     bool vacia(colaPriorA cola);
 
 private:
@@ -26,6 +37,8 @@ private:
     Nat heapifyDown(colaPriorA<alpha,beta> cola,Nat index);
     pair<alpha, beta> obtenerTupla(pair<alpha, typename map<beta,Nat>::iterator> t);
 };
+
+//Funciones para tuplaPersona
 
 template<class alpha, class beta>
 class tuplaPersona{
@@ -43,7 +56,7 @@ tuplaPersona<alpha,beta>::tuplaPersona(alpha gastoPersona, beta persona){
 
 template<class alpha, class beta>
 bool tuplaPersona<alpha, beta>::operator>(tuplaPersona t) {
-    return (_tupla.first > t.first) || (_tupla.first == t.first && _tupla.second == t.second);
+    return (_tupla.first > t.first) || (_tupla.first == t.first && _tupla.second > t.second);
 }
 
 #endif // COLA_H
