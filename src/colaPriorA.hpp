@@ -7,9 +7,9 @@ colaPriorA<alpha,beta>::colaPriorA(int cota):_heap(vector<pair<alpha, typename m
 template<class alpha, class beta>
 const pair<alpha, beta> & colaPriorA<alpha,beta>::proximo(colaPriorA& cola){
     pair<alpha, typename map<beta,Nat>::iterator> tuplaProx = _heap[0];
-    alpha primeroProx = tuplaProx.first();
-    typename map<beta,Nat>::iterator it = tuplaProx.second();
-    beta segundoProx = it.first();
+    alpha primeroProx = tuplaProx.first;
+    typename map<beta,Nat>::iterator it = tuplaProx.second;
+    beta segundoProx = it->first;
     return make_pair<primeroProx,segundoProx>;
 }
 
@@ -26,7 +26,7 @@ alpha* colaPriorA<alpha,beta>::encolar(colaPriorA& cola, pair<alpha, beta> tupla
         }
     }else{
         _longitud++;
-        typename map<beta,Nat>::iterator it = (_indices.emplace(std::make_pair(beta, _longitud - 1))).first;
+        typename map<beta,Nat>::iterator it = (_indices.emplace(std::make_pair(tupla.second, _longitud - 1))).first;
         _heap[_longitud - 1] = make_pair(tupla.first, it);
         index = heapifyUp(cola, _longitud - 1);
     }
@@ -64,8 +64,8 @@ Nat colaPriorA<alpha,beta>::heapifyUp(colaPriorA cola, Nat index){
             tuplaPadre = temp;
 
             index = indexPadre;
-            _heap[index].second().second() = index;
-            _heap[indexPadre].second().second() = indexPadre;
+            _heap[index].second()->second = index;
+            _heap[indexPadre].second()->second = indexPadre;
         }
 
         return index;
@@ -79,19 +79,19 @@ Nat colaPriorA<alpha,beta>::heapifyDown(colaPriorA cola, Nat index) {
     while (index < largo) {
         Nat iHijoIzq = 2 * index + 1;
         Nat iHijoDer = 2 * index + 2;
-        Nat iMaximo = index;
+        //Nat iMaximo = index;
         pair<alpha, beta> tuplaIzq = obtenerTupla(_heap[iHijoIzq]);
         pair<alpha, beta> tuplaDer = obtenerTupla(_heap[iHijoDer]);
         pair<alpha, beta> tuplaMax = obtenerTupla(_heap[iMaximo]);
         if (iHijoIzq < largo && tuplaIzq > tuplaMax) {
-            _heap[iMaximo].second().second() = iHijoIzq;
-            _heap[iHijoDer].second().second() = iMaximo;
+            _heap[iMaximo].second->second = iHijoIzq;
+            _heap[iHijoDer].second->second = iMaximo;
             iMaximo = iHijoIzq;
         } else {
 
             if(iHijoDer < largo && tuplaDer > tuplaMax){
-                _heap[iMaximo].second().second() = iHijoIzq;
-                _heap[iHijoDer].second().second() = iMaximo;
+                _heap[iMaximo].second->second = iHijoIzq;
+                _heap[iHijoDer].second->second = iMaximo;
                 iMaximo = iHijoIzq;
             }
         }
@@ -99,6 +99,7 @@ Nat colaPriorA<alpha,beta>::heapifyDown(colaPriorA cola, Nat index) {
             pair<alpha, typename map<beta,Nat>::iterator> temp = _heap[index];
             _heap[index] = _heap[iMaximo];
             _heap[iMaximo] = temp;
+            index = iMaximo;
         } else {
             break;
         }

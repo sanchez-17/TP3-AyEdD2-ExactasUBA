@@ -30,5 +30,6 @@ private:
     map<Persona,list<tuple<Producto,Nat>>> _ventas;
 };
 
+//#include "puesto.hpp"
 
 #endif //PUESTO_H
