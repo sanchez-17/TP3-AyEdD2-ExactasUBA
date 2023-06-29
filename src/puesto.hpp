@@ -1,4 +1,4 @@
-#include "puesto.h" //este no va acá no?
+#include "puesto.h"
 
 puesto::puesto(Menu menu,Stock stock,map<Producto, vector<Nat>> promos):
 _menu(menu),
@@ -57,17 +57,17 @@ set<Producto> puesto::menu() {
     }
     return conjMenu;
 }
-Nat puesto::precio(Producto p){
-    return _menu[p];
+Nat puesto::precio(Producto producto){
+    return _menu[producto];
 }
 
-Nat puesto::stock(Producto p){
-    return _stock[p];
+Nat puesto::stock(Producto producto){
+    return _stock[producto];
 }
 
-Nat puesto::descuento(Producto p, Nat cant){
-    if(_descuentos.count(p)>0){
-        return _descuentos[p][cant];
+Nat puesto::descuento(Producto producto, Nat cant){
+    if(_descuentos.count(producto)>0){
+        return _descuentos[producto][cant];
     }else{
         return 0;
     }

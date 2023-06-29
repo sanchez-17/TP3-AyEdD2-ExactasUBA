@@ -12,11 +12,11 @@ class puesto{
 public:
     puesto(Menu menu,Stock stock,map<Producto, vector<Nat>> promos);
     puesto crearPuesto(Menu m,Stock s,Promociones prms);
-    void vender(Persona per, Producto p, Nat cant);
+    void vender(Persona per, Producto producto, Nat cant);
     set<Producto> menu();
-    Nat precio(Producto p);
-    Nat stock(Producto p);
-    Nat descuento(Producto p, Nat cant);
+    Nat precio(Producto producto);
+    Nat stock(Producto producto);
+    Nat descuento(Producto producto, Nat cant);
     Nat gastosDe(Persona per);
 
 private:
@@ -30,6 +30,6 @@ private:
     map<Persona,list<tuple<Producto,Nat>>> _ventas;
 };
 
-//#include "puesto.hpp"
+#include "puesto.hpp"
 
 #endif //PUESTO_H
