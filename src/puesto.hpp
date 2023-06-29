@@ -38,9 +38,13 @@ puesto puesto::crearPuesto(Menu menu, Stock stock, Promociones promos){
     return puesto(menu,stock,promociones);
 }
 
-void puesto::vender(Persona per, Producto p, Nat cant) {
-    if(_gastosDe.count(per) == 1){
-        Nat nuevoGasto = _gastosDe[per] + _menu[p] *
+void puesto::vender(Persona per, Producto producto, Nat cant) {
+    Nat nuevoGasto = floor(_menu[producto] * (1 - _descuentos[producto][cant]) / 100);
+    if (_gastosDe.count(per) == 1) { nuevoGasto += _gastosDe[per]; }
+    _gastosDe[per] = nuevoGasto;
+    _ventas[per].push_back(make_pair(producto,cant));
+    if(_descuentos[producto][cant] == 0){
+        list<tuple<Producto,Nat>>::iterator itVenta = _ventas[per].end()--;
+        _ventasSinDesc[per][producto].push_back(itVenta);
     }
 }
-
