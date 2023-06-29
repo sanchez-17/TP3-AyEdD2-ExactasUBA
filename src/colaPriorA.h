@@ -15,13 +15,13 @@ public:
     bool vacia(colaPriorA cola);
 
 private:
-    vector<pair<alpha, typename map<beta,Nat>::iterator>> heap;
+    vector<pair<alpha, typename map<beta,Nat>::iterator>> _heap;
     map<beta, Nat> _indices;
     Nat _longitud;
     Nat _cota;
     //Funciones privadas
-    Nat heapifyUp(colaPriorA cola,int index);
-    Nat heapifyDown(colaPriorA cola,int index);
+    Nat heapifyUp(colaPriorA<alpha,beta> cola,int index);
+    Nat heapifyDown(colaPriorA<alpha,beta> cola,int index);
     pair<alpha, beta> obtenerTupla(pair<alpha, typename map<beta,Nat>::iterator> t);
 };
 
