@@ -6,7 +6,7 @@
 #include <vector>
 #include <list>
 #include <set>
-template<class T>
+
 class puesto{
 public:
     puesto crearPuesto(Menu m,Stock s,Promociones prms);
@@ -16,7 +16,6 @@ public:
     Nat stock(Producto p);
     Nat descuento(Producto p, Nat cant);
     Nat gastosDe(Persona per);
-
 
 private:
     using itLista = list<tuple<Producto,Nat>>::iterator;
@@ -28,5 +27,6 @@ private:
     map<Persona,map<Producto,ventasDeProd>>  _ventasSinDesc;
     map<Persona,list<tuple<Producto,Nat>>> _ventas;
 };
+
 
 #endif //PUESTO_H

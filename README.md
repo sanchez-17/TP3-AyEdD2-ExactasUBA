@@ -2,8 +2,9 @@
 
 Modulo ColaPriorAcot
  - Como inicializar una cola con _indice como diccionario vacio desde el constructor --hecho
- - Generar funcion para castear tuplas de heap a <alpha,beta>
-
+ - Generar funcion para castear tuplas de heap a <alpha,beta> --hecho(se creo una clase)
+ - Arreglar las funciones en donde creamos las tuplas usando la nueva clase
+########################################################
 Si es la primera vez con el repo, traerlo a tu compu
  git clone "link"
 

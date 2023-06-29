@@ -25,13 +25,23 @@ private:
     pair<alpha, beta> obtenerTupla(pair<alpha, typename map<beta,Nat>::iterator> t);
 };
 
-
+template<class alpha, class beta>
+class tuplaPersona{
+public:
+    tuplaPersona(alpha gastoPersona, beta persona);
+    bool operator>(tuplaPersona h);
+private:
+    tuple<alpha,beta> _tupla;
+};
 
 template<class alpha, class beta>
-bool pair<alpha, beta>::operator>(typename pair<alpha, beta> t) {
-    return (this->first > t.first) || (this->first == t.first && this->second == t.second)
+tuplaPersona<alpha,beta>::tuplaPersona(alpha gastoPersona, beta persona){
+    _tupla = make_pair(gastoPersona,persona);
 }
 
-#include "colaPriorA.hpp"
+template<class alpha, class beta>
+bool tuplaPersona<alpha, beta>::operator>(tuplaPersona t) {
+    return (_tupla.first > t.first) || (_tupla.first == t.first && _tupla.second == t.second);
+}
 
 #endif // COLA_H
