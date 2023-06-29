@@ -1,4 +1,4 @@
-#include "puesto.h"
+#include "puesto.h" //este no va acá no?
 
 puesto::puesto(Menu menu,Stock stock,map<Producto, vector<Nat>> promos):
 _menu(menu),
@@ -47,4 +47,31 @@ void puesto::vender(Persona per, Producto producto, Nat cant) {
         list<tuple<Producto,Nat>>::iterator itVenta = _ventas[per].end()--;
         _ventasSinDesc[per][producto].push_back(itVenta);
     }
+}
+
+Menu puesto::menuPuesto(){
+    return _menu;
+}
+
+set<Producto> puesto::menu() {
+    Menu menuA = menuPuesto();
+    for (Menu::iterator it = menuA.begin(); it != menuA.end(); ++it) {
+
+    }
+
+}
+Nat puesto::precio(Producto p){
+
+}
+
+Nat puesto::stock(Producto p){
+
+}
+
+Nat puesto::descuento(Producto p, Nat cant){
+
+}
+
+Nat puesto::gastosDe(Persona per){
+
 }
