@@ -39,6 +39,8 @@ puesto puesto::crearPuesto(Menu menu, Stock stock, Promociones promos){
 }
 
 void puesto::vender(Persona per, Producto p, Nat cant) {
-
+    if(_gastosDe.count(per) == 1){
+        Nat nuevoGasto = _gastosDe[per] + _menu[p] *
+    }
 }
 

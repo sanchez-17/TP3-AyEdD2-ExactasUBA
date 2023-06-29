@@ -4,6 +4,8 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <cmath>
+
 
 template<class alpha, class beta>
 class colaPriorA{
@@ -20,8 +22,8 @@ private:
     Nat _longitud;
     Nat _cota;
     //Funciones privadas
-    Nat heapifyUp(colaPriorA<alpha,beta> cola,int index);
-    Nat heapifyDown(colaPriorA<alpha,beta> cola,int index);
+    Nat heapifyUp(colaPriorA<alpha,beta> cola,Nat index);
+    Nat heapifyDown(colaPriorA<alpha,beta> cola,Nat index);
     pair<alpha, beta> obtenerTupla(pair<alpha, typename map<beta,Nat>::iterator> t);
 };
 

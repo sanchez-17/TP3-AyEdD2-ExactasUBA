@@ -4,34 +4,28 @@ template<class alpha, class beta>
 colaPriorA<alpha,beta>::colaPriorA(int cota):_heap(vector<pair<alpha, typename map<beta,Nat>::iterator>>(cota)),_cota(cota),_longitud(0),_indices(map<beta, Nat>()){}
 
 template<class alpha, class beta>
-colaPriorA<alpha, beta>::~colaPriorA() {
-    _longitud = 0;
-    _cota = 0;
-
-}
-
-template<class alpha, class beta>
-pair<alpha,beta> colaPriorA<alpha,beta>::proximo(colaPriorA& cola){
+const pair<alpha, beta> & colaPriorA<alpha,beta>::proximo(colaPriorA& cola){
     pair<alpha, typename map<beta,Nat>::iterator> tuplaProx = _heap[0];
     alpha primeroProx = tuplaProx.first();
-    it = tuplaProx.second();
+    typename map<beta,Nat>::iterator it = tuplaProx.second();
     beta segundoProx = it.first();
     return make_pair<primeroProx,segundoProx>;
 }
 
 template<class alpha, class beta>
 alpha* colaPriorA<alpha,beta>::encolar(colaPriorA& cola, pair<alpha, beta> tupla){
-    if(indices.contains(tupla.second)){
-        int i = indices[tupla.second];
+    Nat index;
+    if(_indices.contains(tupla.second)){
+        int i = _indices[tupla.second];
         pair<alpha, beta> iesimo = make_pair(tupla.first, _indices[tupla.second]);
         if(tupla > iesimo){
             index = heapifyUp(cola, i);
         } else {
-            index = heapifyDown(c, i);
+            index = heapifyDown(cola, i);
         }
     }else{
-        _longitud = _longitud + 1;
-        map<beta,Nat>::iterator it = (_indices.emplace(std::make_pair(beta, _longitud - 1))).first;
+        _longitud++;
+        typename map<beta,Nat>::iterator it = (_indices.emplace(std::make_pair(beta, _longitud - 1))).first;
         _heap[_longitud - 1] = make_pair(tupla.first, it);
         index = heapifyUp(cola, _longitud - 1);
     }
@@ -78,7 +72,7 @@ Nat colaPriorA<alpha,beta>::heapifyUp(colaPriorA cola, Nat index){
 }
 
 template<class alpha, class beta>
-Nat colaPriorA<alpha,beta>::heapifyDown(colaPriorA<alpha,beta> cola, Nat index) {
+Nat colaPriorA<alpha,beta>::heapifyDown(colaPriorA cola, Nat index) {
     Nat largo = _longitud;
     Nat iMaximo = index;
     while (index < largo) {
@@ -112,7 +106,7 @@ Nat colaPriorA<alpha,beta>::heapifyDown(colaPriorA<alpha,beta> cola, Nat index) 
 }
 
 template<class alpha, class beta>
-pair<alpha, beta> colaPriorA<alpha, beta>::obtenerTupla(pair<alpha, map<beta, Nat>::iterator> t) {
+pair<alpha, beta> colaPriorA<alpha, beta>::obtenerTupla(pair<alpha,typename map<beta, Nat>::iterator> t) {
     pair<alpha, beta> iesimo = make_pair(t.first, t.second->first);
     return iesimo;
 }
