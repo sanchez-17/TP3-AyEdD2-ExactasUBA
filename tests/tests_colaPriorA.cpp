@@ -8,6 +8,7 @@
 
 TEST(colaPriorATest, test_general) {
     ColaPriorA c(3);
+    EXPECT_TRUE(c.vacia);
     pair<Nat,Nat> third = <1,1>;
     pair<Nat,Nat> second = <2,1>;
     pair<Nat,Nat> first = <2,2>;
