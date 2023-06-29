@@ -40,7 +40,7 @@ puesto puesto::crearPuesto(Menu menu, Stock stock, Promociones promos){
 }
 
 void puesto::vender(Persona per, Producto producto, Nat cant) {
-    Nat nuevoGasto = floor(_menu[producto] * (1 - _descuentos[producto][cant]) / 100);
+    Nat nuevoGasto = floor(_menu[producto] * (100 - _descuentos[producto][cant]) / 100);
     if (_gastosDe.count(per) == 1) { nuevoGasto += _gastosDe[per]; }
     _gastosDe[per] = nuevoGasto;
     _ventas[per].push_back(make_pair(producto,cant));
@@ -79,6 +79,6 @@ Nat puesto::gastosDe(Persona per){
 
 //funcion que se realiza al hackear un lolla
 void puesto::reponerItem(Producto producto, Persona per){
-    _stock[producto] = _stock[producto] + 1;
-    _gastosDe[per] = _gastosDe[per] - _menu[producto];
+    _stock[producto] += 1;
+    _gastosDe[per] -= _menu[producto];
 }

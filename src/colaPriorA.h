@@ -20,7 +20,7 @@ public:
 
     // Encola un elemento en la cola.
     // PRE: No hay "cota" cantidad de elementos en la cola.
-    alpha* encolar(colaPriorA& cola, pair<alpha, beta> tupla);
+    alpha* encolar(pair<alpha, beta> tupla);
 
     // Desencola el próximo elemento de la cola.
     // PRE: Hay al menos un elemento en la cola.
@@ -35,8 +35,8 @@ private:
     Nat _longitud;
     Nat _cota;
     //Funciones privadas
-    Nat heapifyUp(colaPriorA<alpha,beta> cola,Nat index);
-    Nat heapifyDown(colaPriorA<alpha,beta> cola,Nat index);
+    Nat heapifyUp(Nat i);
+    Nat heapifyDown(Nat i);
     pair<alpha, beta> obtenerTupla(pair<alpha, typename map<beta,Nat>::iterator> t);
 };
 #include "colaPriorA.hpp"
