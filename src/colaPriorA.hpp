@@ -1,4 +1,5 @@
 #include "colaPriorA.h"
+#include "tuplaPersona.hpp"
 
 template<class alpha, class beta>
 colaPriorA<alpha,beta>::colaPriorA(int cota):_heap(vector<pair<alpha, typename map<beta,Nat>::iterator>>(cota)),_cota(cota),_longitud(0),_indices(map<beta, Nat>()){}
@@ -50,7 +51,7 @@ template<class alpha, class beta>
 Nat colaPriorA<alpha,beta>::heapifyUp(colaPriorA cola, Nat index){
     if(index>0){
         pair<alpha,beta> tuplaIndex= obtenerTupla(_heap[index]);
-
+        tuplaPersona<alpha,beta> tPer(_heap[index].first,_heap[index].second->first);
         int indexPadre = floor((index-1)/2);
         pair<alpha,beta> tuplaPadre= obtenerTupla(_heap[indexPadre]);
 
