@@ -76,3 +76,9 @@ Nat puesto::descuento(Producto producto, Nat cant){
 Nat puesto::gastosDe(Persona per){
     return _gastosDe[per];
 }
+
+//funcion que se realiza al hackear un lolla
+void puesto::reponerItem(Producto producto, Persona per){
+    _stock[producto] = _stock[producto] + 1;
+    _gastosDe[per] = _gastosDe[per] - _menu[producto];
+}

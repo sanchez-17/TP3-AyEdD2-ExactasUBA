@@ -27,7 +27,6 @@ public:
 private:
     set<Persona> _personas;
     map<Persona, Nat*> _punterosAGastos;
-    map<Persona,Nat> _gastosDe;
     colaPriorA<Nat, Persona> _gastosPersona;
     map<IdPuesto, puesto> _puestos;
     map<Persona,map<Producto,map<IdPuesto, puesto*>>>  _hackeables;

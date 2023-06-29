@@ -1,12 +1,11 @@
 #include "lollapatuza.h"
 
 lollapatuza::lollapatuza(map<IdPuesto, puesto> puestos, set<Persona> personas) :
-_personas,
-_punterosAGastos,
-_gastosDe,
-_gastosPersona,
-_puestos,
-_hackeables
+_personas(personas),
+_punterosAGastos(),
+_gastosPersona(colaPriorA<Nat, Persona>(personas.size())),
+_puestos(puestos),
+_hackeables()
 {}
 
 lollapatuza lollapatuza::crearLolla(map<IdPuesto, puesto> puestos, set<Persona> personas){

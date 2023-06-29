@@ -18,6 +18,7 @@ public:
     Nat stock(Producto producto);
     Nat descuento(Producto producto, Nat cant);
     Nat gastosDe(Persona per);
+    void reponerItem(Producto producto, Persona persona);
 
 private:
     using itLista = list<tuple<Producto,Nat>>::iterator;
