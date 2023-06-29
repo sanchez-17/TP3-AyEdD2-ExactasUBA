@@ -1,6 +1,3 @@
-#include "colaPriorA.h"
-#include "tuplaPersona.hpp"
-
 template<class alpha, class beta>
 colaPriorA<alpha,beta>::colaPriorA(int cota):_heap(vector<pair<alpha, typename map<beta,Nat>::iterator>>(cota)),_cota(cota),_longitud(0),_indices(map<beta, Nat>()){}
 
@@ -50,22 +47,23 @@ bool colaPriorA<alpha,beta>::vacia(colaPriorA cola){
 template<class alpha, class beta>
 Nat colaPriorA<alpha,beta>::heapifyUp(colaPriorA cola, Nat index){
     if(index>0){
-        pair<alpha,beta> tuplaIndex= obtenerTupla(_heap[index]);
-        tuplaPersona<alpha,beta> tPer(_heap[index].first,_heap[index].second->first);
+        //pair<alpha,beta> tuplaIndex= obtenerTupla(_heap[index]);
+        tuplaPersona<alpha,beta> tuplaIndex(_heap[index]);
         int indexPadre = floor((index-1)/2);
-        pair<alpha,beta> tuplaPadre= obtenerTupla(_heap[indexPadre]);
+        tuplaPersona<alpha,beta> tuplaPadre(_heap[indexPadre]);
+        //pair<alpha,beta> tuplaPadre= obtenerTupla(_heap[indexPadre]);
 
         while (tuplaIndex > tuplaPadre){
             indexPadre = floor((index-1)/2);
-            tuplaPadre= obtenerTupla(_heap[indexPadre]);
+            tuplaPersona<alpha,beta> tuplaPadre(_heap[indexPadre]);
 
             pair<alpha,beta> temp = tuplaIndex;
             tuplaIndex = tuplaPadre;
             tuplaPadre = temp;
 
             index = indexPadre;
-            _heap[index].second()->second = index;
-            _heap[indexPadre].second()->second = indexPadre;
+            _heap[index].second->second = index;
+            _heap[indexPadre].second->second = indexPadre;
         }
 
         return index;
@@ -79,10 +77,14 @@ Nat colaPriorA<alpha,beta>::heapifyDown(colaPriorA cola, Nat index) {
     while (index < largo) {
         Nat iHijoIzq = 2 * index + 1;
         Nat iHijoDer = 2 * index + 2;
-        //Nat iMaximo = index;
-        pair<alpha, beta> tuplaIzq = obtenerTupla(_heap[iHijoIzq]);
-        pair<alpha, beta> tuplaDer = obtenerTupla(_heap[iHijoDer]);
-        pair<alpha, beta> tuplaMax = obtenerTupla(_heap[iMaximo]);
+        Nat iMaximo = index;
+
+        tuplaPersona<alpha,beta> tuplaIzq(_heap[iHijoIzq]);
+        tuplaPersona<alpha,beta> tuplaDer(_heap[iHijoDer]);
+        tuplaPersona<alpha,beta> tuplaMax(_heap[iMaximo]);
+        //pair<alpha, beta> tuplaIzq = obtenerTupla(_heap[iHijoIzq]);
+        //pair<alpha, beta> tuplaDer = obtenerTupla(_heap[iHijoDer]);
+        //pair<alpha, beta> tuplaMax = obtenerTupla(_heap[iMaximo]);
         if (iHijoIzq < largo && tuplaIzq > tuplaMax) {
             _heap[iMaximo].second->second = iHijoIzq;
             _heap[iHijoDer].second->second = iMaximo;

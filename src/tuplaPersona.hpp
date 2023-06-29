@@ -1,6 +1,6 @@
-#include "tuplaPersona.h"
 template<class alpha, class beta>
-tuplaPersona<alpha,beta>::tuplaPersona(alpha gastoPersona, beta persona):_tupla(tuple<alpha,beta>(gastoPersona,persona)){}
+tuplaPersona<alpha,beta>::tuplaPersona(pair<alpha, typename map<beta,Nat>::iterator> tuplaPer):
+_tupla(tuple<alpha,beta>(tuplaPer.first,tuplaPer.second->first)){}
 
 template<class alpha, class beta>
 bool tuplaPersona<alpha, beta>::operator>(tuplaPersona t) {

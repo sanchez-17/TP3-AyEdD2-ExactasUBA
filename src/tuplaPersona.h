@@ -6,7 +6,8 @@
 template<class alpha, class beta>
 class tuplaPersona{
 public:
-    tuplaPersona(alpha gastoPersona, beta persona);
+    tuplaPersona(pair<alpha, typename map<beta,Nat>::iterator> tuplaPer);
+    //tuplaPersona(alpha gastoPersona, beta persona);
     bool operator>(tuplaPersona h);
     alpha getGastoPersona() const;
     beta getPersona() const;
@@ -15,6 +16,6 @@ private:
     std::tuple<alpha,beta> _tupla;
 };
 
-//#include "tuplaPersona.hpp"
+#include "tuplaPersona.hpp"
 
 #endif

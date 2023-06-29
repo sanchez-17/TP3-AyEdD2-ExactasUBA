@@ -1,10 +1,12 @@
 #ifndef COLA_H
 #define COLA_H
 #include "tipos.h"
+#include "tuplaPersona.h"
 #include <string>
 #include <map>
 #include <vector>
 #include <cmath>
+
 
 
 template<class alpha, class beta>
@@ -37,9 +39,5 @@ private:
     Nat heapifyDown(colaPriorA<alpha,beta> cola,Nat index);
     pair<alpha, beta> obtenerTupla(pair<alpha, typename map<beta,Nat>::iterator> t);
 };
-
-//Funciones para tuplaPersona
-
-
-
+#include "colaPriorA.hpp"
 #endif // COLA_H

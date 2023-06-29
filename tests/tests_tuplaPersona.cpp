@@ -1,6 +1,3 @@
-//
-// Created by aquil on 29/6/2023.
-//
 #include "../src/tuplaPersona.h"
 #include "gtest-1.8.1/gtest.h"
 
