@@ -13,7 +13,7 @@ TEST(colaPriorATest, test_general) {
     pair<Nat,Nat> first = <2,2>;
 
     c.encolar(third);
-    EXPECT_FALSE(c.vacia)
+    EXPECT_FALSE(c.vacia);
 
     c.encolar(first);
     c.encolar(second);
