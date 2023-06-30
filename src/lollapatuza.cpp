@@ -68,7 +68,7 @@ void lollapatuza::hackear(Persona per, Producto producto){
     tuplaPersona<Nat,Persona> gastoPer(gastoAnterior-precioItem,per);
     Nat* punteroGastoActual = _gastosPersona.encolar(gastoPer);
     _punterosAGastos[per] = punteroGastoActual;
-    
+
 
 }
 
@@ -83,5 +83,12 @@ Persona lollapatuza::quienGastoMas(){
 }
 
 IdPuesto lollapatuza::menorStock(Producto producto){
-
+    map<IdPuesto, puesto>::iterator itPuestos = _puestos.begin();
+    Nat minStock = itPuestos->second.stock(producto);
+    int idMinStock = itPuestos->first;
+    while(itPuestos != _puestos.end()){
+        Nat stockActual = itPuestos->second.stock(producto);
+        int idPuestoActual = itPuestos->first;
+        if(stockActual < minStock )
+    }
 }

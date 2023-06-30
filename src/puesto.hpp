@@ -62,7 +62,11 @@ Nat puesto::precio(Producto producto){
 }
 
 Nat puesto::stock(Producto producto){
-    return _stock[producto];
+    if(_stock.count(producto) > 0){
+        return _stock[producto];
+    }else{
+        return 0;
+    }
 }
 
 Nat puesto::descuento(Producto producto, Nat cant){
