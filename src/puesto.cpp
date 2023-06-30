@@ -51,20 +51,20 @@ void puesto::vender(Persona per, Producto producto, Nat cant) {
     }
 }
 
-set<Producto> puesto::menu() {
+set<Producto> puesto::menu()const{
     set<Producto> conjMenu;
-    for (Menu::iterator it = _menu.begin(); it != _menu.end(); ++it) {
+    for (Menu::const_iterator it = _menu.begin(); it != _menu.end(); ++it) {
         conjMenu.insert(it->first);
     }
     return conjMenu;
 }
-Nat puesto::precio(Producto producto){
-    return _menu[producto];
+Nat puesto::precio(Producto producto)const{
+    return _menu.at(producto);
 }
 
-Nat puesto::stock(Producto producto){
+Nat puesto::stock(Producto producto)const{
     if(_stock.count(producto) > 0){
-        return _stock[producto];
+        return _stock.at(producto);
     }else{
         return 0;
     }

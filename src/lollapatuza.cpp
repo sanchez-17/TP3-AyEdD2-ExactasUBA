@@ -96,7 +96,7 @@ Persona lollapatuza::quienGastoMas()const{
     map<Persona,map<Producto,map<IdPuesto, puesto*>>>  _hackeables;
  */
 IdPuesto lollapatuza::menorStock(Producto producto) const{
-    map<IdPuesto, puesto>::iterator itPuestos = _puestos.begin();
+    map<IdPuesto, puesto>::const_iterator itPuestos = _puestos.begin();
     Nat minStock = itPuestos->second.stock(producto);
     int idMinStock = itPuestos->first;
     while(itPuestos != _puestos.end()){
