@@ -7,7 +7,7 @@ FachadaLollapatuza::FachadaLollapatuza(const set<Persona> &personas, const map<I
     // TODO: Completar
     //por cada clave de infoPuestos hay q crear un puesto
     map<IdPuesto, puesto> puestos;
-    puesto nuevoPuesto; //necesitamos un constructor de puesto vacío?
+    puesto nuevoPuesto; //necesitamos un constructor de puesto vacío? si,está hecho.
     for(map<IdPuesto, aed2_Puesto>::const_iterator it = infoPuestos.begin(); it != infoPuestos.end(); ++it){
         Menu menu = it->second.menu;
         Stock stock = it->second.stock;
