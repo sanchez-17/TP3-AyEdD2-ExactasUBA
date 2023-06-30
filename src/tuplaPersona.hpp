@@ -1,4 +1,4 @@
-#include "tuplaPersona.h"
+
 template<class alpha, class beta>
 tuplaPersona<alpha,beta>::tuplaPersona(alpha a,beta b) : _a(a),_b(b)
 {}

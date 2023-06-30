@@ -19,8 +19,8 @@ TEST(tuplaPersonaTest, testBasico){
     //gasto de 100 para persona 20
     _heap.push_back(make_pair(100,it));
     //tuplaPersona<Nat, Persona>* tupla1 = new tuplaPersona<Nat,Persona>(_heap[0].first,_heap[0].second->first);
-    tuplaPersona<Nat, Persona>* tupla3 = new tuplaPersona<Nat,Persona>(20,5);
-    EXPECT_EQ(tupla3, nullptr);
+    tuplaPersona<Nat, Persona> tupla3(20,5);
+    EXPECT_EQ(tupla3.getPersona(), 5);
     //EXPECT_EQ(tupla3->getGastoPersona(),5);
     //EXPECT_EQ(tupla3->getPersona(),20);
     //EXPECT_EQ(tupla1->getGastoPersona(),200);

@@ -23,6 +23,6 @@ private:
 
 };
 
-
+#include "tuplaPersona.hpp"
 
 #endif
