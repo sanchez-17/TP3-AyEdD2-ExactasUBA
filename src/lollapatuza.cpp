@@ -9,10 +9,13 @@ _hackeables()
 {}
 
 lollapatuza lollapatuza::crearLolla(map<IdPuesto, puesto> puestos, set<Persona> personas){
-    colaPriorA<Nat, Persona> gastosPer = colaPriorA<Nat, Persona>(personas.size());
+    //colaPriorA<Nat, Persona> gastosPer = colaPriorA<Nat, Persona>(personas.size());
     map<Persona, Nat*> punteros;
     for (set<Persona>::iterator it = personas.begin(); it != personas.end(); ++it) {
-        Nat* puntero = encolar(gastosPer, make_pair(0, *it));
+        pair<Nat, map<Persona,Nat>::iterator> t = make_pair(0,it);
+        tuplaPersona<Nat,Persona> tuplaPer(t);
+        //Nat* puntero = gastosPer.encolar(make_pair(0, *it));
+        Nat* puntero = _gastosPersona.encolar(tuplaPer);
         punteros[*it] = puntero;
     }
     return lollapatuza(puestos, personas, gastosPer, punteros);
@@ -36,7 +39,8 @@ void lollapatuza::vender(IdPuesto idPuesto, Persona per, Producto producto, Nat 
     Nat gastoActualizado = *punteroAGasto + gastoVenta;
     pair<Nat,Persona> gastoPer = make_pair(gastoActualizado,per);
     Nat* punteroDinero = _gastosPersona.encolar(gastoPer);
-
+    //Actualizo el puntero del gasto de la persona
+    _punterosAGastos[per] = punteroDinero;
 }
 
 map<IdPuesto, puesto> lollapatuza::puestos(){

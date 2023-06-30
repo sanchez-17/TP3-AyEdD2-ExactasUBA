@@ -16,18 +16,18 @@ public:
     colaPriorA(int cota);
 
     // Obtiene una referencia constante al próximo elemento.
-    const pair<alpha,beta>& proximo(colaPriorA& cola);
+    const tuplaPersona<alpha,beta>& proximo();
 
     // Encola un elemento en la cola.
     // PRE: No hay "cota" cantidad de elementos en la cola.
-    alpha* encolar(pair<alpha, beta> tupla);
+    alpha* encolar(tuplaPersona<alpha, beta> tupla);
 
     // Desencola el próximo elemento de la cola.
     // PRE: Hay al menos un elemento en la cola.
-    void desencolar(colaPriorA& cola);
+    void desencolar();
 
     // Decide si la cola esta vacía o no.
-    bool vacia(colaPriorA cola);
+    bool vacia();
 
 private:
     vector<pair<alpha, typename map<beta,Nat>::iterator>> _heap;

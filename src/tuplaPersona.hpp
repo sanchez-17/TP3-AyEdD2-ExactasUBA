@@ -1,6 +1,10 @@
+
+//tuplaPersona<alpha,beta>::tuplaPersona(pair<alpha, typename map<beta,Nat>::iterator> tuplaPer):
+//_tupla(tuple<alpha,beta>(tuplaPer.first,tuplaPer.second->first)){}
 template<class alpha, class beta>
-tuplaPersona<alpha,beta>::tuplaPersona(pair<alpha, typename map<beta,Nat>::iterator> tuplaPer):
-_tupla(tuple<alpha,beta>(tuplaPer.first,tuplaPer.second->first)){}
+tuplaPersona<alpha,beta>::tuplaPersona(alpha a,beta b):
+//_tupla(tuple<alpha,beta>(tuplaPer.first,tuplaPer.second)){}
+_tupla(make_pair(a,b)){}
 
 template<class alpha, class beta>
 bool tuplaPersona<alpha, beta>::operator>(tuplaPersona t) {
