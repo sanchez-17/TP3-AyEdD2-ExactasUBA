@@ -4,7 +4,6 @@
 
 
 FachadaLollapatuza::FachadaLollapatuza(const set<Persona> &personas, const map<IdPuesto, aed2_Puesto> &infoPuestos){
-    // TODO: Completar
     //por cada clave de infoPuestos hay q crear un puesto
     map<IdPuesto, puesto> puestos;
     puesto nuevoPuesto; //necesitamos un constructor de puesto vacío?
@@ -49,18 +48,25 @@ const set<Persona> &FachadaLollapatuza::personas() const {
 }
 
 Nat FachadaLollapatuza::stockEnPuesto(IdPuesto idPuesto, const Producto &producto) const {
-    // TODO: Completar
+    puesto p =_lolla.puestos[idPuesto];
+    p.stock(producto);
 }
 
 Nat FachadaLollapatuza::descuentoEnPuesto(IdPuesto idPuesto, const Producto &producto, Nat cantidad) const {
-    // TODO: Completar
+    puesto p =_lolla.puestos[idPuesto];
+    p.descuento(producto, cantidad);
 }
 
 Nat FachadaLollapatuza::gastoEnPuesto(IdPuesto idPuesto, Persona persona) const {
-    // TODO: Completar
+    puesto p =_lolla.puestos[idPuesto];
+    p.gastosDe(persona);
 }
 
 set<IdPuesto> FachadaLollapatuza::idsDePuestos() const {
-    // TODO: Completar
+    set<IdPuesto> keys;
+    for (map<IdPuesto, puesto>::iterator it = _lolla.puestos.begin(); it != _lolla.puestos.end(); ++it) {
+        keys.insert(it->first);
+    }
+    return keys;
 }
 
