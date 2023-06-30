@@ -16,50 +16,43 @@ FachadaLollapatuza::FachadaLollapatuza(const set<Persona> &personas, const map<I
 }
 
 void FachadaLollapatuza::registrarCompra(Persona persona, Producto producto, Nat cant, IdPuesto idPuesto) {
-    // TODO: Completar
     //void vender(IdPuesto idPuesto, Persona per, Producto producto, Nat cant)
     _lolla.vender(idPuesto, persona, producto, cant);
 }
 
 void FachadaLollapatuza::hackear(Persona persona, Producto producto) {
-    // TODO: Completar
     _lolla.hackear(persona, producto);
 }
 
 Nat FachadaLollapatuza::gastoTotal(Persona persona) const {
-    // TODO: Completar
-    _lolla.gastoTotal(persona);
+    return _lolla.gastoTotal(persona);
 }
 
 Persona FachadaLollapatuza::mayorGastador() const {
-    // TODO: Completar
-    _lolla.quienGastoMas();
+    return _lolla.quienGastoMas();
 }
 
 IdPuesto FachadaLollapatuza::menorStock(Producto producto) const {
-   // TODO: Completar
-   _lolla.menorStock(producto);
+   return _lolla.menorStock(producto);
 }
 
 const set<Persona> &FachadaLollapatuza::personas() const {
-    // TODO: Completar
-    _lolla.personas();
+    return _lolla.personas();
 }
 
 Nat FachadaLollapatuza::stockEnPuesto(IdPuesto idPuesto, const Producto &producto) const {
-    puesto p;
-    p = _lolla.puestos()[idPuesto];
-    p.stock(producto);
+    puesto* p = &_lolla.puestos()[idPuesto];
+    return p->stock(producto);
 }
 
 Nat FachadaLollapatuza::descuentoEnPuesto(IdPuesto idPuesto, const Producto &producto, Nat cantidad) const {
-    puesto p =_lolla.puestos()[idPuesto];
-    p.descuento(producto, cantidad);
+    puesto* p = &_lolla.puestos()[idPuesto];
+    return p->descuento(producto, cantidad);
 }
 
 Nat FachadaLollapatuza::gastoEnPuesto(IdPuesto idPuesto, Persona persona) const {
-    puesto p =_lolla.puestos()[idPuesto];
-    p.gastosDe(persona);
+    puesto* p = &_lolla.puestos()[idPuesto];
+    return p->gastosDe(persona);
 }
 
 set<IdPuesto> FachadaLollapatuza::idsDePuestos() const {

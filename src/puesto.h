@@ -1,12 +1,5 @@
 #ifndef PUESTO_H
 #define PUESTO_H
-#include "tipos.h"
-#include <string>
-#include <map>
-#include <vector>
-#include <list>
-#include <set>
-#include <cmath>
 
 class puesto{
 public:

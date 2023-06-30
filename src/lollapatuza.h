@@ -1,14 +1,13 @@
 #ifndef TP_LOLLA_LOLLAPATUZA_H
 #define TP_LOLLA_LOLLAPATUZA_H
 
-// ya estan los #includes en puesto.h
-//#include "tipos.h"
-//#include <string>
-//#include <map>
-//#include <vector>
-//#include <list>
-//#include <set>
-//#include <cmath>
+#include "tipos.h"
+#include <string>
+#include <map>
+#include <vector>
+#include <list>
+#include <set>
+#include <cmath>
 #include "puesto.h"
 #include "colaPriorA.h"
 
