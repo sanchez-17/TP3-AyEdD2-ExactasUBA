@@ -11,7 +11,6 @@ _ventas(),
 _gastosDe()
 {}
 
-map<Producto, map<Nat, Nat>>;
 puesto puesto::crearPuesto(Menu menu, Stock stock, Promociones promos){
     map<Producto, vector<Nat>> promociones;
     for (Promociones::iterator it = promos.begin(); it != promos.end(); ++it){

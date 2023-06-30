@@ -1,5 +1,11 @@
 #include "lollapatuza.h"
-lollapatuza::lollapatuza(): {}
+lollapatuza::lollapatuza():
+_personas(),
+_punterosAGastos(),
+_gastosPersona(colaPriorA<Nat, Persona>(0)),
+_puestos(),
+_hackeables(){}
+
 lollapatuza::lollapatuza(map<IdPuesto,puesto> puestos,
                          set<Persona> personas,
                          map<Persona,Nat*> punterosAGastos,
@@ -47,7 +53,7 @@ void lollapatuza::vender(IdPuesto idPuesto, Persona per, Producto producto, Nat 
     _punterosAGastos[per] = punteroDinero;
 }
 
-map<IdPuesto, puesto> lollapatuza::puestos(){
+map<IdPuesto, puesto> lollapatuza::puestos()const{
     return _puestos;
 }
 
