@@ -83,10 +83,25 @@ Nat puesto::gastosDe(Persona per){
 
 //funcion que se realiza al hackear un lolla
 bool puesto::reponerItem(Producto producto, Persona per){
-    ventasDeProd::iterator itListaVentas = _ventasSinDesc[per][producto].begin();
+    bool dejaDeSerHackeable = false;
+    ventasDeProd* listaVentas = &_ventasSinDesc[per][producto];
+    ventasDeProd::iterator itListaVentas = listaVentas->begin();
     itLista itVenta = *itListaVentas;
-    if ((*itVenta) != 1){}
+    if ( std::get<1>(*itVenta) != 1){
+        //Cambio la tupla a traves del iterador
+        *itVenta = tuple<Persona,Nat>(per,  std::get<1>(*itVenta) - 1);
+    }else{
+        //Elimino la venta
+        _ventas[per].erase(itVenta);
+        if(listaVentas->size() == 1){
+            _ventasSinDesc[per][producto] = ventasDeProd();
+            dejaDeSerHackeable = true;
+        }
+        _ventasSinDesc[per][producto].erase(itListaVentas);
+    }
     _stock[producto] += 1;
     _gastosDe[per] -= _menu[producto];
-    return true;
+    return dejaDeSerHackeable;
 }
+
+puesto::puesto() {}
