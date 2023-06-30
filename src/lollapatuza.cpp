@@ -1,10 +1,13 @@
 #include "lollapatuza.h"
+//lollapatuza::lollapatuza()= default;
+
 lollapatuza::lollapatuza():
 _personas(),
 _punterosAGastos(),
 _gastosPersona(colaPriorA<Nat, Persona>(0)),
 _puestos(),
 _hackeables(){}
+
 
 lollapatuza::lollapatuza(map<IdPuesto,puesto> puestos,
                          set<Persona> personas,
@@ -27,7 +30,9 @@ lollapatuza lollapatuza::crearLolla(map<IdPuesto, puesto> puestos, set<Persona> 
         Nat* puntero = gastosPersona.encolar(tuplaPersona);
         punterosAGastos[*it] = puntero;
     }
+
     return lollapatuza(puestos, personas, punterosAGastos, gastosPersona);
+
 }
 
 void lollapatuza::vender(IdPuesto idPuesto, Persona per, Producto producto, Nat cant){
@@ -98,14 +103,15 @@ Persona lollapatuza::quienGastoMas()const{
 IdPuesto lollapatuza::menorStock(Producto producto) const{
     map<IdPuesto, puesto>::const_iterator itPuestos = _puestos.begin();
     Nat minStock = itPuestos->second.stock(producto);
-    int idMinStock = itPuestos->first;
+    IdPuesto idMinStock = itPuestos->first;
     while(itPuestos != _puestos.end()){
         Nat stockActual = itPuestos->second.stock(producto);
-        int idPuestoActual = itPuestos->first;
+        IdPuesto idPuestoActual = itPuestos->first;
         if(stockActual < minStock || (stockActual == minStock && idPuestoActual < idMinStock)){
             minStock = stockActual;
             idMinStock = idPuestoActual;
         }
         ++itPuestos;
     }
+    return idMinStock;
 }

@@ -12,6 +12,7 @@
 template<class alpha, class beta>
 class colaPriorA{
 public:
+    colaPriorA();
     // Constructor. Genera una cola vacía de cota posiciones.
     colaPriorA(int cota);
 

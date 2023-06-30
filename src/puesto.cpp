@@ -1,5 +1,6 @@
 #include "puesto.h"
 
+//puesto::puesto() = default;
 puesto::puesto(){}
 
 puesto::puesto(Menu menu,Stock stock,map<Producto, vector<Nat>> promos):
