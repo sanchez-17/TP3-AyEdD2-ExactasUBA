@@ -32,3 +32,13 @@ TEST(tuplaPersonaTest, testBasico){
 
 }
 
+TEST(tuplaPersonaTest,RelacionDeOrden){
+    tuplaPersona<Nat, Persona> t1(20,5);
+    tuplaPersona<Nat, Persona> t2(20,6);
+    EXPECT_TRUE(t2>t1);
+
+    tuplaPersona<Nat, Persona> t3(50,5);
+    tuplaPersona<Nat, Persona> t4(20,6);
+    EXPECT_TRUE(t4<t3);
+}
+
