@@ -1,28 +1,20 @@
 #ifndef TP_LOLLA_LOLLAPATUZA_H
 #define TP_LOLLA_LOLLAPATUZA_H
 
-#include "tipos.h"
-#include <string>
-#include <map>
-#include <vector>
-#include <list>
-#include <set>
-#include <cmath>
 #include "puesto.h"
 #include "colaPriorA.h"
 
 class lollapatuza{
 public:
-    lollapatuza();
-    lollapatuza(map<IdPuesto, puesto> puestos,
+/*    lollapatuza(map<IdPuesto, puesto> puestos,
                 set<Persona> personas,
                 map<Persona, Nat*> punterosAGastos,
-                colaPriorA<Nat, Persona> gastosPersona);
-
-    lollapatuza crearLolla(map<IdPuesto, puesto> puestos, set<Persona> personas);
+                colaPriorA<Nat, Persona> gastosPersona);*/
+    lollapatuza();
+    void crearLolla(map<IdPuesto, puesto> puestos, set<Persona> personas);
     void vender(IdPuesto idPuesto, Persona per, Producto producto, Nat cant);
     map<IdPuesto, puesto> puestos() const;
-    set<Persona> personas() const;
+    const set<Persona>& personas() const;
     void hackear(Persona per, Producto producto);
     Nat gastoTotal(Persona per) const;
     Persona quienGastoMas() const;
@@ -35,9 +27,5 @@ private:
     map<IdPuesto, puesto> _puestos;
     map<Persona,map<Producto,map<IdPuesto, puesto*>>>  _hackeables;
 };
-
-#include "lollapatuza.cpp"
-
-
 
 #endif //TP_LOLLA_LOLLAPATUZA_H

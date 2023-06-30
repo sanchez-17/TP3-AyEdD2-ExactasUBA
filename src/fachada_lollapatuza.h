@@ -3,6 +3,12 @@
 
 //#include <set> ya esta en puesto.h
 #include "tipos.h"
+#include <string>
+#include <map>
+#include <vector>
+#include <list>
+#include <set>
+#include <cmath>
 #include "lollapatuza.h"
 
 
@@ -39,5 +45,6 @@ private:
     */
     lollapatuza _lolla;
 };
+
 
 #endif

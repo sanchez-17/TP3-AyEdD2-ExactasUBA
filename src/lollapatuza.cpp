@@ -1,5 +1,4 @@
 #include "lollapatuza.h"
-//lollapatuza::lollapatuza()= default;
 
 lollapatuza::lollapatuza():
 _personas(),
@@ -8,8 +7,7 @@ _gastosPersona(colaPriorA<Nat, Persona>(0)),
 _puestos(),
 _hackeables(){}
 
-
-lollapatuza::lollapatuza(map<IdPuesto,puesto> puestos,
+/*lollapatuza::lollapatuza(map<IdPuesto,puesto> puestos,
                          set<Persona> personas,
                          map<Persona,Nat*> punterosAGastos,
                          colaPriorA<Nat,Persona> gastosPersona) :
@@ -18,21 +16,27 @@ _punterosAGastos(punterosAGastos),
 _gastosPersona(gastosPersona),
 _puestos(puestos),
 _hackeables()
-{}
+{}*/
 
-lollapatuza lollapatuza::crearLolla(map<IdPuesto, puesto> puestos, set<Persona> personas){
+void lollapatuza::crearLolla(map<IdPuesto, puesto> puestos, set<Persona> personas){
     colaPriorA<Nat, Persona> gastosPersona(personas.size());
     map<Persona, Nat*> punterosAGastos;
-    for (set<Persona>::iterator it = personas.begin(); it != personas.end(); ++it) {
+    for(Persona per:personas){
+        tuplaPersona<Nat,Persona> tuplaPersona(0,per);
+        Nat* puntero = gastosPersona.encolar(tuplaPersona);
+        punterosAGastos[per] = puntero;
+    }
+    /*for (set<Persona>::iterator it = personas.begin(); it != personas.end(); ++it) {
         //pair<Nat, map<Persona,Nat>::iterator> t = make_pair(0,it);
         tuplaPersona<Nat,Persona> tuplaPersona(0,*it);
         //Nat* puntero = gastosPer.encolar(make_pair(0, *it));
         Nat* puntero = gastosPersona.encolar(tuplaPersona);
         punterosAGastos[*it] = puntero;
-    }
-
-    return lollapatuza(puestos, personas, punterosAGastos, gastosPersona);
-
+    }*/
+    _personas = personas;
+    _puestos = puestos;
+    _punterosAGastos = punterosAGastos;
+    _gastosPersona = gastosPersona;
 }
 
 void lollapatuza::vender(IdPuesto idPuesto, Persona per, Producto producto, Nat cant){
@@ -62,7 +66,7 @@ map<IdPuesto, puesto> lollapatuza::puestos()const{
     return _puestos;
 }
 
-set<Persona> lollapatuza::personas() const{
+const set<Persona>& lollapatuza::personas() const{
     return _personas;
 }
 

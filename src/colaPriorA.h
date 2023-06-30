@@ -1,13 +1,9 @@
 #ifndef COLA_H
 #define COLA_H
-#include "tipos.h"
 #include "tuplaPersona.h"
-#include <string>
-#include <map>
+#include "tipos.h"
 #include <vector>
 #include <cmath>
-
-
 
 template<class alpha, class beta>
 class colaPriorA{
@@ -31,7 +27,7 @@ public:
     bool vacia();
 
 private:
-    vector<pair<alpha, typename map<beta,Nat>::iterator>> _heap;
+    std::vector<pair<alpha, typename map<beta,Nat>::iterator>> _heap;
     map<beta, Nat> _indices;
     Nat _longitud;
     Nat _cota;

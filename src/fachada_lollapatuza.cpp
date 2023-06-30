@@ -1,7 +1,4 @@
 #include "fachada_lollapatuza.h"
-#include "puesto.h"
-#include "lollapatuza.h"
-
 FachadaLollapatuza::FachadaLollapatuza(const set<Persona> &personas, const map<IdPuesto, aed2_Puesto> &infoPuestos){
     //por cada clave de infoPuestos hay q crear un puesto
     map<IdPuesto, puesto> puestos;

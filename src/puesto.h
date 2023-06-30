@@ -1,5 +1,11 @@
 #ifndef PUESTO_H
 #define PUESTO_H
+#include "tipos.h"
+#include <map>
+#include <vector>
+#include <list>
+#include <set>
+#include <cmath>
 
 class puesto{
 public:
@@ -25,6 +31,5 @@ private:
     map<Persona,list<tuple<Producto,Nat>>> _ventas;
 };
 
-#include "puesto.cpp"
 
 #endif //PUESTO_H
