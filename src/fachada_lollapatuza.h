@@ -1,8 +1,9 @@
 #ifndef FACHADA_LOLLAPATUZA_H
 #define FACHADA_LOLLAPATUZA_H
 
-#include <set>
+//#include <set> ya esta en puesto.h
 #include "tipos.h"
+#include "lollapatuza.h"
 
 
 class FachadaLollapatuza {
@@ -35,9 +36,8 @@ private:
         Por ejemplo:
 
         Lollapatuza lolla;
-
     */
-
+    lollapatuza _lolla;
 };
 
 #endif

@@ -51,7 +51,7 @@ map<IdPuesto, puesto> lollapatuza::puestos(){
     return _puestos;
 }
 
-set<Persona> lollapatuza::personas(){
+set<Persona> lollapatuza::personas() const{
     return _personas;
 }
 
@@ -82,6 +82,13 @@ Persona lollapatuza::quienGastoMas(){
     return per;
 }
 
+/*
+ *  set<Persona> _personas;
+    map<Persona, Nat*> _punterosAGastos;
+    colaPriorA<Nat, Persona> _gastosPersona;
+    map<IdPuesto, puesto> _puestos;
+    map<Persona,map<Producto,map<IdPuesto, puesto*>>>  _hackeables;
+ */
 IdPuesto lollapatuza::menorStock(Producto producto){
     map<IdPuesto, puesto>::iterator itPuestos = _puestos.begin();
     Nat minStock = itPuestos->second.stock(producto);
@@ -89,6 +96,10 @@ IdPuesto lollapatuza::menorStock(Producto producto){
     while(itPuestos != _puestos.end()){
         Nat stockActual = itPuestos->second.stock(producto);
         int idPuestoActual = itPuestos->first;
-        if(stockActual < minStock )
+        if(stockActual < minStock || (stockActual == minStock && idPuestoActual < idMinStock)){
+            minStock = stockActual;
+            idMinStock = idPuestoActual;
+        }
+        itPuestos++;
     }
 }
