@@ -106,6 +106,6 @@ IdPuesto lollapatuza::menorStock(Producto producto) const{
             minStock = stockActual;
             idMinStock = idPuestoActual;
         }
-        itPuestos++;
+        ++itPuestos;
     }
 }
