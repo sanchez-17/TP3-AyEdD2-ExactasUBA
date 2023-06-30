@@ -16,7 +16,7 @@ public:
     colaPriorA(int cota);
 
     // Obtiene una referencia constante al próximo elemento.
-    const tuplaPersona<alpha, beta> proximo();
+    const tuplaPersona<alpha, beta> proximo() const;
 
     // Encola un elemento en la cola.
     // PRE: No hay "cota" cantidad de elementos en la cola.

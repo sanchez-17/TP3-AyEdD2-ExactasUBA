@@ -1,5 +1,7 @@
 #include "puesto.h"
 
+puesto::puesto() {}
+
 puesto::puesto(Menu menu,Stock stock,map<Producto, vector<Nat>> promos):
 _menu(menu),
 _stock(stock),
@@ -103,5 +105,3 @@ bool puesto::reponerItem(Producto producto, Persona per){
     _gastosDe[per] -= _menu[producto];
     return dejaDeSerHackeable;
 }
-
-puesto::puesto() {}

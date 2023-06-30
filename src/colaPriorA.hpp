@@ -2,7 +2,7 @@ template<class alpha, class beta>
 colaPriorA<alpha,beta>::colaPriorA(int cota):_heap(vector<pair<alpha, typename map<beta,Nat>::iterator>>(cota)),_cota(cota),_longitud(0),_indices(map<beta, Nat>()){}
 
 template<class alpha, class beta>
-const tuplaPersona<alpha, beta> colaPriorA<alpha,beta>::proximo(){
+const tuplaPersona<alpha, beta> colaPriorA<alpha,beta>::proximo()const{
     //pair<alpha, typename map<beta,Nat>::iterator> tuplaProx = _heap[0];
     tuplaPersona<alpha,beta> res(_heap[0].first,_heap[0].second->first);
     //alpha primeroProx = tuplaProx.first;

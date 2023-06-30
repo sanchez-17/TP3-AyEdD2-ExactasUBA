@@ -1,5 +1,5 @@
 #include "lollapatuza.h"
-
+lollapatuza::lollapatuza(): {}
 lollapatuza::lollapatuza(map<IdPuesto,puesto> puestos,
                          set<Persona> personas,
                          map<Persona,Nat*> punterosAGastos,
@@ -72,11 +72,11 @@ void lollapatuza::hackear(Persona per, Producto producto){
 
 }
 
-Nat lollapatuza::gastoTotal(Persona per){
-    return *_punterosAGastos[per];
+Nat lollapatuza::gastoTotal(Persona per)const{
+    return *_punterosAGastos.at(per);
 }
 
-Persona lollapatuza::quienGastoMas(){
+Persona lollapatuza::quienGastoMas()const{
     //tuplaPersona<Nat,Persona> res = _gastosPersona.proximo();
     Persona per = _gastosPersona.proximo().getPersona();
     return per;
