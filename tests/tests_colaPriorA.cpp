@@ -1,8 +1,4 @@
-//
-// Created by aquil on 29/6/2023.
-//
 #include "../src/colaPriorA.h"
-#include "../src/tuplaPersona.h"
 #include "gtest-1.8.1/gtest.h"
 
 
@@ -35,13 +31,13 @@ TEST(colaPriorATest, test_general) {
 
 }
 
-TEST(ColaPrior, vacio) {
-    colaPriorA<Persona,Nat> q;
+TEST(colaPriorATest, vacio) {
+    colaPriorA<Persona,Nat> q(0);
     ASSERT_TRUE(q.vacia());
 }
 
-TEST(ColaPrior, encolarUno) {
-    colaPriorA<Persona,Nat> q;
+TEST(colaPriorATest, encolarUno) {
+    colaPriorA<Persona,Nat> q(1);
     ASSERT_TRUE(q.vacia());
     tuplaPersona<Persona, Nat> per10(100,10);
     q.encolar(per10);
@@ -49,8 +45,8 @@ TEST(ColaPrior, encolarUno) {
     ASSERT_TRUE(q.proximo().getPersona() == 10 && q.proximo().getGastoPersona()==100);
 }
 
-TEST(ColaPrior, encolarMenor) {
-    colaPriorA<Persona,Nat> q;
+TEST(colaPriorATest, encolarMenor) {
+    colaPriorA<Persona,Nat> q(3);
     ASSERT_TRUE(q.vacia());
     tuplaPersona<Persona, Nat> per1(100,1);
     q.encolar(per1);
@@ -66,8 +62,8 @@ TEST(ColaPrior, encolarMenor) {
     ASSERT_TRUE(q.proximo().getPersona() == 1 && q.proximo().getGastoPersona()==100);
 }
 
-TEST(ColaPrior, encolarMayor) {
-    colaPriorA<Persona,Nat> q;
+TEST(colaPriorATest, encolarMayor) {
+    colaPriorA<Persona,Nat> q(3);
     ASSERT_TRUE(q.vacia());
 
     tuplaPersona<Persona, Nat> per1(100,1);
@@ -86,54 +82,64 @@ TEST(ColaPrior, encolarMayor) {
     ASSERT_TRUE(q.proximo().getPersona() == 3 && q.proximo().getGastoPersona()==300);
 }
 
-TEST(ColaPrior, desencolarMenor) {
-    colaPriorA<Persona,Nat> q;
+TEST(colaPriorATest, desencolarMenor) {
+    colaPriorA<Persona,Nat> q(5);
     ASSERT_TRUE(q.vacia());
-    q.encolar(51);
-    q.encolar(42);
-    q.encolar(33);
-    q.encolar(24);
-    q.encolar(15);
-    ASSERT_EQ(q.proximo(), 51);
-    ASSERT_EQ(q.tam(), 5);
+    tuplaPersona<Persona, Nat> per1(100,1);
+    tuplaPersona<Persona, Nat> per2(200,2);
+    tuplaPersona<Persona, Nat> per3(300,3);
+    tuplaPersona<Persona, Nat> per4(400,4);
+    tuplaPersona<Persona, Nat> per5(500,5);
+    q.encolar(per5);
+    q.encolar(per4);
+    q.encolar(per2);
+    q.encolar(per3);
+    q.encolar(per1);
+    ASSERT_TRUE(q.proximo().getPersona() == 5 && q.proximo().getGastoPersona()==500);
+    ASSERT_FALSE(q.vacia());
     q.desencolar();
-    ASSERT_EQ(q.proximo(), 42);
-    ASSERT_EQ(q.tam(), 4);
+    ASSERT_TRUE(q.proximo().getPersona() == 4 && q.proximo().getGastoPersona()==400);
+    ASSERT_FALSE(q.vacia());
     q.desencolar();
-    ASSERT_EQ(q.proximo(), 33);
-    ASSERT_EQ(q.tam(), 3);
+    ASSERT_TRUE(q.proximo().getPersona() == 3 && q.proximo().getGastoPersona()==300);
+    ASSERT_FALSE(q.vacia());
     q.desencolar();
-    ASSERT_EQ(q.proximo(), 24);
-    ASSERT_EQ(q.tam(), 2);
+    ASSERT_TRUE(q.proximo().getPersona() == 2 && q.proximo().getGastoPersona()==200);
+    ASSERT_FALSE(q.vacia());
     q.desencolar();
-    ASSERT_EQ(q.proximo(), 15);
-    ASSERT_EQ(q.tam(), 1);
+    ASSERT_TRUE(q.proximo().getPersona() == 1 && q.proximo().getGastoPersona()==100);
+    ASSERT_FALSE(q.vacia());
     q.desencolar();
-    ASSERT_EQ(q.tam(), 0);
+    ASSERT_TRUE(q.vacia());
 }
 
-TEST(ColaPrior, desencolarMayor) {
-    colaPriorA<Persona,Nat> q;
+TEST(colaPriorATest, desencolarMayor) {
+    colaPriorA<Persona,Nat> q(5);
     ASSERT_TRUE(q.vacia());
-    q.encolar(15);
-    q.encolar(24);
-    q.encolar(33);
-    q.encolar(42);
-    q.encolar(51);
-    ASSERT_EQ(q.proximo(), 51);
-    ASSERT_EQ(q.tam(), 5);
+    tuplaPersona<Persona, Nat> per1(100,1);
+    tuplaPersona<Persona, Nat> per2(200,2);
+    tuplaPersona<Persona, Nat> per3(300,3);
+    tuplaPersona<Persona, Nat> per4(400,4);
+    tuplaPersona<Persona, Nat> per5(500,5);
+    q.encolar(per1);
+    q.encolar(per3);
+    q.encolar(per2);
+    q.encolar(per4);
+    q.encolar(per5);
+    ASSERT_TRUE(q.proximo().getPersona() == 5 && q.proximo().getGastoPersona()==500);
+    ASSERT_FALSE(q.vacia());
     q.desencolar();
-    ASSERT_EQ(q.proximo(), 42);
-    ASSERT_EQ(q.tam(), 4);
+    ASSERT_TRUE(q.proximo().getPersona() == 4 && q.proximo().getGastoPersona()==400);
+    ASSERT_FALSE(q.vacia());
     q.desencolar();
-    ASSERT_EQ(q.proximo(), 33);
-    ASSERT_EQ(q.tam(), 3);
+    ASSERT_TRUE(q.proximo().getPersona() == 3 && q.proximo().getGastoPersona()==300);
+    ASSERT_FALSE(q.vacia());
     q.desencolar();
-    ASSERT_EQ(q.proximo(), 24);
-    ASSERT_EQ(q.tam(), 2);
+    ASSERT_TRUE(q.proximo().getPersona() == 2 && q.proximo().getGastoPersona()==200);
+    ASSERT_FALSE(q.vacia());
     q.desencolar();
-    ASSERT_EQ(q.proximo(), 15);
-    ASSERT_EQ(q.tam(), 1);
+    ASSERT_TRUE(q.proximo().getPersona() == 1 && q.proximo().getGastoPersona()==100);
+    ASSERT_FALSE(q.vacia());
     q.desencolar();
     ASSERT_TRUE(q.vacia());
 }
