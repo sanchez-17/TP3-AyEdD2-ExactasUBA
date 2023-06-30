@@ -81,7 +81,7 @@ Nat colaPriorA<alpha,beta>::heapifyUp(Nat i) {
 
 template<class alpha, class beta>
 Nat colaPriorA<alpha,beta>::heapifyDown(Nat i) {
-    Nat left = 2*i + 1;
+    /*Nat left = 2*i + 1;
     Nat right = 2*i + 2;
     Nat indiceMayorHijo = i;
     tuplaPersona<alpha,beta> tuplaLeft(_heap[left].first,_heap[left].second->first);
@@ -102,9 +102,9 @@ Nat colaPriorA<alpha,beta>::heapifyDown(Nat i) {
     if (indiceMayorHijo != i) {
         swap(_heap[i], _heap[indiceMayorHijo]);
         heapifyDown(indiceMayorHijo);
-    }
+    }*/
     //***********************
-    /*Nat largo = _longitud;
+    Nat largo = _longitud;
     Nat iMaximo;
     while (i < largo) {
         Nat iHijoIzq = 2 * i + 1;
@@ -133,8 +133,8 @@ Nat colaPriorA<alpha,beta>::heapifyDown(Nat i) {
         } else {
             break;
         }
-    }*/
-    return indiceMayorHijo;
+    }
+    return iMaximo;
 }
 
 template<class alpha, class beta>
