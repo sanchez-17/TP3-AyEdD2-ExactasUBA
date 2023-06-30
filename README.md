@@ -3,8 +3,10 @@
 Modulo ColaPriorAcot
  - Como inicializar una cola con _indice como diccionario vacio desde el constructor --hecho
  - Generar funcion para castear tuplas de heap a <alpha,beta> --hecho(se creo una clase)
- - Arreglar las funciones en donde creamos las tuplas usando la nueva clase utilizando la nueva relacion de orden
- - Ver linea 28 colaPriorA.hpp
+ - Arreglar las funciones en donde creamos las tuplas usando la nueva clase utilizando la nueva relacion de orden --hecho
+ - Ver linea 28 colaPriorA.hpp --hecho
+ - La funcion proximo ya no devuelve por referencia, devuelve un objeto del tipo tuplaPersona por copia. Sino falla,ver.
+ - Al obtener una referencia de un puesto a traves de _puestos[idPuesto] tira error. Ver
 
 ########################################################
 Si es la primera vez con el repo, traerlo a tu compu

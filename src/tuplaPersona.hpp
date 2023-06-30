@@ -8,7 +8,7 @@ _tupla(make_pair(a,b)){}
 
 template<class alpha, class beta>
 bool tuplaPersona<alpha, beta>::operator>(tuplaPersona t) {
-    return (_tupla.first > t.first) || (_tupla.first == t.first && _tupla.second > t.second);
+    return (this->getGastoPersona() > t.getGastoPersona()) || (this->getGastoPersona() == t.getGastoPersona() && this->getPersona() > t.getPersona());
 }
 
 template<class alpha, class beta>

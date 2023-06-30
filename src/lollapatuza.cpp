@@ -1,24 +1,27 @@
 #include "lollapatuza.h"
 
-lollapatuza::lollapatuza(map<IdPuesto, puesto> puestos, set<Persona> personas, map<Persona, Nat*> punteros, colaPriorA<Nat, Persona> gastosPer) :
+lollapatuza::lollapatuza(map<IdPuesto,puesto> puestos,
+                         set<Persona> personas,
+                         map<Persona,Nat*> punterosAGastos,
+                         colaPriorA<Nat,Persona> gastosPersona) :
 _personas(personas),
-_punterosAGastos(punteros),
-_gastosPersona(gastosPer),
+_punterosAGastos(punterosAGastos),
+_gastosPersona(gastosPersona),
 _puestos(puestos),
 _hackeables()
 {}
 
 lollapatuza lollapatuza::crearLolla(map<IdPuesto, puesto> puestos, set<Persona> personas){
-    //colaPriorA<Nat, Persona> gastosPer = colaPriorA<Nat, Persona>(personas.size());
-    map<Persona, Nat*> punteros;
+    colaPriorA<Nat, Persona> gastosPersona(personas.size());
+    map<Persona, Nat*> punterosAGastos;
     for (set<Persona>::iterator it = personas.begin(); it != personas.end(); ++it) {
-        pair<Nat, map<Persona,Nat>::iterator> t = make_pair(0,it);
-        tuplaPersona<Nat,Persona> tuplaPer(t);
+        //pair<Nat, map<Persona,Nat>::iterator> t = make_pair(0,it);
+        tuplaPersona<Nat,Persona> tuplaPersona(0,*it);
         //Nat* puntero = gastosPer.encolar(make_pair(0, *it));
-        Nat* puntero = _gastosPersona.encolar(tuplaPer);
-        punteros[*it] = puntero;
+        Nat* puntero = gastosPersona.encolar(tuplaPersona);
+        punterosAGastos[*it] = puntero;
     }
-    return lollapatuza(puestos, personas, gastosPer, punteros);
+    return lollapatuza(puestos, personas, punterosAGastos, gastosPersona);
 }
 
 void lollapatuza::vender(IdPuesto idPuesto, Persona per, Producto producto, Nat cant){
@@ -37,7 +40,8 @@ void lollapatuza::vender(IdPuesto idPuesto, Persona per, Producto producto, Nat 
     //Actualizo el gasto total de la persona en el lollapatuza
     Nat* punteroAGasto = _punterosAGastos[per];
     Nat gastoActualizado = *punteroAGasto + gastoVenta;
-    pair<Nat,Persona> gastoPer = make_pair(gastoActualizado,per);
+    tuplaPersona<Nat,Persona> gastoPer(gastoActualizado,per);
+    //pair<Nat,Persona> gastoPer = make_pair(gastoActualizado,per);
     Nat* punteroDinero = _gastosPersona.encolar(gastoPer);
     //Actualizo el puntero del gasto de la persona
     _punterosAGastos[per] = punteroDinero;
@@ -60,7 +64,9 @@ Nat lollapatuza::gastoTotal(Persona per){
 }
 
 Persona lollapatuza::quienGastoMas(){
-    return (proximo(_gastosPersona)).second;
+    //tuplaPersona<Nat,Persona> res = _gastosPersona.proximo();
+    Persona per = _gastosPersona.proximo().getPersona();
+    return per;
 }
 
 IdPuesto lollapatuza::menorStock(Producto producto){

@@ -14,7 +14,11 @@
 
 class lollapatuza{
 public:
-    lollapatuza(map<IdPuesto, puesto> puestos, set<Persona> personas);
+    lollapatuza(map<IdPuesto, puesto> puestos,
+                set<Persona> personas,
+                map<Persona, Nat*> punterosAGastos,
+                colaPriorA<Nat, Persona> gastosPersona);
+
     lollapatuza crearLolla(map<IdPuesto, puesto> puestos, set<Persona> personas);
     void vender(IdPuesto idPuesto, Persona per, Producto producto, Nat cant);
     map<IdPuesto, puesto> puestos();
