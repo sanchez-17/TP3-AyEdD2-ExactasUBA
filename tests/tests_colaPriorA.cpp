@@ -45,6 +45,17 @@ TEST(colaPriorATest, encolarUno) {
     ASSERT_TRUE(q.proximo().getPersona() == 10 && q.proximo().getGastoPersona()==100);
 }
 
+TEST(colaPriorATest,desencolarUno){
+    colaPriorA<Persona,Nat> q(1);
+    ASSERT_TRUE(q.vacia());
+    tuplaPersona<Persona, Nat> per10(100,10);
+    q.encolar(per10);
+    ASSERT_FALSE(q.vacia());
+    ASSERT_TRUE(q.proximo().getPersona() == 10 && q.proximo().getGastoPersona()==100);
+    q.desencolar();
+    ASSERT_TRUE(q.vacia());
+}
+
 TEST(colaPriorATest, encolarMenor) {
     colaPriorA<Persona,Nat> q(3);
     ASSERT_TRUE(q.vacia());
