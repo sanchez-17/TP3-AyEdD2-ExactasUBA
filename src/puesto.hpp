@@ -78,7 +78,11 @@ Nat puesto::gastosDe(Persona per){
 }
 
 //funcion que se realiza al hackear un lolla
-void puesto::reponerItem(Producto producto, Persona per){
+bool puesto::reponerItem(Producto producto, Persona per){
+    ventasDeProd::iterator itListaVentas = _ventasSinDesc[per][producto].begin();
+    itLista itVenta = *itListaVentas;
+    if ((*itVenta) != 1){}
     _stock[producto] += 1;
     _gastosDe[per] -= _menu[producto];
+    return true;
 }

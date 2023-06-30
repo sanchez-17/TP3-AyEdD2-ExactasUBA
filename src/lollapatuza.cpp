@@ -56,6 +56,19 @@ set<Persona> lollapatuza::personas(){
 }
 
 void lollapatuza::hackear(Persona per, Producto producto){
+    map<IdPuesto, puesto*>::iterator itPuesto = _hackeables[per][producto].begin();
+    puesto* puesto = itPuesto->second;
+    bool dejaDeSerHackeable = puesto->reponerItem(producto,per);
+    if(dejaDeSerHackeable){
+        _hackeables[per][producto].erase(itPuesto); //Borramos por iterador, tmb puede ser por key
+    }
+    Nat* puntero = _punterosAGastos[per];
+    Nat gastoAnterior = *puntero;
+    Nat precioItem = puesto->precio(producto);
+    tuplaPersona<Nat,Persona> gastoPer(gastoAnterior-precioItem,per);
+    Nat* punteroGastoActual = _gastosPersona.encolar(gastoPer);
+    _punterosAGastos[per] = punteroGastoActual;
+    
 
 }
 
