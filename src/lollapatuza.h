@@ -25,8 +25,8 @@ public:
     map<IdPuesto, puesto> puestos();
     set<Persona> personas() const;
     void hackear(Persona per, Producto producto);
-    Nat gastoTotal(Persona per);
-    Persona quienGastoMas();
+    Nat gastoTotal(Persona per) const;
+    Persona quienGastoMas() const;
     IdPuesto menorStock(Producto producto);
 
 private:
