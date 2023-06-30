@@ -22,12 +22,12 @@ public:
 
     lollapatuza crearLolla(map<IdPuesto, puesto> puestos, set<Persona> personas);
     void vender(IdPuesto idPuesto, Persona per, Producto producto, Nat cant);
-    map<IdPuesto, puesto> puestos();
+    map<IdPuesto, puesto> puestos() const;
     set<Persona> personas() const;
     void hackear(Persona per, Producto producto);
     Nat gastoTotal(Persona per) const;
     Persona quienGastoMas() const;
-    IdPuesto menorStock(Producto producto);
+    IdPuesto menorStock(Producto producto) const;
 
 private:
     set<Persona> _personas;

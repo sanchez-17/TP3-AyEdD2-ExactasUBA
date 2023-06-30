@@ -47,23 +47,24 @@ const set<Persona> &FachadaLollapatuza::personas() const {
 }
 
 Nat FachadaLollapatuza::stockEnPuesto(IdPuesto idPuesto, const Producto &producto) const {
-    puesto p =_lolla.puestos[idPuesto];
+    puesto p;
+    p = _lolla.puestos()[idPuesto];
     p.stock(producto);
 }
 
 Nat FachadaLollapatuza::descuentoEnPuesto(IdPuesto idPuesto, const Producto &producto, Nat cantidad) const {
-    puesto p =_lolla.puestos[idPuesto];
+    puesto p =_lolla.puestos()[idPuesto];
     p.descuento(producto, cantidad);
 }
 
 Nat FachadaLollapatuza::gastoEnPuesto(IdPuesto idPuesto, Persona persona) const {
-    puesto p =_lolla.puestos[idPuesto];
+    puesto p =_lolla.puestos()[idPuesto];
     p.gastosDe(persona);
 }
 
 set<IdPuesto> FachadaLollapatuza::idsDePuestos() const {
     set<IdPuesto> keys;
-    for (map<IdPuesto, puesto>::iterator it = _lolla.puestos.begin(); it != _lolla.puestos.end(); ++it) {
+    for (map<IdPuesto, puesto>::iterator it = _lolla.puestos().begin(); it != _lolla.puestos().end(); ++it) {
         keys.insert(it->first);
     }
     return keys;
