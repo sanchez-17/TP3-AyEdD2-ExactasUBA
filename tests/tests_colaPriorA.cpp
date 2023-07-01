@@ -74,7 +74,9 @@ TEST(colaPriorATest, encolarMayor) {
     tuplaPersona<Persona, Nat> per2(200,2);
     q.encolar(per2);
     ASSERT_FALSE(q.vacia());
-    ASSERT_TRUE(q.proximo().getPersona() == 2 && q.proximo().getGastoPersona()==200);
+    ASSERT_TRUE(q.proximo().getPersona() == 2);
+    ASSERT_TRUE(q.proximo().getGastoPersona()==200);
+    //ASSERT_TRUE(q.proximo().getPersona() == 2 && q.proximo().getGastoPersona()==200);
 
     tuplaPersona<Persona, Nat> per3(300,3);
     q.encolar(per3);
