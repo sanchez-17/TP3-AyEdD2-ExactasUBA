@@ -20,7 +20,7 @@ alpha* colaPriorA<alpha,beta>::encolar(tuplaPersona<alpha, beta> tupla){
         }
     }else{
         _longitud++;
-        pair<typename map<beta,Nat>::iterator,bool> it = _indices.insert({tupla.getPersona(),_longitud-1});
+        pair<typename map<beta,Nat>::iterator,bool> it = _indices.insert(pair<Persona,Nat>(tupla.getPersona(),_longitud-1));
         _heap[_longitud - 1] = make_pair(tupla.getGastoPersona(), it.first);
         index = heapifyUp( _longitud - 1);
     }
@@ -32,7 +32,9 @@ alpha* colaPriorA<alpha,beta>::encolar(tuplaPersona<alpha, beta> tupla){
 template<class alpha, class beta>
 void colaPriorA<alpha,beta>::desencolar(){
     swap(_heap[0], _heap[_longitud-1]);
+    //Actualizamos indices
     _heap[0].second->second = 0;
+    _heap[_longitud-1].second->second = _longitud-1;
     _longitud--;
     heapifyDown(0);
 }
@@ -89,36 +91,45 @@ Nat colaPriorA<alpha,beta>::heapifyDown(Nat i) {
     }*/
     //***********************
     Nat largo = _longitud;
-    Nat iMaximo;
+    Nat iMayorHijo = i;
     while (i < largo) {
         Nat iHijoIzq = 2 * i + 1;
         Nat iHijoDer = 2 * i + 2;
-        iMaximo = i;
-        tuplaPersona<alpha,beta> tuplaIzq(_heap[iHijoIzq].first,_heap[iHijoIzq].second->first);
-        tuplaPersona<alpha,beta> tuplaDer(_heap[iHijoDer].first,_heap[iHijoDer].second->first);
-        tuplaPersona<alpha,beta> tuplaMax(_heap[iMaximo].first,_heap[iMaximo].second->first);
-        if (iHijoIzq < largo && tuplaIzq > tuplaMax) {
-            _heap[iMaximo].second->second = iHijoIzq;
-            _heap[iHijoDer].second->second = iMaximo;
-            iMaximo = iHijoIzq;
-        } else {
+        iMayorHijo = i;
 
-            if(iHijoDer < largo && tuplaDer > tuplaMax){
-                _heap[iMaximo].second->second = iHijoDer;
-                _heap[iHijoDer].second->second = iMaximo;
-                iMaximo = iHijoDer;
+        tuplaPersona<alpha, beta> tuplaIzq;
+        tuplaPersona<alpha, beta> tuplaDer;
+        if(iHijoIzq<largo) {
+            tuplaIzq = tuplaPersona<alpha, beta>(_heap[iHijoIzq].first, _heap[iHijoIzq].second->first);
+        }
+        if(iHijoDer<largo) {
+            tuplaDer = tuplaPersona<alpha, beta>(_heap[iHijoDer].first, _heap[iHijoDer].second->first);
+        }
+        tuplaPersona<alpha,beta> tuplaMax(_heap[iMayorHijo].first,_heap[iMayorHijo].second->first);
+
+        if (iHijoIzq < largo) {
+            if(tuplaIzq > tuplaMax){
+                iMayorHijo = iHijoIzq;
+                tuplaMax = tuplaPersona<alpha,beta>(_heap[iMayorHijo].first,_heap[iMayorHijo].second->first);
+            }
+
+        }
+        if(iHijoDer < largo){
+            if(tuplaDer > tuplaMax){
+                iMayorHijo = iHijoDer;
             }
         }
-        if (iMaximo != i) {
-            pair<alpha, typename map<beta,Nat>::iterator> temp = _heap[i];
-            _heap[i] = _heap[iMaximo];
-            _heap[iMaximo] = temp;
-            i = iMaximo;
+
+        if (iMayorHijo != i) {
+            _heap[i].second->second = iMayorHijo;
+            _heap[iMayorHijo].second->second = i;
+            swap(_heap[i], _heap[iMayorHijo]);
+            i = iMayorHijo;
         } else {
             break;
         }
     }
-    return iMaximo;
+    return iMayorHijo;
 }
 
 template<class alpha, class beta>

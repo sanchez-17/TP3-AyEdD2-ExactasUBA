@@ -6,6 +6,7 @@
 template<class alpha, class beta>
 class tuplaPersona{
 public:
+    tuplaPersona();
     tuplaPersona(alpha gastoPersona, beta persona);
 
     const bool operator>(const tuplaPersona h);
