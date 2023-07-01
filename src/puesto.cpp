@@ -37,9 +37,23 @@ puesto puesto::crearPuesto(Menu menu, Stock stock, Promociones promos){
             cant++;
         }
     }*/
+        vector<Nat> cantidades;
         while(itCantXPrm != promosPorCant.end()){
             arr[itCantXPrm->first] = itCantXPrm->second;
+            cantidades.push_back(itCantXPrm->first);
             ++itCantXPrm;
+        }
+
+        Nat j = 0;
+        Nat ultCant = cantidades[0];
+        Nat ultDesc = arr[cantidades[0]];
+        while(ultCant < arr.size()){
+            arr[ultCant]=ultDesc;
+            if(ultCant+1==cantidades[j+1]){
+                j++;
+                ultDesc=arr[cantidades[j]];
+            }
+            ultCant++;
         }
         promociones[it->first] = arr;
     }
