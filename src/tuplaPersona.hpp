@@ -11,12 +11,12 @@ tuplaPersona<alpha, beta>& tuplaPersona<alpha, beta>::operator=(const tuplaPerso
 }
 
 template<class alpha, class beta>
-bool tuplaPersona<alpha, beta>::operator>(tuplaPersona t) {
+const bool tuplaPersona<alpha, beta>::operator>(const tuplaPersona t) {
     return (this->getGastoPersona() > t.getGastoPersona()) || (this->getGastoPersona() == t.getGastoPersona() && this->getPersona() > t.getPersona());
 }
 
 template<class alpha, class beta>
-bool tuplaPersona<alpha, beta>::operator<(tuplaPersona t) {
+const bool tuplaPersona<alpha, beta>::operator<(const tuplaPersona t) {
     return (this->getGastoPersona() < t.getGastoPersona()) || (this->getGastoPersona() == t.getGastoPersona() && this->getPersona() < t.getPersona());
 }
 

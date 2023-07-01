@@ -3,12 +3,7 @@ colaPriorA<alpha,beta>::colaPriorA(int cota):_heap(vector<pair<alpha, typename m
 
 template<class alpha, class beta>
 const tuplaPersona<alpha, beta> colaPriorA<alpha,beta>::proximo()const{
-    //pair<alpha, typename map<beta,Nat>::iterator> tuplaProx = _heap[0];
     tuplaPersona<alpha,beta> res(_heap[0].first,_heap[0].second->first);
-    //alpha primeroProx = tuplaProx.first;
-    //typename map<beta,Nat>::iterator it = tuplaProx.second;
-    //beta segundoProx = it->first;
-    //retun make_pair<primeroProx,segundoProx>;
     return res;
 }
 
@@ -18,7 +13,6 @@ alpha* colaPriorA<alpha,beta>::encolar(tuplaPersona<alpha, beta> tupla){
     if(_indices.count(tupla.getPersona()) > 0){
         Nat i = _indices[tupla.getPersona()];
         tuplaPersona<alpha, beta> iesimo(_heap[i].first,_heap[i].second->first);
-        //pair<alpha, beta> iesimo = make_pair(tupla.getGastoPersona(), _indices[tupla.getPersona()]);
         if(tupla > iesimo){
             index = heapifyUp(i);
         } else {
@@ -28,7 +22,6 @@ alpha* colaPriorA<alpha,beta>::encolar(tuplaPersona<alpha, beta> tupla){
         _longitud++;
         _indices[tupla.getPersona()] = _longitud - 1;
         typename map<beta,Nat>::iterator it = --_indices.end();
-        //typename map<beta,Nat>::iterator it = (_indices.emplace(make_pair(tupla.getPersona(), _longitud - 1))).first;
         _heap[_longitud - 1] = make_pair(tupla.getGastoPersona(), it);
         index = heapifyUp( _longitud - 1);
     }
@@ -38,10 +31,7 @@ alpha* colaPriorA<alpha,beta>::encolar(tuplaPersona<alpha, beta> tupla){
 
 template<class alpha, class beta>
 void colaPriorA<alpha,beta>::desencolar(){
-    //int n = _heap.size() - 1;
     swap(_heap[0], _heap[_longitud-1]);
-
-    //_heap[0] = _heap[_longitud-1];
     _longitud--;
     heapifyDown(0);
 }
@@ -53,6 +43,7 @@ bool colaPriorA<alpha,beta>::vacia(){
 
 template<class alpha, class beta>
 Nat colaPriorA<alpha,beta>::heapifyUp(Nat i) {
+    //if(i==0){return i;}
     if(i>0){
         //pair<alpha,beta> tuplaIndex= obtenerTupla(_heap[index]);
         tuplaPersona<alpha,beta> tuplaI(_heap[i].first,_heap[i].second->first);
@@ -60,16 +51,18 @@ Nat colaPriorA<alpha,beta>::heapifyUp(Nat i) {
         tuplaPersona<alpha,beta> tuplaPadre(_heap[indexPadre].first,_heap[indexPadre].second->first);
         //pair<alpha,beta> tuplaPadre= obtenerTupla(_heap[indexPadre]);
 
-        while (tuplaI > tuplaPadre){
+        while (tuplaI > tuplaPadre && i!=0){
             indexPadre = floor((i-1)/2);
-            tuplaPersona<alpha,beta> tuplaPadre(_heap[indexPadre].first,_heap[indexPadre].second->first);
+            //tuplaPersona<alpha,beta> tuplaPadre(_heap[indexPadre].first,_heap[indexPadre].second->first);
+            tuplaPadre = tuplaPersona<alpha,beta>(_heap[indexPadre].first,_heap[indexPadre].second->first);
             //pair<alpha,beta> temp = tuplaI;
             //tuplaI = tuplaPadre;
             //tuplaPadre = temp;
 
-            pair<alpha, typename map<beta,Nat>::iterator> temp = _heap[i];
+          /*  pair<alpha, typename map<beta,Nat>::iterator> temp = _heap[i];
             _heap[i] = _heap[indexPadre];
-            _heap[indexPadre] = temp;
+            _heap[indexPadre] = temp;*/
+            swap(_heap[i], _heap[indexPadre]);
 
             i = indexPadre;
             _heap[i].second->second = i;

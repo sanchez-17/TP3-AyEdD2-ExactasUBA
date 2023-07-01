@@ -8,8 +8,8 @@ class tuplaPersona{
 public:
     tuplaPersona(alpha gastoPersona, beta persona);
 
-    bool operator>(tuplaPersona h);
-    bool operator<(tuplaPersona h);
+    const bool operator>(const tuplaPersona h);
+    const bool operator<(const tuplaPersona h);
     alpha getGastoPersona() const;
     beta getPersona() const;
     tuplaPersona& operator=(const tuplaPersona& aCopiar);
