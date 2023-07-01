@@ -10,8 +10,9 @@ const tuplaPersona<alpha, beta> colaPriorA<alpha,beta>::proximo()const{
 template<class alpha, class beta>
 alpha* colaPriorA<alpha,beta>::encolar(tuplaPersona<alpha, beta> tupla){
     Nat index;
-    if(_indices.count(tupla.getPersona()) > 0){
+    if(_indices.count(tupla.getPersona()) == 1){
         Nat i = _indices[tupla.getPersona()];
+        _heap[i].first = tupla.getGastoPersona();
         tuplaPersona<alpha, beta> iesimo(_heap[i].first,_heap[i].second->first);
         if(tupla > iesimo){
             index = heapifyUp(i);
