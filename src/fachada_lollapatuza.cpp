@@ -54,9 +54,12 @@ Nat FachadaLollapatuza::gastoEnPuesto(IdPuesto idPuesto, Persona persona) const 
 
 set<IdPuesto> FachadaLollapatuza::idsDePuestos() const {
     set<IdPuesto> keys;
-    for (map<IdPuesto, puesto>::iterator it = _lolla.puestos().begin(); it != _lolla.puestos().end(); ++it) {
-        keys.insert(it->first);
+    for(auto puesto:_lolla.puestos()){
+        keys.insert(puesto.first);
     }
+    //for (map<IdPuesto, puesto>::iterator it = _lolla.puestos().begin(); it != _lolla.puestos().end(); ++it) {
+    //    keys.insert(it->first);
+    //}
     return keys;
 }
 
