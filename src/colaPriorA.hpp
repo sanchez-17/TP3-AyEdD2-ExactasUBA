@@ -21,17 +21,19 @@ alpha* colaPriorA<alpha,beta>::encolar(tuplaPersona<alpha, beta> tupla){
     }else{
         _longitud++;
         _indices[tupla.getPersona()] = _longitud - 1;
-        typename map<beta,Nat>::iterator it = --_indices.end();
+        typename map<beta,Nat>::iterator it = _indices.begin();
         _heap[_longitud - 1] = make_pair(tupla.getGastoPersona(), it);
         index = heapifyUp( _longitud - 1);
     }
     alpha* res = &_heap[index].first;
+    //_heap[index].second->second = index;
     return res;
 }
 
 template<class alpha, class beta>
 void colaPriorA<alpha,beta>::desencolar(){
     swap(_heap[0], _heap[_longitud-1]);
+    _heap[0].second->second = 0;
     _longitud--;
     heapifyDown(0);
 }
@@ -43,28 +45,18 @@ bool colaPriorA<alpha,beta>::vacia(){
 
 template<class alpha, class beta>
 Nat colaPriorA<alpha,beta>::heapifyUp(Nat i) {
-    //if(i==0){return i;}
     if(i>0){
-        //pair<alpha,beta> tuplaIndex= obtenerTupla(_heap[index]);
         tuplaPersona<alpha,beta> tuplaI(_heap[i].first,_heap[i].second->first);
         Nat indexPadre = floor((i-1)/2);
         tuplaPersona<alpha,beta> tuplaPadre(_heap[indexPadre].first,_heap[indexPadre].second->first);
-        //pair<alpha,beta> tuplaPadre= obtenerTupla(_heap[indexPadre]);
 
         while (tuplaI > tuplaPadre && i!=0){
             indexPadre = floor((i-1)/2);
-            //tuplaPersona<alpha,beta> tuplaPadre(_heap[indexPadre].first,_heap[indexPadre].second->first);
             tuplaPadre = tuplaPersona<alpha,beta>(_heap[indexPadre].first,_heap[indexPadre].second->first);
-            //pair<alpha,beta> temp = tuplaI;
-            //tuplaI = tuplaPadre;
-            //tuplaPadre = temp;
-
-          /*  pair<alpha, typename map<beta,Nat>::iterator> temp = _heap[i];
-            _heap[i] = _heap[indexPadre];
-            _heap[indexPadre] = temp;*/
             swap(_heap[i], _heap[indexPadre]);
 
-            i = indexPadre;
+            swap(i,indexPadre);
+            //i = indexPadre;
             _heap[i].second->second = i;
             _heap[indexPadre].second->second = indexPadre;
         }
