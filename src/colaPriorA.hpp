@@ -20,9 +20,8 @@ alpha* colaPriorA<alpha,beta>::encolar(tuplaPersona<alpha, beta> tupla){
         }
     }else{
         _longitud++;
-        _indices[tupla.getPersona()] = _longitud - 1;
-        typename map<beta,Nat>::iterator it = _indices.begin();
-        _heap[_longitud - 1] = make_pair(tupla.getGastoPersona(), it);
+        pair<typename map<beta,Nat>::iterator,bool> it = _indices.insert({tupla.getPersona(),_longitud-1});
+        _heap[_longitud - 1] = make_pair(tupla.getGastoPersona(), it.first);
         index = heapifyUp( _longitud - 1);
     }
     alpha* res = &_heap[index].first;
