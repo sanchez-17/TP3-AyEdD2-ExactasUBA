@@ -6,6 +6,7 @@ Stock stock2 = {{3, 10}, {4, 5}, {5, 30}, {7, 10}};
 Promociones descuentos2 = {{7, {{3, 20}, {6, 25}}}};
 Persona per2 = 2;
 Persona per4 = 4;
+Persona per9 = 9;
 
 
 TEST(puestoTest, descuento) {
@@ -41,4 +42,8 @@ TEST(puestoTest, vender_con_desc) {
 
     p.vender(per2,7,6);
     EXPECT_EQ(p.gastosDe(per2),9000);
+    p.vender(per4,7,3);
+    EXPECT_EQ(p.gastosDe(per4),4800);
+    p.vender(per9,7,10);
+    EXPECT_EQ(p.gastosDe(per9),15000);
 }

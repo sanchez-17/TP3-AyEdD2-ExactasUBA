@@ -62,7 +62,10 @@ puesto puesto::crearPuesto(Menu menu, Stock stock, Promociones promos){
 void puesto::vender(Persona per, Producto producto, Nat cant) {
     Nat descuento = this->descuento(producto,cant);
     //Nat nuevoGasto = floor(_menu[producto] * (100 - _descuentos[producto][cant]) / 100);
-    Nat nuevoGasto = floor(this->precio(producto) * cant * ((100 - descuento) / 100) );
+    Nat precio = this->precio(producto);
+    float cociente = (float(100 - descuento) / float(100));
+    float cosaLoca=precio * cant * cociente;
+    Nat nuevoGasto = floor(cosaLoca);
     if (_gastosDe.count(per) == 1) { nuevoGasto += _gastosDe[per]; }
     _gastosDe[per] = nuevoGasto;
     _ventas[per].push_back(make_pair(producto,cant));
