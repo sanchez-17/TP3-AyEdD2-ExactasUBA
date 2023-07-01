@@ -33,6 +33,15 @@ protected:
     }
 };
 
+TEST_F(LollaTest, error_descuento_raro){
+    //si debuggeas aca, vas a ver en el puesto 2 que el descuento para el producto 7 con cantidad 2 es 0
+    FachadaLollapatuza l(personas, puestos);
+
+    //pero al tratar de correr esto, teniendo un breakpoint en descuentoEnPuesto, en las posiciones
+    //donde hay 0, devuelve basura
+    EXPECT_EQ(l.descuentoEnPuesto(2, 7, 2), 0);
+}
+
 TEST_F(LollaTest, arrancar_lolla) {
     FachadaLollapatuza l(personas, puestos);
 

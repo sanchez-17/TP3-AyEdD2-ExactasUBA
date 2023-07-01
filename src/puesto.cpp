@@ -16,7 +16,7 @@ puesto puesto::crearPuesto(Menu menu, Stock stock, Promociones promos){
     map<Producto, vector<Nat>> promociones;
     for (Promociones::iterator it = promos.begin(); it != promos.end(); ++it){
         Nat stockItem = stock[it->first];
-        vector<Nat> arr = vector<Nat>(stockItem+1,0); //vector<Nat>(stockItem+1);
+        vector<Nat> arr (stockItem+1,0); //vector<Nat>(stockItem+1);
         map<Nat, Nat> promosPorCant = it->second;
         map<Nat, Nat>::iterator itCantXPrm = promosPorCant.begin();//primera clave es la minima
         /*Nat cant = 1;
@@ -43,7 +43,6 @@ puesto puesto::crearPuesto(Menu menu, Stock stock, Promociones promos){
             cantidades.push_back(itCantXPrm->first);
             ++itCantXPrm;
         }
-
         Nat j = 0;
         Nat ultCant = cantidades[0];
         Nat ultDesc = arr[cantidades[0]];
