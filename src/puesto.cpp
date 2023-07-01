@@ -91,7 +91,7 @@ Nat puesto::stock(Producto producto)const{
 
 Nat puesto::descuento(Producto producto, Nat cant){
     if(_descuentos.count(producto)>0){
-        return _descuentos[producto][cant];
+        return _descuentos.at(producto)[cant];
     }else{
         return 0;
     }
