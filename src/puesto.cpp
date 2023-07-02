@@ -107,7 +107,11 @@ Nat puesto::descuento(Producto producto, Nat cant){
 }
 
 Nat puesto::gastosDe(Persona per){
-    return _gastosDe[per];
+    if(_gastosDe.count(per)==1){
+        return _gastosDe[per];
+    } else {
+        return 0;
+    }
 }
 
 //funcion que se realiza al hackear un lolla
