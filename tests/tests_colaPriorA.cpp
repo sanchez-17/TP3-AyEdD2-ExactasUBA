@@ -165,11 +165,11 @@ TEST(colaPriorATest, punterosCorrectos) {
     tuplaPersona<Nat, Persona> per3(300,3);
     tuplaPersona<Nat, Persona> per4(400,4);
     tuplaPersona<Nat, Persona> per5(500,5);
-    int* puntero = q.encolar(per5);
-    int* puntero4 = q.encolar(per4);
-    int* puntero2 = q.encolar(per2);
-    int* puntero3 = q.encolar(per3);
-    int* puntero1 = q.encolar(per1);
+    Nat* puntero = q.encolar(per5);
+    Nat* puntero4 = q.encolar(per4);
+    Nat* puntero2 = q.encolar(per2);
+    Nat* puntero3 = q.encolar(per3);
+    Nat* puntero1 = q.encolar(per1);
     EXPECT_EQ(*puntero, 500);
     EXPECT_EQ(*puntero4, 400);
     EXPECT_EQ(*puntero2, 200);
