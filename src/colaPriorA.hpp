@@ -55,11 +55,11 @@ Nat colaPriorA<alpha,beta>::heapifyUp(Nat i) {
 
         while (tuplaI > tuplaPadre && i!=0){
             indexPadre = floor((i-1)/2);
-            tuplaPadre = tuplaPersona<alpha,beta>(_heap[indexPadre].first,_heap[indexPadre].second->first);
             //Intercambiamos indices, y luego las tuplas con los indices correspondientes.
             _heap[i].second->second = indexPadre;
             _heap[indexPadre].second->second = i;
             swap(_heap[i], _heap[indexPadre]);
+            tuplaPadre = tuplaPersona<alpha,beta>(_heap[indexPadre].first,_heap[indexPadre].second->first);
         }
     }
     return i;
