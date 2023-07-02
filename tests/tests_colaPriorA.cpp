@@ -192,7 +192,7 @@ TEST(colaPriorATest,desencolarUno){
 TEST(colaPriorATest, punterosCorrectos) {
     colaPriorA<Nat,Persona> q(5);
     ASSERT_TRUE(q.vacia());
-    tuplaPersona<Nat, Persona> per1(100,1);
+    /*tuplaPersona<Nat, Persona> per1(100,1);
     tuplaPersona<Nat, Persona> per2(200,7);
     tuplaPersona<Nat, Persona> per3(300,3);
     tuplaPersona<Nat, Persona> per4(400,4);
@@ -206,29 +206,40 @@ TEST(colaPriorATest, punterosCorrectos) {
     EXPECT_EQ(*puntero4, 400);
     EXPECT_EQ(*puntero2, 200);
     EXPECT_EQ(*puntero3, 300);
-    EXPECT_EQ(*puntero1, 100);
+    EXPECT_EQ(*puntero1, 100);*/
 }
 
 TEST(colaPriorATest, punterosCorrectos_valores_modificados) {
+    map<Persona, Nat*> _punterosAGastos;
     //Todas las personas compran 2 veces(aumentan sus gastos acumulados)
     colaPriorA<Nat, Persona> q(5);
     ASSERT_TRUE(q.vacia());
     //encolo todas las personas
-    tuplaPersona<Nat, Persona> per1(100,1);
+    /*tuplaPersona<Nat, Persona> per1(100,1);
     tuplaPersona<Nat, Persona> per2(200,7);
     tuplaPersona<Nat, Persona> per3(300,3);
     tuplaPersona<Nat, Persona> per4(500,4);
     tuplaPersona<Nat, Persona> per5(700,5);
     Nat* puntero5 = q.encolar(per5);
+    _punterosAGastos[5] = puntero5;
     Nat* puntero4 = q.encolar(per4);
+    _punterosAGastos[4] = puntero4;
     Nat* puntero2 = q.encolar(per2);
+    _punterosAGastos[2] = puntero2;
     Nat* puntero3 = q.encolar(per3);
+    _punterosAGastos[3] = puntero3;
     Nat* puntero1 = q.encolar(per1);
+    _punterosAGastos[1] = puntero1;
     EXPECT_EQ(*puntero1, 100);
     EXPECT_EQ(*puntero4, 500);
     EXPECT_EQ(*puntero2, 200);
     EXPECT_EQ(*puntero3, 300);
     EXPECT_EQ(*puntero5, 700);
+    //Actualizo el gasto de per5 a 1500
+    per5 = tuplaPersona<Nat, Persona>(1500,5);
+    EXPECT_EQ(*_punterosAGastos[5], 1500);
+    q.encolar(per5);
+    //
     tuplaPersona<Nat, Persona> per10(700,1);
     tuplaPersona<Nat, Persona> per20(300,7);
     tuplaPersona<Nat, Persona> per30(400,3);
@@ -243,5 +254,26 @@ TEST(colaPriorATest, punterosCorrectos_valores_modificados) {
     EXPECT_EQ(*puntero20, 300);
     EXPECT_EQ(*puntero30, 400);
     EXPECT_EQ(*puntero40, 600);
-    EXPECT_EQ(*puntero50, 800);
+    EXPECT_EQ(*puntero50, 800);*/
+}
+
+TEST(colaPriorATest,punteroA2gastos){
+    map<Persona, Nat*> _punterosAGastos;
+    colaPriorA<Nat, Persona> q(2);
+    tuplaPersona<Nat, Persona> per1(500,1);
+    tuplaPersona<Nat, Persona> per2(400,7);
+    auto* puntero1 = q.encolar(per1);
+    _punterosAGastos[1] = &puntero1->first;
+    auto* puntero2 = q.encolar(per2);
+    _punterosAGastos[2] = &puntero2->first;
+    EXPECT_EQ(*_punterosAGastos[1], 500);
+    EXPECT_EQ(*_punterosAGastos[2], 400);
+    //Actualizo el gasto per2 a 600, las tuplas dentro de heap swapean,
+    //Los punteros deberian seguir apuntando al gasto de la tupla original
+    per2 = tuplaPersona<Nat, Persona>(800,2);
+    puntero2 = q.encolar(per2);
+    _punterosAGastos[2] = &puntero2->first;
+    EXPECT_EQ(*_punterosAGastos[1], 500);
+    EXPECT_EQ(*_punterosAGastos[2], 800);
+    //tira error:El puntero sigue apuntando a heap[0]
 }

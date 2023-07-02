@@ -59,24 +59,26 @@ puesto puesto::crearPuesto(Menu menu, Stock stock, Promociones promos){
     return puesto(menu,stock,promociones);
 }
 
-void puesto::vender(Persona per, Producto producto, Nat cant) {
+tuple<Nat,Nat> puesto::vender(Persona per, Producto producto, Nat cant) {
     Nat descuento = this->descuento(producto,cant);
     //Nat nuevoGasto = floor(_menu[producto] * (100 - _descuentos[producto][cant]) / 100);
     //Calculamos el gasto a realizar con el descuento correspondiente
     Nat precio = this->precio(producto);
     float cociente = (float(100 - descuento) / float(100));
     float cosaLoca=precio * cant * cociente;
-    Nat nuevoGasto = floor(cosaLoca);
+    Nat gastoVenta = floor(cosaLoca);
     //Actualizamos el stock del item en el puesto
     _stock[producto] = stock(producto) - cant;
     //Actualizamos el gasto acumulado de la persona
-    if (_gastosDe.count(per) == 1) { nuevoGasto += _gastosDe[per]; }
-    _gastosDe[per] = nuevoGasto;
+    if (_gastosDe.count(per) == 1) { _gastosDe[per] += gastoVenta; }
+    else{_gastosDe[per] = gastoVenta;}
     _ventas[per].push_back(make_pair(producto,cant));
     if(descuento == 0){
         list<tuple<Producto,Nat>>::iterator itVenta = --_ventas[per].end();
         _ventasSinDesc[per][producto].push_back(itVenta);
     }
+    tuple<Nat,Nat> infoVenta = tuple<Nat,Nat>(descuento,gastoVenta);
+    return infoVenta;
 }
 
 set<Producto> puesto::menu()const{

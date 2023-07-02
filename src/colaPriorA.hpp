@@ -8,10 +8,10 @@ const tuplaPersona<alpha, beta> colaPriorA<alpha,beta>::proximo()const{
 }
 
 template<class alpha, class beta>
-alpha* colaPriorA<alpha,beta>::encolar(tuplaPersona<alpha, beta> gastoActualizado){
+pair<alpha, typename map<beta,Nat>::iterator>* colaPriorA<alpha,beta>::encolar(tuplaPersona<alpha, beta> gastoActualizado){
     Nat index;
     if(_indices.count(gastoActualizado.getPersona()) == 1){
-        Nat i = _indices[gastoActualizado.getPersona()];
+        Nat i = _indices.at(gastoActualizado.getPersona());
         Nat gastoAnterior = _heap[i].first;
         //Actualizamos el gasto, y mantenemos el invariante de colaPriorA
         _heap[i].first = gastoActualizado.getGastoPersona();
@@ -22,11 +22,12 @@ alpha* colaPriorA<alpha,beta>::encolar(tuplaPersona<alpha, beta> gastoActualizad
         }
     }else{
         _longitud++;
-        pair<typename map<beta,Nat>::iterator,bool> it = _indices.insert(pair<Persona,Nat>(gastoActualizado.getPersona(),_longitud-1));
-        _heap[_longitud - 1] = make_pair(gastoActualizado.getGastoPersona(), it.first);
+        //Defino en _indices y guardo el iterador
+        auto it = _indices.insert(pair<Persona,Nat>(gastoActualizado.getPersona(),_longitud-1)).first;
+        _heap[_longitud - 1] = make_pair(gastoActualizado.getGastoPersona(), it);
         index = heapifyUp( _longitud - 1);
     }
-    alpha* res = &_heap[index].first;
+    auto* res = &_heap[index];
     //_heap[index].second->second = index;
     return res;
 }
@@ -54,11 +55,18 @@ Nat colaPriorA<alpha,beta>::heapifyUp(Nat i) {
         tuplaPersona<alpha,beta> tuplaPadre(_heap[indexPadre].first,_heap[indexPadre].second->first);
 
         while (tuplaI > tuplaPadre){
-            //indexPadre = floor((i-1)/2);//
             //Intercambiamos indices, y luego las tuplas con los indices correspondientes.
             _heap[i].second->second = indexPadre;
             _heap[indexPadre].second->second = i;
-            swap(_heap[i], _heap[indexPadre]);
+            //Esto rompe complejidad, pero por alguna razon no actualiza _indices(alternativa:usar punteros,no iteradores)
+            _indices[_heap[i].second->first] = indexPadre;
+            _indices[_heap[indexPadre].second->first] = i;
+            //
+            pair<alpha, typename map<beta,Nat>::iterator> temp = _heap[i];
+            _heap[i] = _heap[indexPadre];
+            _heap[indexPadre] = temp;
+
+            //swap(_heap[i], _heap[indexPadre]);
             i = indexPadre;
             if(i!=0) {
                 indexPadre = floor((i-1)/2);

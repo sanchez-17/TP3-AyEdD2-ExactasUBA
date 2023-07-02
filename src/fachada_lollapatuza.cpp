@@ -13,7 +13,6 @@ FachadaLollapatuza::FachadaLollapatuza(const set<Persona> &personas, const map<I
 }
 
 void FachadaLollapatuza::registrarCompra(Persona persona, Producto producto, Nat cant, IdPuesto idPuesto) {
-    //void vender(IdPuesto idPuesto, Persona per, Producto producto, Nat cant)
     _lolla.vender(idPuesto, persona, producto, cant);
 }
 

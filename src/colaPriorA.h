@@ -17,7 +17,7 @@ public:
 
     // Encola un elemento en la cola.
     // PRE: No hay "cota" cantidad de elementos en la cola.
-    alpha* encolar(tuplaPersona<alpha, beta> tupla);
+    pair<alpha, typename map<beta,Nat>::iterator>* encolar(tuplaPersona<alpha, beta> tupla);
 
     // Desencola el próximo elemento de la cola.
     // PRE: Hay al menos un elemento en la cola.
