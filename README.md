@@ -8,7 +8,9 @@ Modulo ColaPriorAcot
  - La funcion proximo ya no devuelve por referencia, devuelve un objeto del tipo tuplaPersona por copia. Sino falla,ver.
  - Al obtener una referencia de un puesto a traves de _puestos[idPuesto] tira error. Ver
  
-
+Modificaciones de diseño
+*Puesto
+ - En vender falta actualizar el stock
 ########################################################
 Si es la primera vez con el repo, traerlo a tu compu
  git clone "link"
