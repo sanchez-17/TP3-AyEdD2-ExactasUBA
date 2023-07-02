@@ -12,8 +12,8 @@ alpha* colaPriorA<alpha,beta>::encolar(tuplaPersona<alpha, beta> tupla){
     Nat index;
     if(_indices.count(tupla.getPersona()) == 1){
         Nat i = _indices[tupla.getPersona()];
-        _heap[i].first = tupla.getGastoPersona();
         tuplaPersona<alpha, beta> iesimo(_heap[i].first,_heap[i].second->first);
+        _heap[i].first = tupla.getGastoPersona();
         if(tupla > iesimo){
             index = heapifyUp(i);
         } else {
