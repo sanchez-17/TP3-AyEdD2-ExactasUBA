@@ -8,21 +8,22 @@ const tuplaPersona<alpha, beta> colaPriorA<alpha,beta>::proximo()const{
 }
 
 template<class alpha, class beta>
-alpha* colaPriorA<alpha,beta>::encolar(tuplaPersona<alpha, beta> tupla){
+alpha* colaPriorA<alpha,beta>::encolar(tuplaPersona<alpha, beta> gastoActualizado){
     Nat index;
-    if(_indices.count(tupla.getPersona()) == 1){
-        Nat i = _indices[tupla.getPersona()];
-        tuplaPersona<alpha, beta> iesimo(_heap[i].first,_heap[i].second->first);
-        _heap[i].first = tupla.getGastoPersona();
-        if(tupla > iesimo){
+    if(_indices.count(gastoActualizado.getPersona()) == 1){
+        Nat i = _indices[gastoActualizado.getPersona()];
+        Nat gastoAnterior = _heap[i].first;
+        //Actualizamos el gasto, y mantenemos el invariante de colaPriorA
+        _heap[i].first = gastoActualizado.getGastoPersona();
+        if(gastoActualizado.getGastoPersona() > gastoAnterior){
             index = heapifyUp(i);
         } else {
             index = heapifyDown(i);
         }
     }else{
         _longitud++;
-        pair<typename map<beta,Nat>::iterator,bool> it = _indices.insert(pair<Persona,Nat>(tupla.getPersona(),_longitud-1));
-        _heap[_longitud - 1] = make_pair(tupla.getGastoPersona(), it.first);
+        pair<typename map<beta,Nat>::iterator,bool> it = _indices.insert(pair<Persona,Nat>(gastoActualizado.getPersona(),_longitud-1));
+        _heap[_longitud - 1] = make_pair(gastoActualizado.getGastoPersona(), it.first);
         index = heapifyUp( _longitud - 1);
     }
     alpha* res = &_heap[index].first;
@@ -55,12 +56,10 @@ Nat colaPriorA<alpha,beta>::heapifyUp(Nat i) {
         while (tuplaI > tuplaPadre && i!=0){
             indexPadre = floor((i-1)/2);
             tuplaPadre = tuplaPersona<alpha,beta>(_heap[indexPadre].first,_heap[indexPadre].second->first);
+            //Intercambiamos indices, y luego las tuplas con los indices correspondientes.
+            _heap[i].second->second = indexPadre;
+            _heap[indexPadre].second->second = i;
             swap(_heap[i], _heap[indexPadre]);
-
-            swap(i,indexPadre);
-            //i = indexPadre;
-            _heap[i].second->second = i;
-            _heap[indexPadre].second->second = indexPadre;
         }
     }
     return i;
