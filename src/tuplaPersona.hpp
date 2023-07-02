@@ -1,3 +1,6 @@
+
+#include "tuplaPersona.h"
+
 template<class alpha, class beta>
 tuplaPersona<alpha,beta>::tuplaPersona(){}
 
@@ -30,4 +33,9 @@ alpha tuplaPersona<alpha, beta>::getGastoPersona() const {
 template<class alpha, class beta>
 beta tuplaPersona<alpha, beta>::getPersona() const {
     return _b;
+}
+
+template<class alpha, class beta>
+const bool tuplaPersona<alpha, beta>::operator==(tuplaPersona h) {
+    return (this->getGastoPersona() == h.getGastoPersona() && this->getPersona() == h.getPersona());
 }

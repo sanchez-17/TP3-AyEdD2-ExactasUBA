@@ -11,6 +11,7 @@ public:
 
     const bool operator>(const tuplaPersona h);
     const bool operator<(const tuplaPersona h);
+    const bool operator == (tuplaPersona h);
     alpha getGastoPersona() const;
     beta getPersona() const;
     tuplaPersona& operator=(const tuplaPersona& aCopiar);
