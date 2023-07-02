@@ -68,9 +68,7 @@ void puesto::vender(Persona per, Producto producto, Nat cant) {
     float cosaLoca=precio * cant * cociente;
     Nat nuevoGasto = floor(cosaLoca);
     //Actualizamos el stock del item en el puesto
-    Nat stockActualizado =  stock(producto) - cant;
-    if(stockActualizado<0){_stock[producto]=0;}
-    else{_stock[producto] = stock(producto) - cant;}
+    _stock[producto] = stock(producto) - cant;
     //Actualizamos el gasto acumulado de la persona
     if (_gastosDe.count(per) == 1) { nuevoGasto += _gastosDe[per]; }
     _gastosDe[per] = nuevoGasto;
