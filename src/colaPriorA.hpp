@@ -8,7 +8,7 @@ const tuplaPersona<alpha, beta> colaPriorA<alpha,beta>::proximo()const{
 }
 
 template<class alpha, class beta>
-pair<alpha, typename map<beta,Nat>::iterator>* colaPriorA<alpha,beta>::encolar(tuplaPersona<alpha, beta> gastoActualizado){
+alpha colaPriorA<alpha,beta>::encolar(tuplaPersona<alpha, beta> gastoActualizado){
     Nat index;
     if(_indices.count(gastoActualizado.getPersona()) == 1){
         Nat i = _indices.at(gastoActualizado.getPersona());
@@ -27,7 +27,7 @@ pair<alpha, typename map<beta,Nat>::iterator>* colaPriorA<alpha,beta>::encolar(t
         _heap[_longitud - 1] = make_pair(gastoActualizado.getGastoPersona(), it);
         index = heapifyUp( _longitud - 1);
     }
-    auto* res = &_heap[index];
+    alpha res = _heap[index].first;
     //_heap[index].second->second = index;
     return res;
 }

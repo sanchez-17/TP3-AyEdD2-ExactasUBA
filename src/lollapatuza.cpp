@@ -46,7 +46,7 @@ void lollapatuza::vender(IdPuesto idPuesto, Persona per, Producto producto, Nat 
     //Defino el descuento/promo
     //Nat descuento = puesto->descuento(producto,cant);
     //Registro la venta en el puesto
-    tuple<Nat,Nat> infoVenta = puesto->vender(per,producto,cant);
+    tuple<Nat,Nat> infoVenta = puesto->vender(per,producto,cant); //Descuento,gastoVenta
     Nat descuento = get<0>(infoVenta);
     Nat gastoVenta = get<1>(infoVenta);
     //Al vender el puesto nos dice la informacion de la compra: si fue con descuento y cuanto se gasto
@@ -56,18 +56,18 @@ void lollapatuza::vender(IdPuesto idPuesto, Persona per, Producto producto, Nat 
         _hackeables[per][producto][idPuesto] = puesto;
     }
     //Actualizo el gasto total de la persona en el lollapatuza
-    Nat* gastoAcumulado = _punterosAGastos.at(per);
-    Nat gastoAcumActualizado = *gastoAcumulado + gastoVenta;
+    Nat gastoAcumulado = _punterosAGastos.at(per);
+    Nat gastoAcumActualizado = gastoAcumulado + gastoVenta;
     tuplaPersona<Nat,Persona> infoGastoPer(gastoAcumActualizado,per);
     //pair<Nat,Persona> gastoPer = make_pair(gastoActualizado,per);
-    auto* punteroDinero = _gastosPersona.encolar(infoGastoPer);
+    Nat gastoPer = _gastosPersona.encolar(infoGastoPer);
     /*
      * Si al encolar, cada vez que se intercambian tuplas del heap, tmb hay actualizar los punteros
      * Cada puntero apunta a una tupla del heap, si esta tupla1 se intercambia por otra tupla2. el puntero
      * existente apunta a tupla2. Se hizo un test para esto:testPunterosBasico
      */
     //Actualizo el puntero del gasto de la persona
-    _punterosAGastos[per] = &punteroDinero->first;
+    _punterosAGastos[per] = gastoPer;
 }
 
 map<IdPuesto, puesto> lollapatuza::puestos()const{

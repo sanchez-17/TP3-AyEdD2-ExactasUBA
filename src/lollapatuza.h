@@ -22,7 +22,7 @@ public:
 
 private:
     set<Persona> _personas;
-    map<Persona, Nat*> _punterosAGastos;
+    map<Persona, Nat> _punterosAGastos;
     colaPriorA<Nat, Persona> _gastosPersona;
     map<IdPuesto, puesto> _puestos;
     map<Persona,map<Producto,map<IdPuesto, puesto*>>>  _hackeables;
