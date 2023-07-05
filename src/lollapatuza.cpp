@@ -7,57 +7,74 @@ _gastosPersona(colaPriorA<Nat, Persona>(0)),
 _puestos(),
 _hackeables(){}
 
-/*lollapatuza::lollapatuza(map<IdPuesto,puesto> puestos,
-                         set<Persona> personas,
-                         map<Persona,Nat*> punterosAGastos,
-                         colaPriorA<Nat,Persona> gastosPersona) :
-_personas(personas),
-_punterosAGastos(punterosAGastos),
-_gastosPersona(gastosPersona),
-_puestos(puestos),
-_hackeables()
-{}*/
 
 void lollapatuza::crearLolla(map<IdPuesto, puesto> puestos, set<Persona> personas){
     colaPriorA<Nat, Persona> gastosPersona(personas.size());
     map<Persona, Nat> punterosAGastos;
     for(Persona per:personas){
         tuplaPersona<Nat,Persona> tuplaPersona(0,per);
-        Nat gastoPer = gastosPersona.encolar(tuplaPersona);
-        punterosAGastos[per] = gastoPer;
+        Nat gastoActualizado = gastosPersona.encolar(tuplaPersona);
+        punterosAGastos[per] = gastoActualizado;
     }
-    /*for (set<Persona>::iterator it = personas.begin(); it != personas.end(); ++it) {
-        //pair<Nat, map<Persona,Nat>::iterator> t = make_pair(0,it);
-        tuplaPersona<Nat,Persona> tuplaPersona(0,*it);
-        //Nat* puntero = gastosPer.encolar(make_pair(0, *it));
-        Nat* puntero = gastosPersona.encolar(tuplaPersona);
-        punterosAGastos[*it] = puntero;
-    }*/
     _personas = personas;
     _puestos = puestos;
     _punterosAGastos = punterosAGastos;
     _gastosPersona = gastosPersona;
 }
 
+
 void lollapatuza::vender(IdPuesto idPuesto, Persona per, Producto producto, Nat cant){
     //Accedo al puesto en cuestion
     puesto* puesto = &_puestos[idPuesto];
+    Nat precioProducto = puesto->precio(producto);
+    //Defino el descuento/promo
+    Nat descuento = puesto->descuento(producto,cant);
     //Registro la venta en el puesto
-    tuple<Nat,Nat> infoVenta = puesto->vender(per,producto,cant); //Descuento,gastoVenta
-    Nat descuento = get<0>(infoVenta);
-    Nat gastoVenta = get<1>(infoVenta);
-    //Al vender el puesto nos dice la informacion de la compra: si fue con descuento y cuanto se gasto
+    puesto->vender(per,producto,cant);
+    Nat gastoVenta = floor(cant * ((precioProducto  * (100-descuento)) / 100) );
     //Si la venta no tuvo descuento y el puesto no era hackeable, añadir a _hackeables
     if(descuento == 0 && _hackeables[per][producto].count(idPuesto) == 0){
         _hackeables[per][producto][idPuesto] = puesto;
     }
     //Actualizo el gasto total de la persona en el lollapatuza
-    Nat gastoAcumulado = _punterosAGastos.at(per);
-    Nat gastoAcumActualizado = gastoAcumulado + gastoVenta;
-    tuplaPersona<Nat,Persona> infoGastoPer(gastoAcumActualizado,per);
-    Nat gastoPer = _gastosPersona.encolar(infoGastoPer);
-    _punterosAGastos[per] = gastoPer;
+    Nat punteroAGasto = _punterosAGastos.at(per);
+    Nat gastoActualizado = punteroAGasto + gastoVenta;
+    tuplaPersona<Nat,Persona> gastoPer(gastoActualizado,per);
+    //pair<Nat,Persona> gastoPer = make_pair(gastoActualizado,per);
+    Nat punteroDinero = _gastosPersona.encolar(gastoPer);
+    //Actualizo el puntero del gasto de la persona
+    _punterosAGastos[per] = punteroDinero;
 }
+
+
+//pruebo con puesto por referencia en vez de punteros....
+//na se sigue rompiendo
+//igual es mejor  idea guardarlos x ref
+/*
+void lollapatuza::vender(IdPuesto idPuesto, Persona per, Producto producto, Nat cant){
+    //Accedo al puesto en cuestion
+    puesto& puesto = _puestos[idPuesto];
+    Nat precioProducto = puesto.precio(producto);
+    //Defino el descuento/promo
+    Nat descuento = puesto.descuento(producto,cant);
+    //Registro la venta en el puesto
+    puesto.vender(per,producto,cant);
+    Nat gastoVenta = floor(cant * ((precioProducto  * (100-descuento)) / 100) );
+    //Si la venta no tuvo descuento y el puesto no era hackeable, añadir a _hackeables
+    if(descuento == 0 && _hackeables[per][producto].count(idPuesto) == 0){
+        // si es por referencia aca deberian ser puestos en vez de punteros
+        //_hackeables[per][producto][idPuesto] = puesto;
+    }
+    //Actualizo el gasto total de la persona en el lollapatuza
+    Nat punteroAGasto = _punterosAGastos.at(per);
+    Nat gastoActualizado = punteroAGasto + gastoVenta;
+    tuplaPersona<Nat,Persona> gastoPer(gastoActualizado,per);
+    //pair<Nat,Persona> gastoPer = make_pair(gastoActualizado,per);
+    Nat punteroDinero = _gastosPersona.encolar(gastoPer);
+    //Actualizo el puntero del gasto de la persona
+    _punterosAGastos[per] = punteroDinero;
+}
+ */
 
 map<IdPuesto, puesto> lollapatuza::puestos()const{
     return _puestos;
@@ -68,16 +85,18 @@ const set<Persona>& lollapatuza::personas() const{
 }
 
 void lollapatuza::hackear(Persona per, Producto producto){
-    map<IdPuesto, puesto*>::iterator itPuesto = _hackeables[per][producto].begin();
+    //map<IdPuesto, puesto*>::iterator itPuesto = _hackeables[per][producto].begin();
+    // se crea un iterador al dicc(idPuesto, *puesto) para obtener el de menor id
+    map<IdPuesto, puesto*>::iterator itPuesto = _hackeables.at(per).at(producto).begin();
+    //me guardo una copia del puntero al puesto de menor id
     puesto* puesto = itPuesto->second;
     bool dejaDeSerHackeable = puesto->reponerItem(producto,per);
     if(dejaDeSerHackeable){
-        _hackeables[per][producto].erase(itPuesto); //Borramos por iterador, tmb puede ser por key
+        _hackeables[per][producto].erase(itPuesto);
     }
-    Nat gastoAux = _punterosAGastos[per];
-    Nat gastoAnterior = gastoAux;
+    Nat gastoAnterior = _punterosAGastos[per];
     Nat precioItem = puesto->precio(producto);
-    tuplaPersona<Nat,Persona> gastoPer(gastoAnterior-precioItem,per);
+    tuplaPersona<Nat,Persona> gastoPer(gastoAnterior-precioItem,per); // no es solo por el precio del prod, es por la cant comprada tmb. igual parece q da bien
     Nat gastoActual = _gastosPersona.encolar(gastoPer);
     _punterosAGastos[per] = gastoActual;
 
@@ -85,23 +104,14 @@ void lollapatuza::hackear(Persona per, Producto producto){
 }
 
 Nat lollapatuza::gastoTotal(Persona per)const{
-    //Nat orueba = *_punterosAGastos.at(per);
     return _punterosAGastos.at(per);
 }
 
 Persona lollapatuza::quienGastoMas()const{
-    //tuplaPersona<Nat,Persona> res = _gastosPersona.proximo();
     Persona per = _gastosPersona.proximo().getPersona();
     return per;
 }
 
-/*
- *  set<Persona> _personas;
-    map<Persona, Nat*> _punterosAGastos;
-    colaPriorA<Nat, Persona> _gastosPersona;
-    map<IdPuesto, puesto> _puestos;
-    map<Persona,map<Producto,map<IdPuesto, puesto*>>>  _hackeables;
- */
 IdPuesto lollapatuza::menorStock(Producto producto) const{
     map<IdPuesto, puesto>::const_iterator itPuestos = _puestos.begin();
     Nat minStock = itPuestos->second.stock(producto);

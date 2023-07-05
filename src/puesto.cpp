@@ -19,24 +19,6 @@ puesto puesto::crearPuesto(Menu menu, Stock stock, Promociones promos){
         vector<Nat> arr (stockItem+1,0); //vector<Nat>(stockItem+1);
         map<Nat, Nat> promosPorCant = it->second;
         map<Nat, Nat>::iterator itCantXPrm = promosPorCant.begin();//primera clave es la minima
-        /*Nat cant = 1;
-        Nat minPromo = itCantXPrm->second;
-        Nat ultCant = minPromo;//ver
-        while(cant<=stockItem) {
-            //El array son todos ceros hasta hallar alguna promo para alguna cant i.
-            if(cant < minPromo){
-                arr[cant] = 0;
-            }else {
-                if (promosPorCant.count(cant) == 1) {
-                    arr[cant] = promosPorCant[cant];
-                    ultCant = cant;
-                } else {
-                    arr[cant] = promosPorCant[ultCant];
-                }
-            }
-            cant++;
-        }
-    }*/
         vector<Nat> cantidades;
         while(itCantXPrm != promosPorCant.end()){
             arr[itCantXPrm->first] = itCantXPrm->second;
@@ -59,26 +41,23 @@ puesto puesto::crearPuesto(Menu menu, Stock stock, Promociones promos){
     return puesto(menu,stock,promociones);
 }
 
-tuple<Nat,Nat> puesto::vender(Persona per, Producto producto, Nat cant) {
+void puesto::vender(Persona per, Producto producto, Nat cant) {
     Nat descuento = this->descuento(producto,cant);
-    //Nat nuevoGasto = floor(_menu[producto] * (100 - _descuentos[producto][cant]) / 100);
     //Calculamos el gasto a realizar con el descuento correspondiente
     Nat precio = this->precio(producto);
     float cociente = (float(100 - descuento) / float(100));
-    float calcAux=precio * cant * cociente;
-    Nat gastoVenta = floor(calcAux);
+    float cosaLoca=precio * cant * cociente;
+    Nat nuevoGasto = floor(cosaLoca);
     //Actualizamos el stock del item en el puesto
     _stock[producto] = stock(producto) - cant;
     //Actualizamos el gasto acumulado de la persona
-    if (_gastosDe.count(per) == 1) { this->_gastosDe[per] += gastoVenta; }
-    else{this->_gastosDe[per] = gastoVenta;}
+    if (_gastosDe.count(per) == 1) { nuevoGasto += this->_gastosDe.at(per); }
+    this->_gastosDe[per] = nuevoGasto; //se rompe
     _ventas[per].push_back(make_pair(producto,cant));
     if(descuento == 0){
         list<tuple<Producto,Nat>>::iterator itVenta = --_ventas[per].end();
         _ventasSinDesc[per][producto].push_back(itVenta);
     }
-    tuple<Nat,Nat> infoVenta = tuple<Nat,Nat>(descuento,gastoVenta);
-    return infoVenta;
 }
 
 set<Producto> puesto::menu()const{
@@ -119,12 +98,17 @@ Nat puesto::gastosDe(Persona per){
 //funcion que se realiza al hackear un lolla
 bool puesto::reponerItem(Producto producto, Persona per){
     bool dejaDeSerHackeable = false;
+    // creo un puntero¿ a la lista de iteradores
     ventasDeProd* listaVentas = &_ventasSinDesc[per][producto];
+    // creo un iterador a la lista de ventas
     ventasDeProd::iterator itListaVentas = listaVentas->begin();
+    // me guardo el primer iterador de la lista
     itLista itVenta = *itListaVentas;
+    // si la cantidad comprada NO es 1
     if ( std::get<1>(*itVenta) != 1){
         //Cambio la tupla a traves del iterador
-        *itVenta = tuple<Persona,Nat>(per,  std::get<1>(*itVenta) - 1);
+        //*itVenta = tuple<Persona,Nat>(per,  std::get<1>(*itVenta) - 1); //aca en vez de per no es producto?
+        *itVenta = tuple<Persona,Nat>(producto,  std::get<1>(*itVenta) - 1);
     }else{
         //Elimino la venta
         _ventas[per].erase(itVenta);
@@ -134,7 +118,7 @@ bool puesto::reponerItem(Producto producto, Persona per){
         }
         _ventasSinDesc[per][producto].erase(itListaVentas);
     }
-    _stock[producto] += 1;
-    _gastosDe[per] -= _menu[producto];
+    _stock[producto] += 1; //ojo we
+    _gastosDe[per] -= _menu.at(producto);
     return dejaDeSerHackeable;
 }

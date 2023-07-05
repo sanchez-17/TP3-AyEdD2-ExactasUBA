@@ -11,11 +11,10 @@ template<class alpha, class beta>
 alpha colaPriorA<alpha,beta>::encolar(tuplaPersona<alpha, beta> gastoActualizado){
     Nat index;
     if(_indices.count(gastoActualizado.getPersona()) == 1){
-        Nat i = _indices.at(gastoActualizado.getPersona());
+        Nat i = _indices[gastoActualizado.getPersona()];
         Nat gastoAnterior = _heap[i].first;
         //Actualizamos el gasto, y mantenemos el invariante de colaPriorA
         _heap[i].first = gastoActualizado.getGastoPersona();
-        auto info = _heap[i].second;
         if(gastoActualizado.getGastoPersona() > gastoAnterior){
             index = heapifyUp(i);
         } else {
@@ -23,14 +22,11 @@ alpha colaPriorA<alpha,beta>::encolar(tuplaPersona<alpha, beta> gastoActualizado
         }
     }else{
         _longitud++;
-        //Defino en _indices y guardo el iterador
-        auto it = _indices.insert(pair<Persona,Nat>(gastoActualizado.getPersona(),_longitud-1)).first;
-        _heap[_longitud - 1] = make_pair(gastoActualizado.getGastoPersona(), it);
+        pair<typename map<beta,Nat>::iterator,bool> it = _indices.insert(pair<Persona,Nat>(gastoActualizado.getPersona(),_longitud-1));
+        _heap[_longitud - 1] = make_pair(gastoActualizado.getGastoPersona(), it.first);
         index = heapifyUp( _longitud - 1);
     }
-    alpha res = _heap[index].first;
-    //_heap[index].second->second = index;
-    return res;
+    return _heap[index].first;
 }
 
 template<class alpha, class beta>
@@ -55,22 +51,23 @@ Nat colaPriorA<alpha,beta>::heapifyUp(Nat i) {
         Nat indexPadre = floor((i-1)/2);
         tuplaPersona<alpha,beta> tuplaPadre(_heap[indexPadre].first,_heap[indexPadre].second->first);
 
-        while (tuplaI > tuplaPadre){
+        while (tuplaI > tuplaPadre && i!=0){
+            //indexPadre = floor((i-1)/2);
             //Intercambiamos indices, y luego las tuplas con los indices correspondientes.
             _heap[i].second->second = indexPadre;
             _heap[indexPadre].second->second = i;
-            //Esto rompe complejidad, pero por alguna razon no actualiza _indices(alternativa:usar punteros,no iteradores)
-            _indices[_heap[i].second->first] = indexPadre;
-            _indices[_heap[indexPadre].second->first] = i;
-            //
-            swap(_heap[i],_heap[indexPadre]);
-            i = indexPadre;
-            if(i!=0) {
-                indexPadre = floor((i-1)/2);
-                tuplaPadre = tuplaPersona<alpha, beta>(_heap[indexPadre].first, _heap[indexPadre].second->first);
-            }else{
-                tuplaPadre = tuplaI;
+            swap(_heap[i], _heap[indexPadre]);
+            i = indexPadre; //ahora yo soy mi padre
+            if(indexPadre != 0){ //es necesario este if? yo pq capaz la cuenta se rompe
+                indexPadre = floor((i-1)/2); //quiero mi nuevo padre
+                //y me creo a la tupla padre, ahora con el indice correcto
+                tuplaPadre = tuplaPersona<alpha,beta>(_heap[indexPadre].first,_heap[indexPadre].second->first);
             }
+            //else: ya no quiero q hagas nada, ya estoy en el 0
+            //pero esto deberia detectarlo la guarda del while
+
+            //tuplaPadre = tuplaPersona<alpha,beta>(_heap[indexPadre].first,_heap[indexPadre].second->first);
+            //i = indexPadre;
         }
     }
     return i;
@@ -78,29 +75,6 @@ Nat colaPriorA<alpha,beta>::heapifyUp(Nat i) {
 
 template<class alpha, class beta>
 Nat colaPriorA<alpha,beta>::heapifyDown(Nat i) {
-    /*Nat left = 2*i + 1;
-    Nat right = 2*i + 2;
-    Nat indiceMayorHijo = i;
-    tuplaPersona<alpha,beta> tuplaLeft(_heap[left].first,_heap[left].second->first);
-    tuplaPersona<alpha,beta> tuplaRight(_heap[right].first,_heap[right].second->first);
-    tuplaPersona<alpha,beta> tuplaMax(_heap[indiceMayorHijo].first,_heap[indiceMayorHijo].second->first);
-
-    if (left < _longitud && tuplaMax < tuplaLeft) {
-        _heap[indiceMayorHijo].second->second = left;
-        _heap[right].second->second = indiceMayorHijo;
-        indiceMayorHijo = left;
-    }
-    if (right < _longitud && tuplaMax < tuplaRight) {
-        _heap[indiceMayorHijo].second->second = right;
-        _heap[right].second->second = indiceMayorHijo;
-        indiceMayorHijo = right;
-    }
-
-    if (indiceMayorHijo != i) {
-        swap(_heap[i], _heap[indiceMayorHijo]);
-        heapifyDown(indiceMayorHijo);
-    }*/
-    //***********************
     Nat largo = _longitud;
     Nat iMayorHijo = i;
     while (i < largo) {
