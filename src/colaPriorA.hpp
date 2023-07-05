@@ -15,6 +15,7 @@ alpha colaPriorA<alpha,beta>::encolar(tuplaPersona<alpha, beta> gastoActualizado
         Nat gastoAnterior = _heap[i].first;
         //Actualizamos el gasto, y mantenemos el invariante de colaPriorA
         _heap[i].first = gastoActualizado.getGastoPersona();
+        auto info = _heap[i].second;
         if(gastoActualizado.getGastoPersona() > gastoAnterior){
             index = heapifyUp(i);
         } else {
@@ -62,11 +63,7 @@ Nat colaPriorA<alpha,beta>::heapifyUp(Nat i) {
             _indices[_heap[i].second->first] = indexPadre;
             _indices[_heap[indexPadre].second->first] = i;
             //
-            pair<alpha, typename map<beta,Nat>::iterator> temp = _heap[i];
-            _heap[i] = _heap[indexPadre];
-            _heap[indexPadre] = temp;
-
-            //swap(_heap[i], _heap[indexPadre]);
+            swap(_heap[i],_heap[indexPadre]);
             i = indexPadre;
             if(i!=0) {
                 indexPadre = floor((i-1)/2);

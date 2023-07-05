@@ -20,11 +20,11 @@ _hackeables()
 
 void lollapatuza::crearLolla(map<IdPuesto, puesto> puestos, set<Persona> personas){
     colaPriorA<Nat, Persona> gastosPersona(personas.size());
-    map<Persona, Nat*> punterosAGastos;
+    map<Persona, Nat> punterosAGastos;
     for(Persona per:personas){
         tuplaPersona<Nat,Persona> tuplaPersona(0,per);
-        auto* puntero = gastosPersona.encolar(tuplaPersona);
-        punterosAGastos[per] = &puntero->first;
+        Nat gastoPer = gastosPersona.encolar(tuplaPersona);
+        punterosAGastos[per] = gastoPer;
     }
     /*for (set<Persona>::iterator it = personas.begin(); it != personas.end(); ++it) {
         //pair<Nat, map<Persona,Nat>::iterator> t = make_pair(0,it);
@@ -42,15 +42,11 @@ void lollapatuza::crearLolla(map<IdPuesto, puesto> puestos, set<Persona> persona
 void lollapatuza::vender(IdPuesto idPuesto, Persona per, Producto producto, Nat cant){
     //Accedo al puesto en cuestion
     puesto* puesto = &_puestos[idPuesto];
-    //Nat precioProducto = puesto->precio(producto);
-    //Defino el descuento/promo
-    //Nat descuento = puesto->descuento(producto,cant);
     //Registro la venta en el puesto
     tuple<Nat,Nat> infoVenta = puesto->vender(per,producto,cant); //Descuento,gastoVenta
     Nat descuento = get<0>(infoVenta);
     Nat gastoVenta = get<1>(infoVenta);
     //Al vender el puesto nos dice la informacion de la compra: si fue con descuento y cuanto se gasto
-    //Nat gastoVenta = floor(cant * ((precioProducto  * (100-descuento)) / 100) );
     //Si la venta no tuvo descuento y el puesto no era hackeable, añadir a _hackeables
     if(descuento == 0 && _hackeables[per][producto].count(idPuesto) == 0){
         _hackeables[per][producto][idPuesto] = puesto;
@@ -59,14 +55,7 @@ void lollapatuza::vender(IdPuesto idPuesto, Persona per, Producto producto, Nat 
     Nat gastoAcumulado = _punterosAGastos.at(per);
     Nat gastoAcumActualizado = gastoAcumulado + gastoVenta;
     tuplaPersona<Nat,Persona> infoGastoPer(gastoAcumActualizado,per);
-    //pair<Nat,Persona> gastoPer = make_pair(gastoActualizado,per);
     Nat gastoPer = _gastosPersona.encolar(infoGastoPer);
-    /*
-     * Si al encolar, cada vez que se intercambian tuplas del heap, tmb hay actualizar los punteros
-     * Cada puntero apunta a una tupla del heap, si esta tupla1 se intercambia por otra tupla2. el puntero
-     * existente apunta a tupla2. Se hizo un test para esto:testPunterosBasico
-     */
-    //Actualizo el puntero del gasto de la persona
     _punterosAGastos[per] = gastoPer;
 }
 
@@ -85,19 +74,19 @@ void lollapatuza::hackear(Persona per, Producto producto){
     if(dejaDeSerHackeable){
         _hackeables[per][producto].erase(itPuesto); //Borramos por iterador, tmb puede ser por key
     }
-    Nat* puntero = _punterosAGastos[per];
-    Nat gastoAnterior = *puntero;
+    Nat gastoAux = _punterosAGastos[per];
+    Nat gastoAnterior = gastoAux;
     Nat precioItem = puesto->precio(producto);
     tuplaPersona<Nat,Persona> gastoPer(gastoAnterior-precioItem,per);
-    auto* punteroGastoActual = _gastosPersona.encolar(gastoPer);
-    _punterosAGastos[per] = &punteroGastoActual->first;
+    Nat gastoActual = _gastosPersona.encolar(gastoPer);
+    _punterosAGastos[per] = gastoActual;
 
 
 }
 
 Nat lollapatuza::gastoTotal(Persona per)const{
     //Nat orueba = *_punterosAGastos.at(per);
-    return *_punterosAGastos.at(per);
+    return _punterosAGastos.at(per);
 }
 
 Persona lollapatuza::quienGastoMas()const{

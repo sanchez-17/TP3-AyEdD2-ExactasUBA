@@ -65,13 +65,13 @@ tuple<Nat,Nat> puesto::vender(Persona per, Producto producto, Nat cant) {
     //Calculamos el gasto a realizar con el descuento correspondiente
     Nat precio = this->precio(producto);
     float cociente = (float(100 - descuento) / float(100));
-    float cosaLoca=precio * cant * cociente;
-    Nat gastoVenta = floor(cosaLoca);
+    float calcAux=precio * cant * cociente;
+    Nat gastoVenta = floor(calcAux);
     //Actualizamos el stock del item en el puesto
     _stock[producto] = stock(producto) - cant;
     //Actualizamos el gasto acumulado de la persona
-    if (_gastosDe.count(per) == 1) { _gastosDe[per] += gastoVenta; }
-    else{_gastosDe[per] = gastoVenta;}
+    if (_gastosDe.count(per) == 1) { this->_gastosDe[per] += gastoVenta; }
+    else{this->_gastosDe[per] = gastoVenta;}
     _ventas[per].push_back(make_pair(producto,cant));
     if(descuento == 0){
         list<tuple<Producto,Nat>>::iterator itVenta = --_ventas[per].end();

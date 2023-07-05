@@ -258,22 +258,22 @@ TEST(colaPriorATest, punterosCorrectos_valores_modificados) {
 }
 
 TEST(colaPriorATest,punteroA2gastos){
-    map<Persona, Nat*> _punterosAGastos;
+    map<Persona, Nat> _punterosAGastos;
     colaPriorA<Nat, Persona> q(2);
     tuplaPersona<Nat, Persona> per1(500,1);
     tuplaPersona<Nat, Persona> per2(400,7);
-    auto* puntero1 = q.encolar(per1);
-    _punterosAGastos[1] = &puntero1->first;
-    auto* puntero2 = q.encolar(per2);
-    _punterosAGastos[2] = &puntero2->first;
-    EXPECT_EQ(*_punterosAGastos[1], 500);
-    EXPECT_EQ(*_punterosAGastos[2], 400);
+    Nat puntero1 = q.encolar(per1);
+    _punterosAGastos[1] = puntero1;
+    Nat puntero2 = q.encolar(per2);
+    _punterosAGastos[2] = puntero2;
+    EXPECT_EQ(_punterosAGastos[1], 500);
+    EXPECT_EQ(_punterosAGastos[2], 400);
     //Actualizo el gasto per2 a 600, las tuplas dentro de heap swapean,
     //Los punteros deberian seguir apuntando al gasto de la tupla original
     per2 = tuplaPersona<Nat, Persona>(800,2);
     puntero2 = q.encolar(per2);
-    _punterosAGastos[2] = &puntero2->first;
-    EXPECT_EQ(*_punterosAGastos[1], 500);
-    EXPECT_EQ(*_punterosAGastos[2], 800);
+    _punterosAGastos[2] = puntero2;
+    EXPECT_EQ(_punterosAGastos[1], 500);
+    EXPECT_EQ(_punterosAGastos[2], 800);
     //tira error:El puntero sigue apuntando a heap[0]
 }
