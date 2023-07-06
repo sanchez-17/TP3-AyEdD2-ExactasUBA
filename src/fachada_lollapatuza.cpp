@@ -3,7 +3,7 @@ FachadaLollapatuza::FachadaLollapatuza(const set<Persona> &personas, const map<I
     //por cada clave de infoPuestos hay q crear un puesto
     map<IdPuesto, puesto> puestos;
     puesto nuevoPuesto;
-    for(map<IdPuesto, aed2_Puesto>::const_iterator it = infoPuestos.begin(); it != infoPuestos.end(); ++it){
+    for(auto it = infoPuestos.begin(); it != infoPuestos.end(); ++it){
         Menu menu = it->second.menu;
         Stock stock = it->second.stock;
         Promociones promos = it->second.promociones;

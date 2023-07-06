@@ -24,3 +24,17 @@ TEST(estructuraTest, bugacho_raro) {
     qcy.venderCola(50,8);
     EXPECT_EQ(qcy.dameGasto(8), 50);
 }
+
+TEST(estructuraTest, iteradoresADiccs){
+    std::vector<pair<Nat, typename map<Persona,Nat>::iterator>> _heap(2);
+    map<Persona, Nat> _indices;
+    auto it1 = _indices.insert(pair<Persona,Nat>(1,0));
+    _heap[0] = make_pair(25, it1.first);
+    auto it2 = _indices.insert(pair<Persona,Nat>(2,1));
+    _heap[1] = make_pair(25, it2.first);
+    _heap[0].second->second = 4;
+    swap(_heap[0],_heap[1]);
+    EXPECT_EQ(_indices.at(1),4);
+    _heap[0].second->second = 15;
+    EXPECT_EQ(_indices.at(1),15);
+}

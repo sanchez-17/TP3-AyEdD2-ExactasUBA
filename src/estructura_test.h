@@ -14,6 +14,7 @@ private:
     colaPriorA<Nat,Persona> _cola;
     map<Persona,Nat> _gastosDe;
 
+
 };
 
 //#include "estructura_test.cpp"

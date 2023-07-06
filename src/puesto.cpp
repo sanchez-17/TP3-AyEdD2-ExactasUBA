@@ -42,27 +42,29 @@ puesto puesto::crearPuesto(Menu menu, Stock stock, Promociones promos){
 }
 
 void puesto::vender(Persona per, Producto producto, Nat cant) {
+    Nat gastoAnteriorEnPuesto;
     Nat descuento = this->descuento(producto,cant);
     //Calculamos el gasto a realizar con el descuento correspondiente
     Nat precio = this->precio(producto);
     float cociente = (float(100 - descuento) / float(100));
     float cosaLoca=precio * cant * cociente;
-    Nat nuevoGasto = floor(cosaLoca);
     //Actualizamos el stock del item en el puesto
     _stock[producto] = stock(producto) - cant;
     //Actualizamos el gasto acumulado de la persona
-    if (_gastosDe.count(per) == 1) { nuevoGasto += this->_gastosDe.at(per); }
-    this->_gastosDe[per] = nuevoGasto; //se rompe
-    _ventas[per].push_back(make_pair(producto,cant));
+    if (_gastosDe.count(per) == 1) {gastoAnteriorEnPuesto = _gastosDe.at(per);}
+    else{gastoAnteriorEnPuesto=0;}
+    Nat nuevoGastoEnPuesto = floor(cosaLoca) + gastoAnteriorEnPuesto;
+    _gastosDe[per] = 27; //se rompe
+    _ventas[per].emplace_back(producto,cant);
     if(descuento == 0){
-        list<tuple<Producto,Nat>>::iterator itVenta = --_ventas[per].end();
+        auto itVenta = --_ventas[per].end();
         _ventasSinDesc[per][producto].push_back(itVenta);
     }
 }
 
 set<Producto> puesto::menu()const{
     set<Producto> conjMenu;
-    for (Menu::const_iterator it = _menu.begin(); it != _menu.end(); ++it) {
+    for (auto it = _menu.begin(); it != _menu.end(); ++it) {
         conjMenu.insert(it->first);
     }
     return conjMenu;
@@ -89,7 +91,7 @@ Nat puesto::descuento(Producto producto, Nat cant){
 
 Nat puesto::gastosDe(Persona per){
     if(_gastosDe.count(per)==1){
-        return _gastosDe[per];
+        return _gastosDe.at(per);
     } else {
         return 0;
     }
