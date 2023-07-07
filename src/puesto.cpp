@@ -45,9 +45,7 @@ void puesto::vender(Persona per, Producto producto, Nat cant) {
     Nat descuento = this->descuento(producto,cant);
     //Calculamos el gasto a realizar con el descuento correspondiente
     Nat precio = this->precio(producto);
-    float cociente = (float(100 - descuento) / float(100));
-    float cosaLoca=precio * cant * cociente;
-    Nat nuevoGasto = floor(cosaLoca);
+    Nat nuevoGasto = floor(precio * cant * (100 - descuento) / 100);
     //Actualizamos el stock del item en el puesto
     _stock[producto] = stock(producto) - cant;
     //Actualizamos el gasto acumulado de la persona
