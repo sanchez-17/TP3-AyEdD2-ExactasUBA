@@ -8,7 +8,7 @@ _puestos(),
 _hackeables(){}
 
 
-void lollapatuza::crearLolla(map<IdPuesto, puesto> puestos, set<Persona> personas){
+void lollapatuza::crearLolla(const map<IdPuesto, puesto>& puestos, const set<Persona>& personas){
     colaPriorA<Nat, Persona> gastosPersona(personas.size());
     map<Persona, Nat> punterosAGastos;
     for(Persona per:personas){
@@ -103,7 +103,7 @@ void lollapatuza::hackear(Persona per, Producto producto){
 
 }
 
-Nat lollapatuza::gastoTotal(Persona per)const{
+const Nat lollapatuza::gastoTotal(Persona per)const{
     return _punterosAGastos.at(per);
 }
 

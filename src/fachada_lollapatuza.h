@@ -28,7 +28,7 @@ public:
     // Operaciones para obtener información de los puestos
     Nat stockEnPuesto(IdPuesto idPuesto, const Producto& producto) const;
     Nat descuentoEnPuesto(IdPuesto idPuesto, const Producto& producto, Nat cantidad) const;
-    Nat gastoEnPuesto(IdPuesto idPuesto, Persona persona) const;
+    const Nat gastoEnPuesto(IdPuesto idPuesto, Persona persona) const;
 
     /**
      * Devuelve el conjunto de los los ids de todos los puestos;

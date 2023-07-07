@@ -7,12 +7,12 @@
 class lollapatuza{
 public:
     lollapatuza();
-    void crearLolla(map<IdPuesto, puesto> puestos, set<Persona> personas);
+    void crearLolla(const map<IdPuesto, puesto>& puestos, const set<Persona>& personas);
     void vender(IdPuesto idPuesto, Persona per, Producto producto, Nat cant);
     map<IdPuesto, puesto> puestos() const;
     const set<Persona>& personas() const;
     void hackear(Persona per, Producto producto);
-    Nat gastoTotal(Persona per) const;
+    const Nat gastoTotal(Persona per) const;
     Persona quienGastoMas() const;
     IdPuesto menorStock(Producto producto) const;
 

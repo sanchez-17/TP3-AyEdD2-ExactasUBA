@@ -1,7 +1,7 @@
 #include "puesto.h"
 
-//puesto::puesto() = default;
-puesto::puesto(){}
+puesto::puesto() = default;
+//puesto::puesto(){}
 
 puesto::puesto(Menu menu,Stock stock,map<Producto, vector<Nat>> promos):
 _menu(menu),
@@ -14,11 +14,11 @@ _gastosDe()
 
 puesto puesto::crearPuesto(Menu menu, Stock stock, Promociones promos){
     map<Producto, vector<Nat>> promociones;
-    for (Promociones::iterator it = promos.begin(); it != promos.end(); ++it){
-        Nat stockItem = stock[it->first];
+    for (auto it: promos){
+        Nat stockItem = stock[it.first];
         vector<Nat> arr (stockItem+1,0); //vector<Nat>(stockItem+1);
-        map<Nat, Nat> promosPorCant = it->second;
-        map<Nat, Nat>::iterator itCantXPrm = promosPorCant.begin();//primera clave es la minima
+        map<Nat, Nat> promosPorCant = it.second;
+        auto itCantXPrm = promosPorCant.begin();//primera clave es la minima
         vector<Nat> cantidades;
         while(itCantXPrm != promosPorCant.end()){
             arr[itCantXPrm->first] = itCantXPrm->second;
@@ -36,7 +36,7 @@ puesto puesto::crearPuesto(Menu menu, Stock stock, Promociones promos){
             }
             ultCant++;
         }
-        promociones[it->first] = arr;
+        promociones[it.first] = arr;
     }
     return puesto(menu,stock,promociones);
 }
@@ -60,8 +60,8 @@ void puesto::vender(Persona per, Producto producto, Nat cant) {
 
 set<Producto> puesto::menu()const{
     set<Producto> conjMenu;
-    for (Menu::const_iterator it = _menu.begin(); it != _menu.end(); ++it) {
-        conjMenu.insert(it->first);
+    for(auto m:_menu){
+        conjMenu.insert(m.first);
     }
     return conjMenu;
 }
@@ -85,7 +85,7 @@ Nat puesto::descuento(Producto producto, Nat cant){
     }
 }
 
-Nat puesto::gastosDe(Persona per){
+const Nat puesto::gastosDe(Persona per){
     if(_gastosDe.count(per)==1){
         return _gastosDe[per];
     } else {
