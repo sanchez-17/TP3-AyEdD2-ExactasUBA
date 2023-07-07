@@ -1,4 +1,4 @@
-#include "estructura_test.h"
+#include "estructura.h"
 
 EstructuraTest::EstructuraTest(colaPriorA<Nat, Persona> cola) : _cola(cola), _gastosDe() {
 

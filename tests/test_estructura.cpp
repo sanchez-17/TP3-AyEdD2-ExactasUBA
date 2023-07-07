@@ -3,7 +3,7 @@
 //
 #include "gtest-1.8.1/gtest.h"
 #include "../src/tipos.h"
-#include "../src/estructura_test.h"
+#include "../src/estructura.h"
 
 
 
