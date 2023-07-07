@@ -148,8 +148,8 @@ TEST_F(LollaTest, vender_sin_descuento) {
 
 TEST_F(LollaTest, vender_dos_veces_mismo_producto_persona_y_puesto) {
     FachadaLollapatuza l(personas, puestos);
-    l.registrarCompra(8, 3, 4, 2);
-    l.registrarCompra(8, 3, 2, 2);
+    l.registrarCompra(8, 3, 4, 2);//gasto=2000
+    l.registrarCompra(8, 3, 2, 2);//gasto=1000
 
     EXPECT_EQ(l.gastoTotal(2), 0);
     EXPECT_EQ(l.gastoTotal(4), 0);

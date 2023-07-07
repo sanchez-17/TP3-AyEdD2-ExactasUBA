@@ -116,9 +116,3 @@ Nat colaPriorA<alpha,beta>::heapifyDown(Nat i) {
     }
     return iMayorHijo;
 }
-
-template<class alpha, class beta>
-pair<alpha, beta> colaPriorA<alpha, beta>::obtenerTupla(pair<alpha,typename map<beta, Nat>::iterator> t) {
-    pair<alpha, beta> iesimo = make_pair(t.first, t.second->first);
-    return iesimo;
-}

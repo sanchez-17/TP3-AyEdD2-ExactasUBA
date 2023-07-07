@@ -34,7 +34,6 @@ private:
     //Funciones privadas
     Nat heapifyUp(Nat i);
     Nat heapifyDown(Nat i);
-    pair<alpha, beta> obtenerTupla(pair<alpha, typename map<beta,Nat>::iterator> t);
 };
 #include "colaPriorA.hpp"
 #endif // COLA_H
