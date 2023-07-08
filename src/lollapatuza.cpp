@@ -2,24 +2,24 @@
 
 lollapatuza::lollapatuza():
 _personas(),
-_punterosAGastos(),
-_gastosPersona(colaPriorA<Nat, Persona>(0)),
+_gastosPersona(),
+_colaDeGastos(colaPriorA<Nat, Persona>(0)),
 _puestos(),
 _hackeables(){}
 
 
 void lollapatuza::crearLolla(const map<IdPuesto, puesto>& puestos, const set<Persona>& personas){
-    colaPriorA<Nat, Persona> gastosPersona(personas.size());
-    map<Persona, Nat> punterosAGastos;
+    colaPriorA<Nat, Persona> colaGastos(personas.size());
+    map<Persona, Nat> gastosXPer;
     for(Persona per:personas){
         tuplaPersona<Nat,Persona> tuplaPersona(0,per);
-        Nat gastoActualizado = gastosPersona.encolar(tuplaPersona);
-        punterosAGastos[per] = gastoActualizado;
+        Nat gastoActualizado = colaGastos.encolar(tuplaPersona);
+        gastosXPer[per] = gastoActualizado;
     }
     _personas = personas;
     _puestos = puestos;
-    _punterosAGastos = punterosAGastos;
-    _gastosPersona = gastosPersona;
+    _gastosPersona = gastosXPer;
+    _colaDeGastos = colaGastos;
 }
 
 
@@ -37,13 +37,12 @@ void lollapatuza::vender(IdPuesto idPuesto, Persona per, Producto producto, Nat 
         _hackeables[per][producto][idPuesto] = puesto;
     }
     //Actualizo el gasto total de la persona en el lollapatuza
-    Nat punteroAGasto = _punterosAGastos.at(per);
-    Nat gastoActualizado = punteroAGasto + gastoVenta;
+    Nat gastoAnterior = _gastosPersona.at(per);
+    Nat gastoActualizado = gastoAnterior + gastoVenta;
     tuplaPersona<Nat,Persona> gastoPer(gastoActualizado,per);
-    //pair<Nat,Persona> gastoPer = make_pair(gastoActualizado,per);
-    Nat punteroDinero = _gastosPersona.encolar(gastoPer);
+    Nat gastoTotal = _colaDeGastos.encolar(gastoPer);
     //Actualizo el puntero del gasto de la persona
-    _punterosAGastos[per] = punteroDinero;
+    _gastosPersona[per] = gastoTotal;
 }
 
 
@@ -94,21 +93,21 @@ void lollapatuza::hackear(Persona per, Producto producto){
     if(dejaDeSerHackeable){
         _hackeables[per][producto].erase(itPuesto);
     }
-    Nat gastoAnterior = _punterosAGastos[per];
+    Nat gastoAnterior = _gastosPersona[per];
     Nat precioItem = puesto->precio(producto);
-    tuplaPersona<Nat,Persona> gastoPer(gastoAnterior-precioItem,per); // no es solo por el precio del prod, es por la cant comprada tmb. igual parece q da bien
-    Nat gastoActual = _gastosPersona.encolar(gastoPer);
-    _punterosAGastos[per] = gastoActual;
+    tuplaPersona<Nat,Persona> gastoPer(gastoAnterior-precioItem,per);
+    Nat gastoActual = _colaDeGastos.encolar(gastoPer);
+    _gastosPersona[per] = gastoActual;
 
 
 }
 
 const Nat lollapatuza::gastoTotal(Persona per)const{
-    return _punterosAGastos.at(per);
+    return _gastosPersona.at(per);
 }
 
 Persona lollapatuza::quienGastoMas()const{
-    Persona per = _gastosPersona.proximo().getPersona();
+    Persona per = _colaDeGastos.proximo().getPersona();
     return per;
 }
 
