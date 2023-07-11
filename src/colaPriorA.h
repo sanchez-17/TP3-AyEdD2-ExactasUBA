@@ -19,10 +19,10 @@ public:
 
     // Desencola el próximo elemento de la cola.
     // PRE: Hay al menos un elemento en la cola.
-    //void desencolar();
+    void desencolar();
 
     // Decide si la cola esta vacía o no.
-    // bool vacia();
+    bool vacia();
 
     //PRE: la tupla1 ya fue encolada antes. la tupla 2 no.
     //tupla1 tendria q ser el <gasto,persona> viejo. tupla2 es el <gasto,persona> nuevo.
