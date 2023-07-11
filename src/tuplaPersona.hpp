@@ -16,12 +16,12 @@ tuplaPersona<alpha, beta>& tuplaPersona<alpha, beta>::operator=(const tuplaPerso
 }
 
 template<class alpha, class beta>
-const bool tuplaPersona<alpha, beta>::operator>(const tuplaPersona t) {
+bool tuplaPersona<alpha, beta>::operator>(const tuplaPersona& t) const{
     return (this->getGastoPersona() > t.getGastoPersona()) || (this->getGastoPersona() == t.getGastoPersona() && this->getPersona() > t.getPersona());
 }
 
 template<class alpha, class beta>
-const bool tuplaPersona<alpha, beta>::operator<(const tuplaPersona t) {
+bool tuplaPersona<alpha, beta>::operator<(const tuplaPersona& t) const{
     return (this->getGastoPersona() < t.getGastoPersona()) || (this->getGastoPersona() == t.getGastoPersona() && this->getPersona() < t.getPersona());
 }
 
@@ -36,6 +36,11 @@ beta tuplaPersona<alpha, beta>::getPersona() const {
 }
 
 template<class alpha, class beta>
-const bool tuplaPersona<alpha, beta>::operator==(tuplaPersona h) {
+bool tuplaPersona<alpha, beta>::operator==(tuplaPersona h) {
     return (this->getGastoPersona() == h.getGastoPersona() && this->getPersona() == h.getPersona());
+}
+
+template<class alpha, class beta>
+bool tuplaPersona<alpha, beta>::operator!=(tuplaPersona h) {
+    return (this->getGastoPersona() != h.getGastoPersona() && this->getPersona() != h.getPersona());
 }

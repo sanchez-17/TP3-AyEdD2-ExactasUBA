@@ -1,3 +1,4 @@
+/*
 #include "estructura.h"
 
 EstructuraTest::EstructuraTest(colaPriorA<Nat, Persona> cola) : _cola(cola), _gastosDe() {
@@ -13,3 +14,4 @@ void EstructuraTest::venderCola(Nat gasto, Persona per) {
 Nat EstructuraTest::dameGasto(Persona per){
     return _gastosDe.at(per);
 }
+*/

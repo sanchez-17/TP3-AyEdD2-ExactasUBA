@@ -1,3 +1,5 @@
+/*
+
 #include "../src/colaPriorA.h"
 #include "gtest-1.8.1/gtest.h"
 
@@ -215,9 +217,6 @@ TEST(colaPriorATest, punterosCorrectos_valores_modificados) {
     EXPECT_EQ(puntero50, 500);
 }
 
-// ??????
-// anda bien
-// ?????????entonces pq anda mal en lolla
 TEST(colaPriorATest, simulacro_hackear) {
     colaPriorA<Nat,Persona> q(4);
     ASSERT_TRUE(q.vacia());
@@ -245,18 +244,122 @@ TEST(colaPriorATest, simulacro_hackear) {
     EXPECT_EQ(q.proximo().getPersona(), 8);
     // 2da compra.
     // en vender ya calculamos cuanto seria el total. compra algo de 3500. por lo cual encolo 11500
-    tuplaPersona<Nat, Persona> per8compra2(11500,8); //no c reescribir tuplasPersonas q.q
+    tuplaPersona<Nat, Persona> per8compra2(11500,8);
     gasto8 = q.encolar(per8compra2);
     EXPECT_EQ(gasto8, 11500);
     EXPECT_EQ(q.proximo().getGastoPersona(), 11500);
     EXPECT_EQ(q.proximo().getPersona(), 8);
     // hackeo los 3500. regresa a tener 8000
-    // si falla aca es el heapifyDown
-    // si falla antes sigue siendo heapifyUp
-    // si falla los 2 bueno...........
     tuplaPersona<Nat, Persona> per8hackeo(8000,8);
     gasto8 = q.encolar(per8hackeo);
     EXPECT_EQ(gasto8, 8000);
     EXPECT_EQ(q.proximo().getGastoPersona(), 8000);
     EXPECT_EQ(q.proximo().getPersona(), 8);
 }
+
+TEST(colaPriorATest, tres_compras) {
+    colaPriorA<Nat,Persona> q(3);
+    ASSERT_TRUE(q.vacia());
+    // todas las personas ingresan sin gastos
+    tuplaPersona<Nat, Persona> per2(0,2);
+    tuplaPersona<Nat, Persona> per9(0,9);
+    tuplaPersona<Nat, Persona> per4(0,4);
+    Nat gasto2 = q.encolar(per2);
+    Nat gasto9 = q.encolar(per9);
+    Nat gasto4 = q.encolar(per4);
+    EXPECT_EQ(gasto2, 0);
+    EXPECT_EQ(gasto4, 0);
+    EXPECT_EQ(gasto9, 0);
+    EXPECT_EQ(q.proximo().getGastoPersona(), 0);
+    EXPECT_EQ(q.proximo().getPersona(), 9);
+    //4 compra
+    tuplaPersona<Nat, Persona> per4compra1(1200,4);
+    gasto4 = q.encolar(per4compra1);
+    EXPECT_EQ(gasto4, 1200);
+    EXPECT_EQ(q.proximo().getGastoPersona(), 1200);
+    EXPECT_EQ(q.proximo().getPersona(), 4);//ver por aca cómo quedó el heap
+    //2 compra, pero menos que 4
+    tuplaPersona<Nat, Persona> per2compra1(100,2);
+    gasto2 = q.encolar(per2compra1);
+    EXPECT_EQ(gasto2, 100);
+    EXPECT_EQ(q.proximo().getGastoPersona(), 1200);
+    EXPECT_EQ(q.proximo().getPersona(), 4);
+    //9 compra mas q todos
+    tuplaPersona<Nat, Persona> per9compra1(2000,9);
+    gasto9 = q.encolar(per9compra1);
+    EXPECT_EQ(gasto9, 2000);
+    EXPECT_EQ(q.proximo().getGastoPersona(), 2000);
+    EXPECT_EQ(q.proximo().getPersona(), 9);
+    //2 compra mas q todos
+    tuplaPersona<Nat, Persona> per2compra2(2403,2);
+    gasto2 = q.encolar(per2compra2);
+    EXPECT_EQ(gasto2, 2403);
+    EXPECT_EQ(q.proximo().getGastoPersona(), 2403);
+    EXPECT_EQ(q.proximo().getPersona(), 2);
+
+}
+
+TEST(colaPriorATest, vender_2_veces_dist_personas) {
+    colaPriorA<Nat,Persona> cola(4);
+    ASSERT_TRUE(cola.vacia());
+    // todas las personas ingresan sin gastos
+    tuplaPersona<Nat, Persona> per2(0,2);
+    tuplaPersona<Nat, Persona> per4(0,4);
+    tuplaPersona<Nat, Persona> per8(0,8);
+    tuplaPersona<Nat, Persona> per9(0,9);
+    Nat gasto2 = cola.encolar(per2);
+    Nat gasto4 = cola.encolar(per4);
+    Nat gasto8 = cola.encolar(per8);
+    Nat gasto9 = cola.encolar(per9);
+    EXPECT_EQ(gasto2, 0);
+    EXPECT_EQ(gasto4, 0);
+    EXPECT_EQ(gasto8, 0);
+    EXPECT_EQ(gasto9, 0);
+    EXPECT_EQ(cola.proximo().getGastoPersona(), 0);
+    EXPECT_EQ(cola.proximo().getPersona(), 9);
+    // 2 hace una compra de 7500
+    tuplaPersona<Nat, Persona> per2compra(7500,2);
+    gasto2 = cola.encolar(per2compra);
+    EXPECT_EQ(gasto2, 7500);
+    EXPECT_EQ(cola.proximo().getGastoPersona(), 7500);
+    EXPECT_EQ(cola.proximo().getPersona(), 2);
+    // 4 hace una compra de 15000
+    tuplaPersona<Nat, Persona> per4compra(15000,4);
+    gasto4 = cola.encolar(per4compra);
+    EXPECT_EQ(gasto4, 15000);
+    EXPECT_EQ(cola.proximo().getGastoPersona(), 15000);
+    EXPECT_EQ(cola.proximo().getPersona(), 4);
+}
+
+TEST(colaPriorATest, vender_con_distintos_descuentos) {
+    colaPriorA<Nat,Persona> cola(4);
+    ASSERT_TRUE(cola.vacia());
+    // todas las personas ingresan sin gastos
+    tuplaPersona<Nat, Persona> per2(0,2);
+    tuplaPersona<Nat, Persona> per4(0,4);
+    tuplaPersona<Nat, Persona> per8(0,8);
+    tuplaPersona<Nat, Persona> per9(0,9);
+    Nat gasto2 = cola.encolar(per2);
+    Nat gasto4 = cola.encolar(per4);
+    Nat gasto8 = cola.encolar(per8);
+    Nat gasto9 = cola.encolar(per9);
+    EXPECT_EQ(gasto2, 0);
+    EXPECT_EQ(gasto4, 0);
+    EXPECT_EQ(gasto8, 0);
+    EXPECT_EQ(gasto9, 0);
+    EXPECT_EQ(cola.proximo().getGastoPersona(), 0);
+    EXPECT_EQ(cola.proximo().getPersona(), 9);
+    // 2 hace una compra de 7500
+    tuplaPersona<Nat, Persona> per2compra(7500,2);
+    gasto2 = cola.encolar(per2compra);
+    EXPECT_EQ(gasto2, 7500);
+    EXPECT_EQ(cola.proximo().getGastoPersona(), 7500);
+    EXPECT_EQ(cola.proximo().getPersona(), 2);
+    // 4 hace una compra de 15000
+    tuplaPersona<Nat, Persona> per4compra(15000,4);
+    gasto4 = cola.encolar(per4compra);
+    EXPECT_EQ(gasto4, 15000);
+    EXPECT_EQ(cola.proximo().getGastoPersona(), 15000);
+    EXPECT_EQ(cola.proximo().getPersona(), 4);
+}
+*/

@@ -1,25 +1,24 @@
 #include "lollapatuza.h"
 
 lollapatuza::lollapatuza():
-_personas(),
-_gastosPersona(),
-_colaDeGastos(colaPriorA<Nat, Persona>(0)),
-_puestos(),
-_hackeables(){}
+        _personas(),
+        _gastosPersona(),
+        _colaDeGastos(colaPriorA<tuplaPersona<Nat, Persona>>()),
+        _puestos(),
+        _hackeables(){}
 
 
 void lollapatuza::crearLolla(const map<IdPuesto, puesto>& puestos, const set<Persona>& personas){
-    colaPriorA<Nat, Persona> colaGastos(personas.size());
+    //colaPriorA<Nat, Persona> colaGastos();
     map<Persona, Nat> gastosXPer;
     for(Persona per:personas){
-        tuplaPersona<Nat,Persona> tuplaPersona(0,per);
-        Nat gastoActualizado = colaGastos.encolar(tuplaPersona);
-        gastosXPer[per] = gastoActualizado;
+        tuplaPersona<Nat,Persona> tuplaPer(0,per);
+        _colaDeGastos.encolar(tuplaPer);
+        gastosXPer[per] = 0;
     }
     _personas = personas;
     _puestos = puestos;
     _gastosPersona = gastosXPer;
-    _colaDeGastos = colaGastos;
 }
 
 
@@ -39,10 +38,11 @@ void lollapatuza::vender(IdPuesto idPuesto, Persona per, Producto producto, Nat 
     //Actualizo el gasto total de la persona en el lollapatuza
     Nat gastoAnterior = _gastosPersona.at(per);
     Nat gastoActualizado = gastoAnterior + gastoVenta;
+    tuplaPersona<Nat,Persona> gastoPerAnt(gastoAnterior,per);
     tuplaPersona<Nat,Persona> gastoPer(gastoActualizado,per);
-    Nat gastoTotal = _colaDeGastos.encolar(gastoPer);
+    _colaDeGastos.cambiarPrioridad(gastoPerAnt, gastoPer);
     //Actualizo el puntero del gasto de la persona
-    _gastosPersona[per] = gastoTotal;
+    _gastosPersona[per] = gastoActualizado;
 }
 
 
@@ -95,9 +95,10 @@ void lollapatuza::hackear(Persona per, Producto producto){
     }
     Nat gastoAnterior = _gastosPersona[per];
     Nat precioItem = puesto->precio(producto);
+    tuplaPersona<Nat,Persona> gastoPerAnt(gastoAnterior,per);
     tuplaPersona<Nat,Persona> gastoPer(gastoAnterior-precioItem,per);
-    Nat gastoActual = _colaDeGastos.encolar(gastoPer);
-    _gastosPersona[per] = gastoActual;
+    _colaDeGastos.cambiarPrioridad(gastoPerAnt, gastoPer);
+    _gastosPersona[per] = gastoAnterior-precioItem;
 
 
 }

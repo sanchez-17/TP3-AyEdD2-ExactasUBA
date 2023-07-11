@@ -5,35 +5,31 @@
 #include <vector>
 #include <cmath>
 
-template<class alpha, class beta>
+template<class alpha>
 class colaPriorA{
 public:
     colaPriorA();
-    // Constructor. Genera una cola vacía de cota posiciones.
-    colaPriorA(int cota);
 
     // Obtiene una referencia constante al próximo elemento.
-    const tuplaPersona<alpha, beta> proximo() const;
+    const alpha proximo() const;
 
     // Encola un elemento en la cola.
-    // PRE: No hay "cota" cantidad de elementos en la cola.
-    alpha encolar(tuplaPersona<alpha, beta> tupla);
+    // PRE: La persona no fue encolada antes
+    void encolar(alpha tupla);
 
     // Desencola el próximo elemento de la cola.
     // PRE: Hay al menos un elemento en la cola.
-    void desencolar();
+    //void desencolar();
 
     // Decide si la cola esta vacía o no.
-    bool vacia();
+    // bool vacia();
+
+    //PRE: la tupla1 ya fue encolada antes. la tupla 2 no.
+    //tupla1 tendria q ser el <gasto,persona> viejo. tupla2 es el <gasto,persona> nuevo.
+    void cambiarPrioridad(alpha tupla1, alpha tupla2);
 
 private:
-    std::vector<pair<alpha, typename map<beta,Nat>::iterator>> _heap;
-    map<beta, Nat> _indices;
-    Nat _longitud;
-    Nat _cota;
-    //Funciones privadas
-    Nat heapifyUp(Nat i);
-    Nat heapifyDown(Nat i);
+    map<alpha, bool> _cola; //el bool es basura
 };
 #include "colaPriorA.hpp"
 #endif // COLA_H

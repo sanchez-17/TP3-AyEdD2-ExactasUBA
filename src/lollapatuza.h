@@ -3,6 +3,7 @@
 
 #include "puesto.h"
 #include "colaPriorA.h"
+#include "tuplaPersona.h"
 
 class lollapatuza{
 public:
@@ -19,9 +20,10 @@ public:
 private:
     set<Persona> _personas;
     map<Persona, Nat> _gastosPersona;
-    colaPriorA<Nat, Persona> _colaDeGastos;
+    colaPriorA<tuplaPersona<Nat, Persona>> _colaDeGastos;
     map<IdPuesto, puesto> _puestos;
     map<Persona,map<Producto,map<IdPuesto, puesto*>>>  _hackeables;
 };
 
 #endif //TP_LOLLA_LOLLAPATUZA_H
+

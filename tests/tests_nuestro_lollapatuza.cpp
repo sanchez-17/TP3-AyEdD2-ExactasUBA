@@ -13,7 +13,7 @@ Persona per81 = 8;
 Persona per91 = 9;
 set<Persona> peoples={2,4,8,9};
 
-TEST(nuestroLollaTest, bugacho_raro) {
+TEST(nuestroLollaTest, bug_raro) {
     puesto nuevoPuesto;
     nuevoPuesto = nuevoPuesto.crearPuesto(menu1, stock21, descuentos21);
 

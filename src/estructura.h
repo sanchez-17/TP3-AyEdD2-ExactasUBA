@@ -1,3 +1,5 @@
+/*
+
 #ifndef TP_LOLLA_ESTRUCTURA_TEST_H
 #define TP_LOLLA_ESTRUCTURA_TEST_H
 
@@ -18,3 +20,4 @@ private:
 
 //#include "estructura_test.cpp"
 #endif //TP_LOLLA_ESTRUCTURA_TEST_H
+*/
