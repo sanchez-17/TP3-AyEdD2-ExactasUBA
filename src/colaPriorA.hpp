@@ -3,26 +3,25 @@ colaPriorA<alpha>::colaPriorA():_cola(map<alpha, bool>()){}
 
 template<class alpha>
 const alpha colaPriorA<alpha>::proximo()const{
-    // aca seria el iterador al ultimo
+    // el iterador al ultimo
     auto it = --_cola.end();
     return (*it).first;
 }
 template<class alpha>
 void colaPriorA<alpha>::encolar(alpha tupla){
-    //simplemente encolo
-    _cola[tupla] = false; //bool basura
+    _cola[tupla] = false;
 }
 
 template<class alpha>
 void colaPriorA<alpha>::cambiarPrioridad(alpha tupla1, alpha tupla2){
-    //me dan el anterior y lo borro y agrego este nuevo.
-    //nunca va a haber repetidos pq las claves son unicas
+    // recibe el anterior y lo borra y agrega el nuevo.
+    // nunca va a haber repetidos pq las claves son unicas
     _cola.erase(tupla1);
-    _cola[tupla2] = false; //bool basura
+    _cola[tupla2] = false;
 }
 
 template<class alpha>
-bool colaPriorA<alpha>::vacia(){
+bool colaPriorA<alpha>::vacia() const{
     return _cola.empty();
 }
 

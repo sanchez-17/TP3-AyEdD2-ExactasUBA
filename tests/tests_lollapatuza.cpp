@@ -33,14 +33,6 @@ protected:
     }
 };
 
-TEST_F(LollaTest, error_descuento_raro){
-    //si debuggeas aca, vas a ver en el puesto 2 que el descuento para el producto 7 con cantidad 2 es 0
-    FachadaLollapatuza l(personas, puestos);
-
-    //pero al tratar de correr esto, teniendo un breakpoint en descuentoEnPuesto, en las posiciones
-    //donde hay 0, devuelve basura
-    EXPECT_EQ(l.descuentoEnPuesto(2, 7, 2), 0);
-}
 
 TEST_F(LollaTest, arrancar_lolla) {
     FachadaLollapatuza l(personas, puestos);
@@ -184,7 +176,6 @@ TEST_F(LollaTest, vender_dos_veces_mismo_producto_persona_y_puesto) {
     EXPECT_EQ(l.idsDePuestos(), idsPuestos);
 }
 
-//en los tests q se pasan, _heap se sigue rompiendo pero justo da bien en los tests
 TEST_F(LollaTest, vender_dos_veces_distinto_producto) {
     FachadaLollapatuza l(personas, puestos);
     l.registrarCompra(9, 3, 1, 6);
@@ -683,3 +674,66 @@ TEST_F(LollaTest, hackear_altera_puesto_menor_id) {
     EXPECT_EQ(l.gastoEnPuesto(7, 9), 0);
     EXPECT_EQ(l.idsDePuestos(), idsPuestos);
 }
+
+
+TEST_F(LollaTest, hackear_altera_quienGastoMas) {
+    FachadaLollapatuza l(personas, puestos);
+    l.registrarCompra(4, 5, 2, 6);
+    l.registrarCompra(8, 5, 2, 6);
+    EXPECT_EQ(l.gastoTotal(2), 0);
+    EXPECT_EQ(l.gastoTotal(4), 5000);
+    EXPECT_EQ(l.gastoTotal(8), 5000);
+    EXPECT_EQ(l.gastoTotal(9), 0);
+    // Desempatan por id
+    EXPECT_EQ(l.mayorGastador(), 8);
+    // Se hackea a la persona que gasto mas
+    l.hackear(8, 5);
+    EXPECT_EQ(l.gastoTotal(2), 0);
+    EXPECT_EQ(l.gastoTotal(4), 5000);
+    EXPECT_EQ(l.gastoTotal(8), 2500);
+    EXPECT_EQ(l.gastoTotal(9), 0);
+    EXPECT_EQ(l.mayorGastador(), 4);
+    EXPECT_EQ(l.menorStock(3), 6);
+    EXPECT_EQ(l.menorStock(4), 2);
+    EXPECT_EQ(l.menorStock(5), 7);
+    EXPECT_EQ(l.menorStock(7), 6);
+    EXPECT_EQ(l.personas(), personas);
+    for (const pair<const Producto, Nat>& s : stock2) {
+        EXPECT_EQ(l.stockEnPuesto(2, s.first), s.second);
+    }
+    EXPECT_EQ(l.stockEnPuesto(6, 3), 5);
+    EXPECT_EQ(l.stockEnPuesto(6, 4), 15);
+    //El stock del producto 5 es 22 ya que antes habia 25 -4 comprados +1 del hackeo
+    EXPECT_EQ(l.stockEnPuesto(6, 5), 22);
+    EXPECT_EQ(l.stockEnPuesto(6, 7), 5);
+    for (const pair<const Producto, Nat>& s : stock7) {
+        EXPECT_EQ(l.stockEnPuesto(7, s.first), s.second);
+    }
+    for (const Persona& p : personas) {
+        EXPECT_EQ(l.gastoEnPuesto(2, p), 0);
+    }
+    EXPECT_EQ(l.gastoEnPuesto(6, 2), 0);
+    EXPECT_EQ(l.gastoEnPuesto(6, 4), 5000);
+    EXPECT_EQ(l.gastoEnPuesto(6, 8), 2500);
+    EXPECT_EQ(l.gastoEnPuesto(6, 9), 0);
+    for (const Persona& p : personas) {
+        EXPECT_EQ(l.gastoEnPuesto(7, p), 0);
+    }
+    EXPECT_EQ(l.descuentoEnPuesto(2, 7, 2), 0);
+    EXPECT_EQ(l.descuentoEnPuesto(2, 7, 3), 20);
+    EXPECT_EQ(l.descuentoEnPuesto(2, 7, 4), 20);
+    EXPECT_EQ(l.descuentoEnPuesto(2, 7, 5), 20);
+    EXPECT_EQ(l.descuentoEnPuesto(2, 7, 6), 25);
+    EXPECT_EQ(l.descuentoEnPuesto(2, 7, 7), 25);
+    EXPECT_EQ(l.descuentoEnPuesto(6, 4, 3), 0);
+    EXPECT_EQ(l.descuentoEnPuesto(6, 4, 4), 15);
+    EXPECT_EQ(l.descuentoEnPuesto(6, 4, 5), 15);
+    EXPECT_EQ(l.descuentoEnPuesto(7, 3, 4), 0);
+    EXPECT_EQ(l.descuentoEnPuesto(7, 3, 5), 30);
+    EXPECT_EQ(l.descuentoEnPuesto(7, 3, 6), 30);
+    EXPECT_EQ(l.descuentoEnPuesto(7, 7, 1), 0);
+    EXPECT_EQ(l.descuentoEnPuesto(7, 7, 2), 10);
+    EXPECT_EQ(l.descuentoEnPuesto(7, 7, 3), 10);
+    EXPECT_EQ(l.idsDePuestos(), idsPuestos);
+}
+

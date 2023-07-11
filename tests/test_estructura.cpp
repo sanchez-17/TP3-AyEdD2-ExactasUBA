@@ -1,4 +1,4 @@
-/*
+/* comentado pq en esta version no sucede el bug
 
 //
 // Created by clinux01 on 05/07/23.

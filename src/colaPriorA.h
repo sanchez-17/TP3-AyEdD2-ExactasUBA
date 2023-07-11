@@ -22,14 +22,14 @@ public:
     void desencolar();
 
     // Decide si la cola esta vacía o no.
-    bool vacia();
+    bool vacia() const;
 
-    //PRE: la tupla1 ya fue encolada antes. la tupla 2 no.
-    //tupla1 tendria q ser el <gasto,persona> viejo. tupla2 es el <gasto,persona> nuevo.
+    //PRE: la tupla1 ya fue encolada antes. la tupla2 no.
+    //tupla1 es el <gasto,persona> con el gasto anterior. tupla2 es el <gasto,persona> con el gasto actualizado.
     void cambiarPrioridad(alpha tupla1, alpha tupla2);
 
 private:
-    map<alpha, bool> _cola; //el bool es basura
+    map<alpha, bool> _cola;
 };
 #include "colaPriorA.hpp"
 #endif // COLA_H

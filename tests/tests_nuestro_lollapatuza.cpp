@@ -1,3 +1,4 @@
+/* comentado pq en esta version no sucede este bug
 #include "../src/puesto.h"
 #include "../src/lollapatuza.h"
 #include "gtest-1.8.1/gtest.h"
@@ -28,3 +29,4 @@ TEST(nuestroLollaTest, bug_raro) {
 
 
 }
+ */
