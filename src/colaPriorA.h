@@ -27,7 +27,7 @@ public:
     bool vacia();
 
 private:
-    std::vector<pair<alpha, typename map<beta,Nat>::iterator>> _heap;
+    std::vector<pair<alpha, pair<beta,Nat*> > > _heap;
     map<beta, Nat> _indices;
     Nat _longitud;
     Nat _cota;
