@@ -54,7 +54,7 @@ void puesto::vender(Persona per, Producto producto, Nat cant) {
     if (_gastosDe.count(per) == 1) {gastoAnteriorEnPuesto = _gastosDe.at(per);}
     else{gastoAnteriorEnPuesto=0;}
     Nat nuevoGastoEnPuesto = floor(cosaLoca) + gastoAnteriorEnPuesto;
-    _gastosDe[per] = 27; //se rompe
+    _gastosDe[per] = nuevoGastoEnPuesto; //se rompe
     _ventas[per].emplace_back(producto,cant);
     if(descuento == 0){
         auto itVenta = --_ventas[per].end();
