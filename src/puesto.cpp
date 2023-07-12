@@ -41,25 +41,27 @@ puesto puesto::crearPuesto(Menu menu, Stock stock, Promociones promos){
     return puesto(menu,stock,promociones);
 }
 
-void puesto::vender(Persona per, Producto producto, Nat cant) {
-    Nat gastoAnteriorEnPuesto;
-    Nat descuento = this->descuento(producto,cant);
+tuple<bool,Nat> puesto::vender(Persona per, Producto producto, Nat cant) {//Complejidad:O(log(A)+log(I))
+    Nat puestoHackeable = false;                                                            //O(1)
+    Nat descuento = this->descuento(producto,cant);                                         //O(log(I))
     //Calculamos el gasto a realizar con el descuento correspondiente
-    Nat precio = this->precio(producto);
-    float cociente = (float(100 - descuento) / float(100));
-    float cosaLoca=precio * cant * cociente;
+    Nat precio = this->precio(producto);                                                    //O(log(I))
+    Nat gastoVentaP = floor(precio * cant * (100 - descuento) / 100);                     //O(1)
     //Actualizamos el stock del item en el puesto
-    _stock[producto] = stock(producto) - cant;
+    _stock[producto] = stock(producto) - cant;                                              //O(log(I))
     //Actualizamos el gasto acumulado de la persona
-    if (_gastosDe.count(per) == 1) {gastoAnteriorEnPuesto = _gastosDe.at(per);}
-    else{gastoAnteriorEnPuesto=0;}
-    Nat nuevoGastoEnPuesto = floor(cosaLoca) + gastoAnteriorEnPuesto;
-    _gastosDe[per] = nuevoGastoEnPuesto; //se rompe
-    _ventas[per].emplace_back(producto,cant);
+    Nat gastoAcumuladoEnPuesto = gastoVentaP;                                               //O(1)
+    if (_gastosDe.count(per) == 1) { gastoAcumuladoEnPuesto += _gastosDe.at(per); }
+    //_gastosDe.insert(pair<Persona,Nat>(per,gastoAcumuladoEnPuesto));
+    this->_gastosDe[per] = gastoAcumuladoEnPuesto; //se rompe                                     //O(log(A))
+    _ventas[per].push_back(make_pair(producto,cant));                               //O(log(A))
     if(descuento == 0){
-        auto itVenta = --_ventas[per].end();
-        _ventasSinDesc[per][producto].push_back(itVenta);
+        auto itVenta = --_ventas[per].end();                                      //O(1)
+        _ventasSinDesc[per][producto].push_back(itVenta);                                 //O(log(A)+log(I))
+        puestoHackeable = true;                                                             //O(1)
     }
+    tuple<bool,Nat> infoVenta(puestoHackeable,gastoVentaP);                           //O(1)
+    return infoVenta;                                                                       //O(1)
 }
 
 set<Producto> puesto::menu()const{

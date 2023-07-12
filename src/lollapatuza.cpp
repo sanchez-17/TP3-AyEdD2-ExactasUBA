@@ -24,27 +24,24 @@ void lollapatuza::crearLolla(map<IdPuesto, puesto> puestos, set<Persona> persona
 
 
 void lollapatuza::vender(IdPuesto idPuesto, Persona per, Producto producto, Nat cant){
+
     //Accedo al puesto en cuestion
-    puesto* puesto = &_puestos[idPuesto];
-    Nat precioProducto = puesto->precio(producto);
-    //Defino el descuento/promo
-    Nat descuento = puesto->descuento(producto,cant);
+    puesto* puesto = &_puestos[idPuesto];                                               //O(1)
     //Registro la venta en el puesto
-    //puesto->vender(per,producto,cant);
-    Nat gastoVenta = floor(cant * ((precioProducto  * (100-descuento)) / 100) );
-    //Si la venta no tuvo descuento y el puesto no era hackeable, añadir a _hackeables
-    if(descuento == 0 && _hackeables[per][producto].count(idPuesto) == 0){
-        _hackeables[per][producto][idPuesto] = puesto;
+    tuple<bool,Nat>infoVenta = puesto->vender(per,producto,cant);                       //O(log(A)+log(I))
+    //Al vender en el puesto, me da la informacion sobre el gasto de la venta y si se hizo sin descuento.
+    bool eshackeable = get<0>(infoVenta);                                            //O(1)
+    Nat gastoVentaEnPuesto = get<1>(infoVenta);                                      //O(1)
+    if(eshackeable) {
+        _hackeables[per][producto][idPuesto] = puesto;                                  //O(log(A)+log(I)+log(P))
     }
     //Actualizo el gasto total de la persona en el lollapatuza
-    Nat punteroAGasto = _punterosAGastos.at(per);
-    Nat gastoActualizado = punteroAGasto + gastoVenta;
-    tuplaPersona<Nat,Persona> gastoPer(gastoActualizado,per);
-    //pair<Nat,Persona> gastoPer = make_pair(gastoActualizado,per);
-    Nat punteroDinero = _gastosPersona.encolar(gastoPer);
+    Nat gastoAntEnLolla = _punterosAGastos.at(per);                                   //O(1)
+    Nat gastoActualizado = gastoAntEnLolla + gastoVentaEnPuesto;                        //O(1)
+    tuplaPersona<Nat,Persona> gastoPer(gastoActualizado,per);                      //O(1)
+    Nat gastoEnLolla = _gastosPersona.encolar(gastoPer);                             //O()
     //Actualizo el puntero del gasto de la persona
-    _punterosAGastos[per] = punteroDinero;
-    puesto->vender(per,producto,cant);
+    _punterosAGastos[per] = gastoEnLolla;                                               //O(log(A))
 }
 
 
