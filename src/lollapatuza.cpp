@@ -3,7 +3,7 @@
 lollapatuza::lollapatuza():
         _personas(),
         _gastosPersona(),
-        _colaDeGastos(colaPriorA<tuplaPersona<Nat, Persona>>()),
+        _colaDeGastos(),
         _puestos(),
         _hackeables(){}
 

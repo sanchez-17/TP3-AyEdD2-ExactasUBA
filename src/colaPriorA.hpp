@@ -1,10 +1,10 @@
 template<class alpha>
-colaPriorA<alpha>::colaPriorA():_cola(map<alpha, bool>()){}
+colaPriorA<alpha>::colaPriorA():_cola(){}
 
 template<class alpha>
 const alpha colaPriorA<alpha>::proximo()const{
     // el iterador al ultimo
-    auto it = --_cola.end();
+    auto it = _cola.rbegin();
     return (*it).first;
 }
 template<class alpha>
@@ -27,7 +27,7 @@ bool colaPriorA<alpha>::vacia() const{
 
 template<class alpha>
 void colaPriorA<alpha>::desencolar(){
-    auto it = --_cola.end();
+    auto it = _cola.rbegin();
     alpha proximo = (*it).first;
     _cola.erase(proximo);
 }
