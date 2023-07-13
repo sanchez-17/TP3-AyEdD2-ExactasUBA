@@ -175,18 +175,18 @@ TEST(colaPriorATest, simulacro_hackear) {
     // 8 compra dos veces
     // 1ra compra
     tuplaPersona<Nat, Persona> per8compra1(8000,8);
-    q.cambiarPrioridad(per8, per8compra1);
+    q.actualizarOrden(per8, per8compra1);
     EXPECT_EQ(q.proximo().getGastoPersona(), 8000);
     EXPECT_EQ(q.proximo().getPersona(), 8);
     // 2da compra.
     // en vender ya calculamos cuanto seria el total. compra algo de 3500. por lo cual encolo 11500
     tuplaPersona<Nat, Persona> per8compra2(11500,8);
-    q.cambiarPrioridad(per8compra1, per8compra2);
+    q.actualizarOrden(per8compra1, per8compra2);
     EXPECT_EQ(q.proximo().getGastoPersona(), 11500);
     EXPECT_EQ(q.proximo().getPersona(), 8);
     // hackeo los 3500. regresa a tener 8000
     tuplaPersona<Nat, Persona> per8hackeo(8000,8);
-    q.cambiarPrioridad(per8compra2, per8hackeo);
+    q.actualizarOrden(per8compra2, per8hackeo);
     EXPECT_EQ(q.proximo().getGastoPersona(), 8000);
     EXPECT_EQ(q.proximo().getPersona(), 8);
 }
@@ -205,22 +205,22 @@ TEST(colaPriorATest, tres_compras) {
     EXPECT_EQ(q.proximo().getPersona(), 9);
     //4 compra
     tuplaPersona<Nat, Persona> per4compra1(1200,4);
-    q.cambiarPrioridad(per4, per4compra1);
+    q.actualizarOrden(per4, per4compra1);
     EXPECT_EQ(q.proximo().getGastoPersona(), 1200);
     EXPECT_EQ(q.proximo().getPersona(), 4);
     //2 compra, pero menos que 4
     tuplaPersona<Nat, Persona> per2compra1(100,2);
-    q.cambiarPrioridad(per2, per2compra1);
+    q.actualizarOrden(per2, per2compra1);
     EXPECT_EQ(q.proximo().getGastoPersona(), 1200);
     EXPECT_EQ(q.proximo().getPersona(), 4);
     //9 compra mas que todos
     tuplaPersona<Nat, Persona> per9compra1(2000,9);
-    q.cambiarPrioridad(per9, per9compra1);
+    q.actualizarOrden(per9, per9compra1);
     EXPECT_EQ(q.proximo().getGastoPersona(), 2000);
     EXPECT_EQ(q.proximo().getPersona(), 9);
     //2 compra mas que todos
     tuplaPersona<Nat, Persona> per2compra2(2403,2);
-    q.cambiarPrioridad(per2compra1, per2compra2);
+    q.actualizarOrden(per2compra1, per2compra2);
     EXPECT_EQ(q.proximo().getGastoPersona(), 2403);
     EXPECT_EQ(q.proximo().getPersona(), 2);
 }
@@ -241,12 +241,12 @@ TEST(colaPriorATest, vender_2_veces_dist_personas) {
     EXPECT_EQ(cola.proximo().getPersona(), 9);
     // 2 hace una compra de 7500
     tuplaPersona<Nat, Persona> per2compra(7500,2);
-    cola.cambiarPrioridad(per2, per2compra);
+    cola.actualizarOrden(per2, per2compra);
     EXPECT_EQ(cola.proximo().getGastoPersona(), 7500);
     EXPECT_EQ(cola.proximo().getPersona(), 2);
     // 4 hace una compra de 15000
     tuplaPersona<Nat, Persona> per4compra(15000,4);
-    cola.cambiarPrioridad(per4, per4compra);
+    cola.actualizarOrden(per4, per4compra);
     EXPECT_EQ(cola.proximo().getGastoPersona(), 15000);
     EXPECT_EQ(cola.proximo().getPersona(), 4);
 }

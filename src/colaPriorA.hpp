@@ -8,16 +8,16 @@ const alpha colaPriorA<alpha>::proximo()const{
     return (*it).first;
 }
 template<class alpha>
-void colaPriorA<alpha>::encolar(alpha tupla){
-    _cola[tupla] = false;
+void colaPriorA<alpha>::encolar(alpha a){
+    _cola[a] = false;
 }
 
 template<class alpha>
-void colaPriorA<alpha>::cambiarPrioridad(alpha tupla1, alpha tupla2){
+void colaPriorA<alpha>::actualizarOrden(alpha a1, alpha a2){
     // recibe el anterior y lo borra y agrega el nuevo.
     // nunca va a haber repetidos pq las claves son unicas
-    _cola.erase(tupla1);
-    _cola[tupla2] = false;
+    _cola.erase(a1);
+    _cola[a2] = false;
 }
 
 template<class alpha>
