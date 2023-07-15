@@ -3,16 +3,8 @@
 puesto::puesto() = default;
 //puesto::puesto(){}
 
-puesto::puesto(Menu menu,Stock stock,map<Producto, vector<Nat>> promos):
-_menu(menu),
-_stock(stock),
-_descuentos(promos),
-_ventasSinDesc(),
-_ventas(),
-_gastosDe()
-{}
-
-puesto puesto::crearPuesto(Menu menu, Stock stock, Promociones promos){
+puesto::puesto(Menu& menu, Stock& stock, Promociones& promos):_menu(menu),
+                                                              _stock(stock){
     map<Producto, vector<Nat>> promociones;
     for (auto it: promos){
         Nat stockItem = stock[it.first];
@@ -38,7 +30,7 @@ puesto puesto::crearPuesto(Menu menu, Stock stock, Promociones promos){
         }
         promociones[it.first] = arr;
     }
-    return puesto(menu,stock,promociones);
+    _descuentos = promociones;
 }
 
 pair<bool,Nat> puesto::vender(Persona per, Producto producto, Nat cant){
