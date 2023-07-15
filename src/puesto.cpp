@@ -41,21 +41,27 @@ puesto puesto::crearPuesto(Menu menu, Stock stock, Promociones promos){
     return puesto(menu,stock,promociones);
 }
 
-void puesto::vender(Persona per, Producto producto, Nat cant){
-    Nat descuento = this->descuento(producto,cant);
+pair<bool,Nat> puesto::vender(Persona per, Producto producto, Nat cant){
+    Nat puestoHackeable = false;                                                            //O(1)
+    Nat descuento = this->descuento(producto,cant);                                         //O(log(I))
     //Calculamos el gasto a realizar con el descuento correspondiente
-    Nat precio = this->precio(producto);
-    Nat nuevoGasto = floor(precio * cant * (100 - descuento) / 100);
+    Nat precio = this->precio(producto);                                                    //O(log(I))
+    Nat gastoVentaP = floor(precio * cant * (100 - descuento) / 100);                     //O(1)
     //Actualizamos el stock del item en el puesto
-    _stock[producto] = stock(producto) - cant;
-    //Actualizamos el gasto acumulado de la persona
-    if (_gastosDe.count(per) == 1) { nuevoGasto += this->_gastosDe.at(per); }
-    this->_gastosDe[per] = nuevoGasto; //se rompe
-    _ventas[per].push_back(make_pair(producto,cant));
+    _stock[producto] = stock(producto) - cant;                                              //O(log(I))
+    //Actualizamos el gasto acumulado de la persona                                          //O(1)
+    if (_gastosDe.count(per) == 1) { gastoVentaP += _gastosDe.at(per); }
+    this->_gastosDe[per] = gastoVentaP;                                                     //O(log(A))
+    _ventas[per].push_back(make_pair(producto,cant));                               //O(log(A))
     if(descuento == 0){
-        list<tuple<Producto,Nat>>::iterator itVenta = --_ventas[per].end();
-        _ventasSinDesc[per][producto].push_back(itVenta);
+        auto itVenta = --_ventas[per].end();                                      //O(1)
+        _ventasSinDesc[per][producto].push_back(itVenta);                                 //O(log(A)+log(I))
+        puestoHackeable = true;                                                             //O(1)
     }
+    pair<bool,Nat> infoVenta;
+    infoVenta.first = puestoHackeable;
+    infoVenta.second = gastoVentaP;                                                           //O(1)
+    return infoVenta;
 }
 
 set<Producto> puesto::menu()const{
