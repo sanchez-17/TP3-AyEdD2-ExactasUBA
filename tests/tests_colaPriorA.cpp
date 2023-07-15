@@ -15,16 +15,13 @@ TEST(colaPriorATest, test_general) {
 
     c.encolar(per1);
     c.encolar(per2);
-    //La persona que mas gasto es per2 con gasto:3
-    EXPECT_EQ(c.proximo(),3);
+    //La persona que mas gasto es per3 con gasto:3
     EXPECT_EQ(c.proximo(),2);
     c.desencolar();
-    //Ahora la persona que mas gasto es per3 con gasto:2
-    EXPECT_EQ(c.proximo(),2);
+    //Ahora la persona que mas gasto es per2 con gasto:2
     EXPECT_EQ(c.proximo(),3);
     c.desencolar();
     //Ahora la persona que mas gasto es per1 con gasto:1
-    EXPECT_EQ(c.proximo(),1);
     EXPECT_EQ(c.proximo(),1);
     c.desencolar();
     EXPECT_TRUE(c.vacia());
