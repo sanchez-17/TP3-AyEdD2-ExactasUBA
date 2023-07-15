@@ -1,24 +1,21 @@
 #include "lollapatuza.h"
 
-lollapatuza::lollapatuza():
-        _personas(),
-        _gastosPersona(),
-        _colaDeGastos(),
-        _puestos(),
-        _hackeables(){}
+lollapatuza::lollapatuza()=default;
 
-
-void lollapatuza::crearLolla(const map<IdPuesto, puesto>& puestos, const set<Persona>& personas){
-    map<Persona, Nat> gastosXPer;
+lollapatuza::lollapatuza(map<IdPuesto, puesto>& puestos, const set<Persona>& personas){
+    colaPriorA<Nat, Persona> gastosPersona(personas.size());
+    map<Persona, Nat> gastoAcumPorPersona;
     for(Persona per:personas){
-        tuplaPersona<Nat,Persona> tuplaPer(0,per);
-        _colaDeGastos.encolar(tuplaPer);
-        gastosXPer[per] = 0;
+        tuplaPersona<Nat,Persona> tuplaPersona(0,per);
+        Nat gastoInicial = gastosPersona.encolar(tuplaPersona);
+        gastoAcumPorPersona[per] = gastoInicial;
     }
     _personas = personas;
     _puestos = puestos;
-    _gastosPersona = gastosXPer;
+    _punterosAGastos = gastoAcumPorPersona;
+    _gastosPersona = gastosPersona;
 }
+
 
 
 void lollapatuza::vender(IdPuesto idPuesto, Persona per, Producto producto, Nat cant){
