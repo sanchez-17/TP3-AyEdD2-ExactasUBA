@@ -5,7 +5,7 @@
 #include <vector>
 #include <cmath>
 
-template<class alpha>
+template<class alpha, class beta>
 class colaPriorA{
 public:
     colaPriorA();
@@ -15,7 +15,7 @@ public:
 
     // Encola un elemento en la cola.
     // PRE: La persona no fue encolada antes
-    void encolar(alpha a);
+    void encolar(tuplaPersona<alpha, beta> tupla);
 
     // Desencola el próximo elemento de la cola.
     // PRE: Hay al menos un elemento en la cola.
@@ -25,11 +25,11 @@ public:
     bool vacia() const;
 
     //PRE: la a1 ya fue encolada antes. la a2 no.
-    //a1 es el <gasto,persona> con el gasto anterior. a2 es el <gasto,persona> con el gasto actualizado.
-    void actualizarOrden(alpha a1, alpha a2);
+    //tupla1 es el <gasto,persona> con el gasto anterior. a2 es el <gasto,persona> con el gasto actualizado.
+    void actualizarOrden(tuplaPersona<alpha, beta> tupla1, tuplaPersona<alpha, beta> tupla2);
 
 private:
-    map<alpha, bool> _cola;
+    map<tuplaPersona<alpha, beta>, bool> _cola;
 };
 #include "colaPriorA.hpp"
 #endif // COLA_H

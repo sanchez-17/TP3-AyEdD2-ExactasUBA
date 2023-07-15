@@ -76,7 +76,7 @@ const Nat lollapatuza::gastoTotal(Persona per)const{
 }
 
 Persona lollapatuza::quienGastoMas()const{
-    Persona per = _colaDeGastos.proximo().getPersona();
+    Persona per = _colaDeGastos.proximo();
     return per;
 }
 
