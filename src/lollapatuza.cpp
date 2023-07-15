@@ -1,19 +1,23 @@
 #include "lollapatuza.h"
 
-lollapatuza::lollapatuza()=default;
+lollapatuza::lollapatuza():
+        _personas(),
+        _gastosPersona(),
+        _colaDeGastos(),
+        _puestos(),
+        _hackeables(){}
 
-lollapatuza::lollapatuza(map<IdPuesto, puesto>& puestos, const set<Persona>& personas){
-    colaPriorA<Nat, Persona> gastosPersona(personas.size());
-    map<Persona, Nat> gastoAcumPorPersona;
+
+lollapatuza::lollapatuza(const map<IdPuesto, puesto>& puestos, const set<Persona>& personas){
+    map<Persona, Nat> gastosXPer;
     for(Persona per:personas){
-        tuplaPersona<Nat,Persona> tuplaPersona(0,per);
-        Nat gastoInicial = gastosPersona.encolar(tuplaPersona);
-        gastoAcumPorPersona[per] = gastoInicial;
+        tuplaPersona<Nat,Persona> tuplaPer(0,per);
+        _colaDeGastos.encolar(tuplaPer);
+        gastosXPer[per] = 0;
     }
     _personas = personas;
     _puestos = puestos;
-    _punterosAGastos = gastoAcumPorPersona;
-    _gastosPersona = gastosPersona;
+    _gastosPersona = gastosXPer;
 }
 
 
