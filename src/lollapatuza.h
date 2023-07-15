@@ -10,7 +10,7 @@ public:
     lollapatuza();
     void crearLolla(const map<IdPuesto, puesto>& puestos, const set<Persona>& personas);
     void vender(IdPuesto idPuesto, Persona per, Producto producto, Nat cant);
-    map<IdPuesto, puesto> puestos() const;
+    const map<IdPuesto, puesto> & puestos() const;
     const set<Persona>& personas() const;
     void hackear(Persona per, Producto producto);
     const Nat gastoTotal(Persona per) const;

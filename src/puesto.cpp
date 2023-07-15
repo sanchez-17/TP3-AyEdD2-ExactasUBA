@@ -41,7 +41,7 @@ puesto puesto::crearPuesto(Menu menu, Stock stock, Promociones promos){
     return puesto(menu,stock,promociones);
 }
 
-void puesto::vender(Persona per, Producto producto, Nat cant) {
+void puesto::vender(Persona per, Producto producto, Nat cant){
     Nat descuento = this->descuento(producto,cant);
     //Calculamos el gasto a realizar con el descuento correspondiente
     Nat precio = this->precio(producto);
@@ -77,7 +77,7 @@ Nat puesto::stock(Producto producto)const{
     }
 }
 
-Nat puesto::descuento(Producto producto, Nat cant){
+Nat puesto::descuento(Producto producto, Nat cant)const{
     if(_descuentos.count(producto)>0){
         return _descuentos.at(producto)[cant];
     }else{
@@ -85,9 +85,9 @@ Nat puesto::descuento(Producto producto, Nat cant){
     }
 }
 
-const Nat puesto::gastosDe(Persona per){
+const Nat puesto::gastosDe(Persona per)const{
     if(_gastosDe.count(per)==1){
-        return _gastosDe[per];
+        return _gastosDe.at(per);
     } else {
         return 0;
     }

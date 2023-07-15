@@ -44,7 +44,7 @@ void lollapatuza::vender(IdPuesto idPuesto, Persona per, Producto producto, Nat 
     _gastosPersona[per] = gastoActualizado;
 }
 
-map<IdPuesto, puesto> lollapatuza::puestos()const{
+const map<IdPuesto, puesto> & lollapatuza::puestos() const {
     return _puestos;
 }
 

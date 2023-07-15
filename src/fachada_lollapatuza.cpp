@@ -67,16 +67,18 @@ const set<Persona> &FachadaLollapatuza::personas() const {
 }
 
 Nat FachadaLollapatuza::stockEnPuesto(IdPuesto idPuesto, const Producto &producto) const {
-    puesto* p = &_lolla.puestos()[idPuesto];
+    const puesto* p = &_lolla.puestos().at(idPuesto);
     return p->stock(producto);
 }
 
 Nat FachadaLollapatuza::descuentoEnPuesto(IdPuesto idPuesto, const Producto &producto, Nat cantidad) const {
-    return (_lolla.puestos().at(idPuesto)).descuento(producto, cantidad);
+    const puesto* p = &_lolla.puestos().at(idPuesto);
+    //return (_lolla.puestos().at(idPuesto)).descuento(producto, cantidad);
+    return p->descuento(producto,cantidad);
 }
 
 const Nat FachadaLollapatuza::gastoEnPuesto(IdPuesto idPuesto, Persona persona) const {
-    puesto *p = &_lolla.puestos().at(idPuesto);
+    const puesto *p = &_lolla.puestos().at(idPuesto);
     return p->gastosDe(persona);
 }
 
