@@ -10,8 +10,7 @@ Persona per9 = 9;
 
 
 TEST(puestoTest, descuento) {
-    puesto nuevoPuesto;
-    puesto p = nuevoPuesto.crearPuesto(menu,stock2,descuentos2);
+    puesto p = puesto(menu,stock2,descuentos2);
 
     EXPECT_EQ(p.descuento(7,0),0);
     EXPECT_EQ(p.descuento(7,2),0);
@@ -21,12 +20,10 @@ TEST(puestoTest, descuento) {
     EXPECT_EQ(p.descuento(7,6),25);
     EXPECT_EQ(p.descuento(7,7),25);
     EXPECT_EQ(p.descuento(7,10),25);
-    //FUNCIONA, entonces algo pasa cuando se obtiene el puesto por referencia
 }
 
 TEST(puestoTest, vender) {
-    puesto nuevoPuesto;
-    puesto p = nuevoPuesto.crearPuesto(menu,stock2,descuentos2);
+    puesto p = puesto(menu,stock2,descuentos2);
 
     p.vender(per2,3,5);
     EXPECT_EQ(p.gastosDe(per2),2500);
@@ -37,8 +34,7 @@ TEST(puestoTest, vender) {
 }
 
 TEST(puestoTest, vender_con_desc) {
-    puesto nuevoPuesto;
-    puesto p = nuevoPuesto.crearPuesto(menu,stock2,descuentos2);
+    puesto p = puesto(menu,stock2,descuentos2);
 
     p.vender(per2,7,6);
     EXPECT_EQ(p.gastosDe(per2),9000);
