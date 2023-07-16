@@ -14,23 +14,23 @@ lollapatuza::lollapatuza(map<IdPuesto, puesto>& puestos, const set<Persona>& per
 
 
 void lollapatuza::vender(IdPuesto idPuesto, Persona per, Producto producto, Nat cant){
-    //Accedo al puesto en cuestion
+    //Accede al puesto en cuestion
     puesto* puesto = &_puestos[idPuesto];
-    //Registro la venta en el puesto
+    //Registra la venta en el puesto
     pair<bool,Nat>infoVenta = puesto->vender(per,producto,cant);
-    //Al vender en el puesto, me da la informacion sobre el gasto de la venta y si se hizo sin descuento.
+    //Al vender en el puesto, da la informacion sobre el gasto de la venta y si se hizo sin descuento
     bool eshackeable = infoVenta.first;
     Nat gastoVentaEnPuesto = infoVenta.second;
     if(eshackeable) {
         _hackeables[per][producto][idPuesto] = puesto;
     }
-    //Actualizo el gasto total de la persona en el lollapatuza
+    //Actualiza el gasto total de la persona en el lollapatuza
     Nat gastoAntEnLolla = _gastosPersona.at(per);
     Nat gastoActualizado = gastoAntEnLolla + gastoVentaEnPuesto;
     tuplaPersona<Nat,Persona> gastoPerAnt(gastoAntEnLolla,per);
     tuplaPersona<Nat,Persona> gastoPer(gastoActualizado,per);
     _colaDeGastos.actualizarOrden(gastoPerAnt, gastoPer);
-    //Actualizo el puntero del gasto de la persona
+    //Actualiza el puntero del gasto de la persona
     _gastosPersona[per] = gastoActualizado;
 
 }
@@ -47,16 +47,16 @@ void lollapatuza::hackear(Persona per, Producto producto){
     //Crea un iterador al dicc(idPuesto, *puesto) para obtener el de menor id
     map<IdPuesto, puesto*>::iterator itPuesto = _hackeables.at(per).at(producto).begin();//O(log(A)+log(I))
     //Guarda una copia del puntero al puesto de menor id
-    puesto* puesto = itPuesto->second;                                          //O(1)
-    bool dejaDeSerHackeable = puesto->reponerItem(producto,per);        //O(log(A)+log(I))
+    puesto* puesto = itPuesto->second;                                           //O(1)
+    bool dejaDeSerHackeable = puesto->reponerItem(producto,per);         //O(log(A)+log(I))
     if(dejaDeSerHackeable){
-        _hackeables[per][producto].erase(itPuesto);                     //O(log(A)+log(I)+log(P))
+        _hackeables[per][producto].erase(itPuesto);                      //O(log(A)+log(I)+log(P))
     }
     Nat gastoAnterior = _gastosPersona[per];                                    //O(log(A))
     Nat precioItem = puesto->precio(producto);                                  //O(log(I))
-    tuplaPersona<Nat,Persona> gastoPerAnt(gastoAnterior,per);              //O(1)
-    tuplaPersona<Nat,Persona> gastoPer(gastoAnterior-precioItem,per);      //O(1)
-    _colaDeGastos.actualizarOrden(gastoPerAnt, gastoPer);           //O(log(A))
+    tuplaPersona<Nat,Persona> gastoPerAnt(gastoAnterior,per);             //O(1)
+    tuplaPersona<Nat,Persona> gastoPer(gastoAnterior-precioItem,per);     //O(1)
+    _colaDeGastos.actualizarOrden(gastoPerAnt, gastoPer);          //O(log(A))
     _gastosPersona[per] = gastoAnterior-precioItem;                             //O(log(A))
 } //Complejidad: O(log(A)+log(I)+lo(P))
 
