@@ -91,7 +91,7 @@ const Nat puesto::gastosDe(Persona per)const{
     }
 }
 
-//Funcion que se realiza al hackear un lolla
+//Funcion que se realiza al hackear un Lollapatuza
 bool puesto::reponerItem(Producto producto, Persona per){
     bool dejaDeSerHackeable = false;                                                    //O(1)
     //Crea un puntero a la lista de iteradores

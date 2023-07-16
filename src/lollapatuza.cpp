@@ -15,25 +15,24 @@ lollapatuza::lollapatuza(map<IdPuesto, puesto>& puestos, const set<Persona>& per
 
 void lollapatuza::vender(IdPuesto idPuesto, Persona per, Producto producto, Nat cant){
     //Accede al puesto en cuestion
-    puesto* puesto = &_puestos[idPuesto];
+    puesto* puesto = &_puestos[idPuesto];                                                       //O(1)
     //Registra la venta en el puesto
-    pair<bool,Nat>infoVenta = puesto->vender(per,producto,cant);
+    pair<bool,Nat>infoVenta = puesto->vender(per,producto,cant);                                //O(log(A)+log(I))
     //Al vender en el puesto, da la informacion sobre el gasto de la venta y si se hizo sin descuento
-    bool eshackeable = infoVenta.first;
-    Nat gastoVentaEnPuesto = infoVenta.second;
-    if(eshackeable) {
-        _hackeables[per][producto][idPuesto] = puesto;
+    bool eshackeable = infoVenta.first;                                                         //O(1)
+    Nat gastoVentaEnPuesto = infoVenta.second;                                                  //O(1)
+    if(eshackeable) {                                                                           //O(1)
+        _hackeables[per][producto][idPuesto] = puesto;                                          //O(log(A)+log(I)+log(P))
     }
     //Actualiza el gasto total de la persona en el lollapatuza
-    Nat gastoAntEnLolla = _gastosPersona.at(per);
-    Nat gastoActualizado = gastoAntEnLolla + gastoVentaEnPuesto;
-    tuplaPersona<Nat,Persona> gastoPerAnt(gastoAntEnLolla,per);
-    tuplaPersona<Nat,Persona> gastoPer(gastoActualizado,per);
-    _colaDeGastos.actualizarOrden(gastoPerAnt, gastoPer);
+    Nat gastoAntEnLolla = _gastosPersona.at(per);                                            //log(A)
+    Nat gastoActualizado = gastoAntEnLolla + gastoVentaEnPuesto;                                //O(1)
+    tuplaPersona<Nat,Persona> gastoPerAnt(gastoAntEnLolla,per);                           //O(1)
+    tuplaPersona<Nat,Persona> gastoPer(gastoActualizado,per);                             //O(1)
+    _colaDeGastos.actualizarOrden(gastoPerAnt, gastoPer);                          //O(log(A))
     //Actualiza el puntero del gasto de la persona
-    _gastosPersona[per] = gastoActualizado;
-
-}
+    _gastosPersona[per] = gastoActualizado;                                                    //O(log(A))
+} //Complejidad: O(log(A)+log(I)+log(P))
 
 const map<IdPuesto, puesto> & lollapatuza::puestos() const {
     return _puestos;

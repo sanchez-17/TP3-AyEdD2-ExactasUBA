@@ -17,6 +17,7 @@ public:
     Nat stock(Producto producto)const;
     Nat descuento(Producto producto, Nat cant)const;
     const Nat gastosDe(Persona per)const;
+    // Repone la compra de un producto dada una persona
     bool reponerItem(Producto producto, Persona persona);
 
 private:
