@@ -1,7 +1,6 @@
 #ifndef FACHADA_LOLLAPATUZA_H
 #define FACHADA_LOLLAPATUZA_H
 
-//#include <set> ya esta en puesto.h
 #include "tipos.h"
 #include <string>
 #include <map>
@@ -36,13 +35,6 @@ public:
     set<IdPuesto> idsDePuestos() const;
 
 private:
-    /*  TODO: Completar.
-
-        En la parte privada deben guardarse una instancia de su  modulo Lollapatuza.
-        Por ejemplo:
-
-        Lollapatuza lolla;
-    */
     lollapatuza _lolla;
 };
 

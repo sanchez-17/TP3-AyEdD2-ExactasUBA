@@ -48,7 +48,7 @@ Nat FachadaLollapatuza::descuentoEnPuesto(IdPuesto idPuesto, const Producto &pro
 }
 
 const Nat FachadaLollapatuza::gastoEnPuesto(IdPuesto idPuesto, Persona persona) const {
-    const puesto *p = &_lolla.puestos().at(idPuesto);
+    const puesto* p = &_lolla.puestos().at(idPuesto);
     return p->gastosDe(persona);
 }
 
