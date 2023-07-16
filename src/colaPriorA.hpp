@@ -3,7 +3,7 @@ colaPriorA<alpha, beta>::colaPriorA():_cola(){}
 
 template<class alpha, class beta>
 const alpha colaPriorA<alpha, beta>::proximo()const{
-    // el iterador al ultimo
+    //Iterador al maximo
     auto it = _cola.rbegin();
     return (*it).first.getPersona();
 }
@@ -14,8 +14,6 @@ void colaPriorA<alpha, beta>::encolar(tuplaPersona<alpha, beta> tupla){
 
 template<class alpha, class beta>
 void colaPriorA<alpha, beta>::actualizarOrden(tuplaPersona<alpha, beta> tupla1, tuplaPersona<alpha, beta> tupla2){
-    // recibe el anterior y lo borra y agrega el nuevo.
-    // nunca va a haber repetidos pq las claves son unicas
     _cola.erase(tupla1);
     _cola[tupla2] = false;
 }
