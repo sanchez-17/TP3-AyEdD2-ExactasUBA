@@ -36,11 +36,11 @@ beta tuplaPersona<alpha, beta>::getPersona() const {
 }
 
 template<class alpha, class beta>
-bool tuplaPersona<alpha, beta>::operator==(tuplaPersona h) {
-    return (this->getGastoPersona() == h.getGastoPersona() && this->getPersona() == h.getPersona());
+bool tuplaPersona<alpha, beta>::operator==(tuplaPersona t) const{
+    return (this->getGastoPersona() == t.getGastoPersona() && this->getPersona() == t.getPersona());
 }
 
 template<class alpha, class beta>
-bool tuplaPersona<alpha, beta>::operator!=(tuplaPersona h) {
-    return (this->getGastoPersona() != h.getGastoPersona() && this->getPersona() != h.getPersona());
+bool tuplaPersona<alpha, beta>::operator!=(tuplaPersona t) const{
+    return (this->getGastoPersona() != t.getGastoPersona() || this->getPersona() != t.getPersona());
 }

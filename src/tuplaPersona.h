@@ -9,13 +9,13 @@ public:
     tuplaPersona();
     tuplaPersona(alpha gastoPersona, beta persona);
 
-    bool operator>(const tuplaPersona& h) const;
-    bool operator<(const tuplaPersona& h) const;
-    bool operator == (tuplaPersona h);
+    bool operator>(const tuplaPersona& t) const;
+    bool operator<(const tuplaPersona& t) const;
+    bool operator == (tuplaPersona t) const;
     alpha getGastoPersona() const;
     beta getPersona() const;
     tuplaPersona& operator=(const tuplaPersona& aCopiar);
-    bool operator != (tuplaPersona h);
+    bool operator != (tuplaPersona t) const;
 
 private:
     alpha _a;

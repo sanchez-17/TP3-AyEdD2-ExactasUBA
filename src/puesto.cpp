@@ -1,16 +1,15 @@
 #include "puesto.h"
 
 puesto::puesto() = default;
-//puesto::puesto(){}
 
 puesto::puesto(Menu& menu, Stock& stock, Promociones& promos):_menu(menu),
                                                               _stock(stock){
     map<Producto, vector<Nat>> promociones;
     for (auto it: promos){
         Nat stockItem = stock[it.first];
-        vector<Nat> arr (stockItem+1,0); //vector<Nat>(stockItem+1);
+        vector<Nat> arr (stockItem+1,0);
         map<Nat, Nat> promosPorCant = it.second;
-        auto itCantXPrm = promosPorCant.begin();//primera clave es la minima
+        auto itCantXPrm = promosPorCant.begin();//La primera clave es la minima
         vector<Nat> cantidades;
         while(itCantXPrm != promosPorCant.end()){
             arr[itCantXPrm->first] = itCantXPrm->second;
@@ -34,26 +33,26 @@ puesto::puesto(Menu& menu, Stock& stock, Promociones& promos):_menu(menu),
 }
 
 pair<bool,Nat> puesto::vender(Persona per, Producto producto, Nat cant){
-    Nat puestoHackeable = false;                                                            //O(1)
-    Nat descuento = this->descuento(producto,cant);                                         //O(log(I))
+    Nat puestoHackeable = false;
+    Nat descuento = this->descuento(producto,cant);
     //Calculamos el gasto a realizar con el descuento correspondiente
-    Nat precio = this->precio(producto);                                                    //O(log(I))
-    Nat gastoVentaP = floor(precio * cant * (100 - descuento) / 100);                     //O(1)
+    Nat precio = this->precio(producto);
+    Nat gastoVentaP = floor(precio * cant * (100 - descuento) / 100);
     //Actualizamos el stock del item en el puesto
-    _stock[producto] = stock(producto) - cant;                                              //O(log(I))
+    _stock[producto] = stock(producto) - cant;
     //Actualizamos el gasto acumulado de la persona
     Nat gastoAcumuladoEnPuesto = gastoVentaP;
     if (_gastosDe.count(per) == 1) { gastoAcumuladoEnPuesto += _gastosDe.at(per); }
-    this->_gastosDe[per] = gastoAcumuladoEnPuesto;                                                     //O(log(A))
-    _ventas[per].push_back(make_pair(producto,cant));                               //O(log(A))
+    this->_gastosDe[per] = gastoAcumuladoEnPuesto;
+    _ventas[per].push_back(make_pair(producto,cant));
     if(descuento == 0){
-        auto itVenta = --_ventas[per].end();                                      //O(1)
-        _ventasSinDesc[per][producto].push_back(itVenta);                                 //O(log(A)+log(I))
-        puestoHackeable = true;                                                             //O(1)
+        auto itVenta = --_ventas[per].end();
+        _ventasSinDesc[per][producto].push_back(itVenta);
+        puestoHackeable = true;
     }
     pair<bool,Nat> infoVenta;
     infoVenta.first = puestoHackeable;
-    infoVenta.second = gastoVentaP;                                                           //O(1)
+    infoVenta.second = gastoVentaP;
     return infoVenta;
 }
 
@@ -92,21 +91,21 @@ const Nat puesto::gastosDe(Persona per)const{
     }
 }
 
-//funcion que se realiza al hackear un lolla
+//Funcion que se realiza al hackear un lolla
 bool puesto::reponerItem(Producto producto, Persona per){
     bool dejaDeSerHackeable = false;                                                    //O(1)
-    // creo un puntero¿ a la lista de iteradores
+    //Crea un puntero a la lista de iteradores
     ventasDeProd* listaVentas = &_ventasSinDesc[per][producto];                         //O(log(A)+log(I))
-    // creo un iterador a la lista de ventas
+    //Crea un iterador a la lista de ventas
     ventasDeProd::iterator itListaVentas = listaVentas->begin();                        //O(1)
-    // me guardo el primer iterador de la lista
+    //Guarda el primer iterador de la lista
     itLista itVenta = *itListaVentas;                                                   //O(1)
-    // si la cantidad comprada NO es 1
+    //Si la cantidad comprada no es 1:
     if ( std::get<1>(*itVenta) != 1){                                               //O(1)
-        //Cambio la tupla a traves del iterador
+        //Cambia la tupla a traves del iterador
         *itVenta = tuple<Persona,Nat>(producto,  std::get<1>(*itVenta) - 1);  //O(1)
     }else{
-        //Elimino la venta
+        //Elimina la venta
         _ventas[per].erase(itVenta);                                            //O(log(A))
         if(listaVentas->size() == 1){                                                  //O(1)
             _ventasSinDesc[per][producto] = ventasDeProd();                            //O(log(A)+log(I))

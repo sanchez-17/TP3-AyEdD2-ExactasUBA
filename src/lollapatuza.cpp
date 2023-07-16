@@ -44,9 +44,9 @@ const set<Persona>& lollapatuza::personas() const{
 }
 
 void lollapatuza::hackear(Persona per, Producto producto){
-    // se crea un iterador al dicc(idPuesto, *puesto) para obtener el de menor id
+    //Crea un iterador al dicc(idPuesto, *puesto) para obtener el de menor id
     map<IdPuesto, puesto*>::iterator itPuesto = _hackeables.at(per).at(producto).begin();//O(log(A)+log(I))
-    //me guardo una copia del puntero al puesto de menor id
+    //Guarda una copia del puntero al puesto de menor id
     puesto* puesto = itPuesto->second;                                          //O(1)
     bool dejaDeSerHackeable = puesto->reponerItem(producto,per);        //O(log(A)+log(I))
     if(dejaDeSerHackeable){
@@ -58,8 +58,7 @@ void lollapatuza::hackear(Persona per, Producto producto){
     tuplaPersona<Nat,Persona> gastoPer(gastoAnterior-precioItem,per);      //O(1)
     _colaDeGastos.actualizarOrden(gastoPerAnt, gastoPer);           //O(log(A))
     _gastosPersona[per] = gastoAnterior-precioItem;                             //O(log(A))
-
-}
+} //Complejidad: O(log(A)+log(I)+lo(P))
 
 const Nat lollapatuza::gastoTotal(Persona per)const{
     return _gastosPersona.at(per);
