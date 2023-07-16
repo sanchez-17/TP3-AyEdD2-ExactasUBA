@@ -140,14 +140,14 @@ TEST_F(LollaTest, vender_sin_descuento) {
 
 TEST_F(LollaTest, vender_dos_veces_mismo_producto_persona_y_puesto) {
     FachadaLollapatuza l(personas, puestos);
-    l.registrarCompra(8, 3, 4, 2);//gasto=2000
-    l.registrarCompra(8, 3, 2, 2);//gasto=1000
+    l.registrarCompra(8, 3, 4, 2);
+    l.registrarCompra(8, 3, 2, 2);
 
     EXPECT_EQ(l.gastoTotal(2), 0);
     EXPECT_EQ(l.gastoTotal(4), 0);
     EXPECT_EQ(l.gastoTotal(8), 3000);
     EXPECT_EQ(l.gastoTotal(9), 0);
-    EXPECT_EQ(l.mayorGastador(), 8); //da 9
+    EXPECT_EQ(l.mayorGastador(), 8);
     EXPECT_EQ(l.menorStock(3), 2);
     EXPECT_EQ(l.menorStock(4), 2);
     EXPECT_EQ(l.menorStock(5), 7);
@@ -245,7 +245,7 @@ TEST_F(LollaTest, vender_dos_veces_distinta_persona) {
     for (const Persona& p : personas) {
         EXPECT_EQ(l.gastoEnPuesto(6, p), 0);
     }
-    EXPECT_EQ(l.gastoEnPuesto(7, 2), 7500); //da 0
+    EXPECT_EQ(l.gastoEnPuesto(7, 2), 7500);
     EXPECT_EQ(l.gastoEnPuesto(7, 4), 15000);
     EXPECT_EQ(l.gastoEnPuesto(7, 8), 0);
     EXPECT_EQ(l.gastoEnPuesto(7, 9), 0);
@@ -287,7 +287,7 @@ TEST_F(LollaTest, vender_dos_veces_distinto_puesto) {
     }
     EXPECT_EQ(l.gastoEnPuesto(7, 2), 0);
     EXPECT_EQ(l.gastoEnPuesto(7, 4), 0);
-    EXPECT_EQ(l.gastoEnPuesto(7, 8), 6000); //da 1
+    EXPECT_EQ(l.gastoEnPuesto(7, 8), 6000);
     EXPECT_EQ(l.gastoEnPuesto(7, 9), 0);
     EXPECT_EQ(l.idsDePuestos(), idsPuestos);
 }
