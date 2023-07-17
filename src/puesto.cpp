@@ -44,15 +44,14 @@ pair<bool,Nat> puesto::vender(Persona per, Producto producto, Nat cant) {//Compl
     //Actualizamos el gasto acumulado de la persona
     Nat gastoAcumuladoEnPuesto = gastoVentaP;                                               //O(1)
     if (_gastosDe.count(per) == 1) { gastoAcumuladoEnPuesto += _gastosDe.at(per); }
-    //_gastosDe.insert(pair<Persona,Nat>(per,gastoAcumuladoEnPuesto));
-    this->_gastosDe[per] = gastoAcumuladoEnPuesto; //se rompe                                     //O(log(A))
+    _gastosDe[per] = gastoAcumuladoEnPuesto; //se rompe                               //O(log(A))
     _ventas[per].push_back(make_pair(producto,cant));                               //O(log(A))
     if(descuento == 0){
         auto itVenta = --_ventas[per].end();                                      //O(1)
         _ventasSinDesc[per][producto].push_back(itVenta);                                 //O(log(A)+log(I))
         puestoHackeable = true;                                                             //O(1)
     }
-    pair<bool,Nat> infoVenta(puestoHackeable,gastoVentaP);                           //O(1)
+    pair<bool,Nat> infoVenta(puestoHackeable,gastoVentaP);                            //O(1)
     return infoVenta;                                                                       //O(1)
 }
 
@@ -103,7 +102,6 @@ bool puesto::reponerItem(Producto producto, Persona per){
     // si la cantidad comprada NO es 1
     if ( std::get<1>(*itVenta) != 1){
         //Cambio la tupla a traves del iterador
-        //*itVenta = tuple<Persona,Nat>(per,  std::get<1>(*itVenta) - 1); //aca en vez de per no es producto?
         *itVenta = tuple<Persona,Nat>(producto,  std::get<1>(*itVenta) - 1);
     }else{
         //Elimino la venta
@@ -114,7 +112,7 @@ bool puesto::reponerItem(Producto producto, Persona per){
         }
         _ventasSinDesc[per][producto].erase(itListaVentas);
     }
-    _stock[producto] += 1; //ojo we
+    _stock[producto] += 1;
     _gastosDe[per] -= _menu.at(producto);
     return dejaDeSerHackeable;
 }

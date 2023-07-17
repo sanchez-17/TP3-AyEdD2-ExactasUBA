@@ -12,14 +12,14 @@ public:
     const map<IdPuesto, puesto>& puestos() const;
     const set<Persona>& personas() const;
     void hackear(Persona per, Producto producto);
-    Nat gastoTotal(Persona per) const;
+    const Nat gastoTotal(Persona per) const;
     const Persona quienGastoMas() const;
     IdPuesto menorStock(Producto producto) const;
 
 private:
     set<Persona> _personas;
-    map<Persona, Nat> _punterosAGastos;
-    colaPriorA<Nat, Persona> _gastosPersona;
+    map<Persona, Nat> _gastosPorPersona;
+    colaPriorA<Nat, Persona> _colaDeGastos;
     map<IdPuesto, puesto> _puestos;
     map<Persona,map<Producto,map<IdPuesto, puesto*>>>  _hackeables;
 };
