@@ -83,7 +83,7 @@ Nat puesto::stock(Producto producto)const{
     }
 }
 
-Nat puesto::descuento(Producto producto, Nat cant){
+Nat puesto::descuento(Producto producto, Nat cant)const {
     if(_descuentos.count(producto)>0){
         return _descuentos.at(producto)[cant];
     }else{
@@ -91,7 +91,7 @@ Nat puesto::descuento(Producto producto, Nat cant){
     }
 }
 
-Nat puesto::gastosDe(Persona per){
+Nat puesto::gastosDe(Persona per)const {
     if(_gastosDe.count(per)==1){
         return _gastosDe.at(per);
     } else {

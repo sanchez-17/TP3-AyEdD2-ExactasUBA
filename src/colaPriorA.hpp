@@ -1,4 +1,7 @@
 template<class alpha, class beta>
+colaPriorA<alpha,beta>::colaPriorA() = default;
+
+template<class alpha, class beta>
 colaPriorA<alpha,beta>::colaPriorA(int cota):_heap(vector<pair<alpha, pair<beta,Nat*>>>(cota)),_cota(cota),_longitud(0),_indices(){}
 
 template<class alpha, class beta>
@@ -21,13 +24,11 @@ alpha colaPriorA<alpha,beta>::encolar(tuplaPersona<alpha, beta> gastoActualizado
             index = heapifyDown(i);
         }
     }else{
-        _longitud++;
-        _indices[gastoActualizado.getPersona()] = _longitud-1;
+        _indices[gastoActualizado.getPersona()] = _longitud;
         Nat* it = &_indices.at(gastoActualizado.getPersona());
-        //pair<typename map<beta,Nat>::iterator,bool> it = _indices.insert(pair<Persona,Nat>(gastoActualizado.getPersona(),_longitud-1));
-
-        _heap[_longitud - 1] = make_pair(gastoActualizado.getGastoPersona(), make_pair(gastoActualizado.getPersona(),it));
-        index = heapifyUp( _longitud - 1);
+        _heap[_longitud] = make_pair(gastoActualizado.getGastoPersona(), make_pair(gastoActualizado.getPersona(),it));
+        index = heapifyUp( _longitud);
+        _longitud++;
     }
     return _heap[index].first;
 }

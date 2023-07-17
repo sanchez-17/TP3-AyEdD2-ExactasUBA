@@ -20,8 +20,7 @@ TEST(nuestroLollaTest, bugacho_raro) {
     map<IdPuesto,puesto>  dickPuesto;
     dickPuesto[2] = nuevoPuesto;
 
-    lollapatuza lol;
-    lol.crearLolla(dickPuesto,peoples);
+    lollapatuza lol(dickPuesto,peoples);
 
     lol.vender(2,8,3,2); //1000
     EXPECT_EQ(lol.gastoTotal(8),1000);

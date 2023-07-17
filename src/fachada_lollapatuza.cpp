@@ -9,7 +9,7 @@ FachadaLollapatuza::FachadaLollapatuza(const set<Persona> &personas, const map<I
         Promociones promos = it->second.promociones;
         puestos.insert(make_pair(it->first, nuevoPuesto.crearPuesto(menu, stock, promos)));
     }
-    _lolla.crearLolla(puestos, personas);
+    _lolla = lollapatuza(puestos, personas);
 }
 
 void FachadaLollapatuza::registrarCompra(Persona persona, Producto producto, Nat cant, IdPuesto idPuesto) {
@@ -37,16 +37,17 @@ const set<Persona> &FachadaLollapatuza::personas() const {
 }
 
 Nat FachadaLollapatuza::stockEnPuesto(IdPuesto idPuesto, const Producto &producto) const {
-    puesto* p = &_lolla.puestos()[idPuesto];
+    const puesto* p = &_lolla.puestos().at(idPuesto);
     return p->stock(producto);
 }
 
 Nat FachadaLollapatuza::descuentoEnPuesto(IdPuesto idPuesto, const Producto &producto, Nat cantidad) const {
-    return (_lolla.puestos().at(idPuesto)).descuento(producto, cantidad);
+    const puesto* p = &_lolla.puestos().at(idPuesto);
+    return p->descuento(producto,cantidad);
 }
 
 Nat FachadaLollapatuza::gastoEnPuesto(IdPuesto idPuesto, Persona persona) const {
-    puesto *p = &_lolla.puestos().at(idPuesto);
+    const puesto *p = &_lolla.puestos().at(idPuesto);
     return p->gastosDe(persona);
 }
 

@@ -16,8 +16,8 @@ public:
     set<Producto> menu()const;
     Nat precio(Producto producto)const;
     Nat stock(Producto producto)const;
-    Nat descuento(Producto producto, Nat cant);
-    Nat gastosDe(Persona per);
+    Nat descuento(Producto producto, Nat cant)const ;
+    Nat gastosDe(Persona per)const ;
     bool reponerItem(Producto producto, Persona persona);
 
 private:
