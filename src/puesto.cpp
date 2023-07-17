@@ -41,7 +41,7 @@ puesto puesto::crearPuesto(Menu menu, Stock stock, Promociones promos){
     return puesto(menu,stock,promociones);
 }
 
-tuple<bool,Nat> puesto::vender(Persona per, Producto producto, Nat cant) {//Complejidad:O(log(A)+log(I))
+pair<bool,Nat> puesto::vender(Persona per, Producto producto, Nat cant) {//Complejidad:O(log(A)+log(I))
     Nat puestoHackeable = false;                                                            //O(1)
     Nat descuento = this->descuento(producto,cant);                                         //O(log(I))
     //Calculamos el gasto a realizar con el descuento correspondiente
@@ -60,7 +60,7 @@ tuple<bool,Nat> puesto::vender(Persona per, Producto producto, Nat cant) {//Comp
         _ventasSinDesc[per][producto].push_back(itVenta);                                 //O(log(A)+log(I))
         puestoHackeable = true;                                                             //O(1)
     }
-    tuple<bool,Nat> infoVenta(puestoHackeable,gastoVentaP);                           //O(1)
+    pair<bool,Nat> infoVenta(puestoHackeable,gastoVentaP);                           //O(1)
     return infoVenta;                                                                       //O(1)
 }
 

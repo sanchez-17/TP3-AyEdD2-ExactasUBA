@@ -13,7 +13,7 @@ public:
     colaPriorA(int cota);
 
     // Obtiene una referencia constante al próximo elemento.
-    const tuplaPersona<alpha, beta> proximo() const;
+    const beta proximo() const;
 
     // Encola un elemento en la cola.
     // PRE: No hay "cota" cantidad de elementos en la cola.
@@ -35,7 +35,6 @@ private:
     //Funciones privadas
     Nat heapifyUp(Nat i);
     Nat heapifyDown(Nat i);
-    pair<alpha, beta> obtenerTupla(pair<alpha, typename map<beta,Nat>::iterator> t);
 };
 #include "colaPriorA.hpp"
 #endif // COLA_H

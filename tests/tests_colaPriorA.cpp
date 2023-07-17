@@ -5,9 +5,9 @@
 TEST(colaPriorATest, test_general) {
     colaPriorA<Nat,Persona> c(3);
     EXPECT_TRUE(c.vacia());
-    tuplaPersona<Nat, Persona> per1(1,1);
-    tuplaPersona<Nat, Persona> per2(2,3);
-    tuplaPersona<Nat, Persona> per3(3,2);
+    tuplaPersona<Nat, Persona> per1(10,1);
+    tuplaPersona<Nat, Persona> per2(30,2);
+    tuplaPersona<Nat, Persona> per3(50,3);
 
     c.encolar(per3);
     EXPECT_FALSE(c.vacia());
@@ -15,16 +15,13 @@ TEST(colaPriorATest, test_general) {
     c.encolar(per1);
     c.encolar(per2);
     //La persona que mas gasto es per2 con gasto:3
-    EXPECT_EQ(c.proximo().getGastoPersona(),3);
-    EXPECT_EQ(c.proximo().getPersona(),2);
+    EXPECT_EQ(c.proximo(),3);
     c.desencolar();
     //Ahora la persona que mas gasto es per3 con gasto:2
-    EXPECT_EQ(c.proximo().getGastoPersona(),2);
-    EXPECT_EQ(c.proximo().getPersona(),3);
+    EXPECT_EQ(c.proximo(),2);
     c.desencolar();
     //Ahora la persona que mas gasto es per1 con gasto:1
-    EXPECT_EQ(c.proximo().getGastoPersona(),1);
-    EXPECT_EQ(c.proximo().getPersona(),1);
+    EXPECT_EQ(c.proximo(),1);
     c.desencolar();
     EXPECT_TRUE(c.vacia());
 
@@ -41,7 +38,7 @@ TEST(colaPriorATest, encolarUno) {
     tuplaPersona<Nat, Persona> per10(100,10);
     q.encolar(per10);
     ASSERT_FALSE(q.vacia());
-    ASSERT_TRUE(q.proximo().getPersona() == 10 && q.proximo().getGastoPersona()==100);
+    ASSERT_EQ(q.proximo(),10);
 }
 
 TEST(colaPriorATest, encolarMenor){
@@ -50,15 +47,15 @@ TEST(colaPriorATest, encolarMenor){
     tuplaPersona<Nat, Persona> per1(100,1);
     q.encolar(per1);
     ASSERT_FALSE(q.vacia());
-    ASSERT_TRUE(q.proximo().getPersona() == 1 && q.proximo().getGastoPersona()==100);
+    ASSERT_EQ(q.proximo(),1);
     tuplaPersona<Nat, Persona> per2(50,2);
     q.encolar(per2);
     ASSERT_FALSE(q.vacia());
-    ASSERT_TRUE(q.proximo().getPersona() == 1 && q.proximo().getGastoPersona()==100);
+    ASSERT_EQ(q.proximo(),1);
     tuplaPersona<Nat, Persona> per3(51,2);
     q.encolar(per3);
     ASSERT_FALSE(q.vacia());
-    ASSERT_TRUE(q.proximo().getPersona() == 1 && q.proximo().getGastoPersona()==100);
+    ASSERT_EQ(q.proximo(),1);
 }
 
 TEST(colaPriorATest, encolarMayor) {
@@ -68,19 +65,17 @@ TEST(colaPriorATest, encolarMayor) {
     tuplaPersona<Nat, Persona> per1(100,1);
     q.encolar(per1);
     ASSERT_FALSE(q.vacia());
-    ASSERT_TRUE(q.proximo().getPersona() == 1 && q.proximo().getGastoPersona()==100);
+    ASSERT_EQ(q.proximo(),1);
 
     tuplaPersona<Nat, Persona> per2(200,2);
     q.encolar(per2);
     ASSERT_FALSE(q.vacia());
-    ASSERT_TRUE(q.proximo().getPersona() == 2);
-    ASSERT_TRUE(q.proximo().getGastoPersona()==200);
-    //ASSERT_TRUE(q.proximo().getPersona() == 2 && q.proximo().getGastoPersona()==200);
+    ASSERT_EQ(q.proximo(),2);
 
     tuplaPersona<Nat, Persona> per3(300,3);
     q.encolar(per3);
     ASSERT_FALSE(q.vacia());
-    ASSERT_TRUE(q.proximo().getPersona() == 3 && q.proximo().getGastoPersona()==300);
+    ASSERT_EQ(q.proximo(),3);
 }
 
 TEST(colaPriorATest, desencolarMenor) {
@@ -96,19 +91,19 @@ TEST(colaPriorATest, desencolarMenor) {
     q.encolar(per2);
     q.encolar(per3);
     q.encolar(per1);
-    ASSERT_TRUE(q.proximo().getPersona() == 5 && q.proximo().getGastoPersona()==500);
+    ASSERT_EQ(q.proximo(),5);
     ASSERT_FALSE(q.vacia());
     q.desencolar();
-    ASSERT_TRUE(q.proximo().getPersona() == 4 && q.proximo().getGastoPersona()==400);
+    ASSERT_EQ(q.proximo(),4);
     ASSERT_FALSE(q.vacia());
     q.desencolar();
-    ASSERT_TRUE(q.proximo().getPersona() == 3 && q.proximo().getGastoPersona()==300);
+    ASSERT_EQ(q.proximo(),3);
     ASSERT_FALSE(q.vacia());
     q.desencolar();
-    ASSERT_TRUE(q.proximo().getPersona() == 2 && q.proximo().getGastoPersona()==200);
+    ASSERT_EQ(q.proximo(),2);
     ASSERT_FALSE(q.vacia());
     q.desencolar();
-    ASSERT_TRUE(q.proximo().getPersona() == 1 && q.proximo().getGastoPersona()==100);
+    ASSERT_EQ(q.proximo(),1);
     ASSERT_FALSE(q.vacia());
     q.desencolar();
     ASSERT_TRUE(q.vacia());
@@ -129,20 +124,19 @@ TEST(colaPriorATest, desencolarMayor) {
     q.encolar(per2);
     q.encolar(per4);
     q.encolar(per5);
-    EXPECT_EQ(q.proximo().getGastoPersona(), 500); //aca
-    EXPECT_EQ(q.proximo().getPersona(), 5);
+    ASSERT_EQ(q.proximo(),5);
     ASSERT_FALSE(q.vacia());
     q.desencolar();
-    ASSERT_TRUE(q.proximo().getPersona() == 4 && q.proximo().getGastoPersona()==400);
+    ASSERT_EQ(q.proximo(),4);
     ASSERT_FALSE(q.vacia());
     q.desencolar();
-    ASSERT_TRUE(q.proximo().getPersona() == 3 && q.proximo().getGastoPersona()==300);
+    ASSERT_EQ(q.proximo(),3);
     ASSERT_FALSE(q.vacia());
     q.desencolar();
-    ASSERT_TRUE(q.proximo().getPersona() == 2 && q.proximo().getGastoPersona()==200);
+    ASSERT_EQ(q.proximo(),2);
     ASSERT_FALSE(q.vacia());
     q.desencolar();
-    ASSERT_TRUE(q.proximo().getPersona() == 1 && q.proximo().getGastoPersona()==100);
+    ASSERT_EQ(q.proximo(),1);
     ASSERT_FALSE(q.vacia());
     q.desencolar();
     ASSERT_TRUE(q.vacia());
@@ -154,7 +148,7 @@ TEST(colaPriorATest,desencolarUno){
     tuplaPersona<Nat, Persona> per10(100,10);
     q.encolar(per10);
     ASSERT_FALSE(q.vacia());
-    ASSERT_TRUE(q.proximo().getPersona() == 10 && q.proximo().getGastoPersona()==100);
+    ASSERT_EQ(q.proximo(),10);
     q.desencolar();
     ASSERT_TRUE(q.vacia());
 }
@@ -234,22 +228,19 @@ TEST(colaPriorATest, simulacro_hackear) {
     EXPECT_EQ(gasto4, 0);
     EXPECT_EQ(gasto8, 0);
     EXPECT_EQ(gasto9, 0);
-    EXPECT_EQ(q.proximo().getGastoPersona(), 0);
-    EXPECT_EQ(q.proximo().getPersona(), 9);
+    ASSERT_EQ(q.proximo(),9);
     // 8 compra dos veces
     // 1ra compra
     tuplaPersona<Nat, Persona> per8compra1(8000,8);
     gasto8 = q.encolar(per8compra1);
     EXPECT_EQ(gasto8, 8000);
-    EXPECT_EQ(q.proximo().getGastoPersona(), 8000);
-    EXPECT_EQ(q.proximo().getPersona(), 8);
+    ASSERT_EQ(q.proximo(),8);
     // 2da compra.
     // en vender ya calculamos cuanto seria el total. compra algo de 3500. por lo cual encolo 11500
     tuplaPersona<Nat, Persona> per8compra2(11500,8); //no c reescribir tuplasPersonas q.q
     gasto8 = q.encolar(per8compra2);
     EXPECT_EQ(gasto8, 11500);
-    EXPECT_EQ(q.proximo().getGastoPersona(), 11500);
-    EXPECT_EQ(q.proximo().getPersona(), 8);
+    ASSERT_EQ(q.proximo(),8);
     // hackeo los 3500. regresa a tener 8000
     // si falla aca es el heapifyDown
     // si falla antes sigue siendo heapifyUp
@@ -257,6 +248,5 @@ TEST(colaPriorATest, simulacro_hackear) {
     tuplaPersona<Nat, Persona> per8hackeo(8000,8);
     gasto8 = q.encolar(per8hackeo);
     EXPECT_EQ(gasto8, 8000);
-    EXPECT_EQ(q.proximo().getGastoPersona(), 8000);
-    EXPECT_EQ(q.proximo().getPersona(), 8);
+    ASSERT_EQ(q.proximo(),8);
 }

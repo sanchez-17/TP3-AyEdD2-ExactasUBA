@@ -13,7 +13,7 @@ public:
     const set<Persona>& personas() const;
     void hackear(Persona per, Producto producto);
     Nat gastoTotal(Persona per) const;
-    Persona quienGastoMas() const;
+    const Persona quienGastoMas() const;
     IdPuesto menorStock(Producto producto) const;
 
 private:

@@ -9,29 +9,25 @@ _hackeables(){}
 
 
 lollapatuza::lollapatuza(map<IdPuesto, puesto>& puestos,const set<Persona>& personas){
-    colaPriorA<Nat, Persona> gastosPersona(personas.size());
-    map<Persona, Nat> punterosAGastos;
+    _gastosPersona = colaPriorA<Nat, Persona>(personas.size());
     for(Persona per:personas){
         tuplaPersona<Nat,Persona> tuplaPersona(0,per);
-        Nat gastoActualizado = gastosPersona.encolar(tuplaPersona);
-        punterosAGastos[per] = gastoActualizado;
+        Nat gastoActualizado = _gastosPersona.encolar(tuplaPersona);
+        _punterosAGastos[per] = gastoActualizado;
     }
     _personas = personas;
     _puestos = puestos;
-    _punterosAGastos = punterosAGastos;
-    _gastosPersona = gastosPersona;
 }
 
 
 void lollapatuza::vender(IdPuesto idPuesto, Persona per, Producto producto, Nat cant){
-
     //Accedo al puesto en cuestion
     puesto* puesto = &_puestos[idPuesto];                                               //O(1)
     //Registro la venta en el puesto
-    tuple<bool,Nat>infoVenta = puesto->vender(per,producto,cant);                       //O(log(A)+log(I))
+    pair<bool,Nat>infoVenta = puesto->vender(per,producto,cant);                       //O(log(A)+log(I))
     //Al vender en el puesto, me da la informacion sobre el gasto de la venta y si se hizo sin descuento.
-    bool eshackeable = get<0>(infoVenta);                                            //O(1)
-    Nat gastoVentaEnPuesto = get<1>(infoVenta);                                      //O(1)
+    bool eshackeable = infoVenta.first;                                            //O(1)
+    Nat gastoVentaEnPuesto = infoVenta.second;                                      //O(1)
     if(eshackeable) {
         _hackeables[per][producto][idPuesto] = puesto;                                  //O(log(A)+log(I)+log(P))
     }
@@ -105,9 +101,8 @@ Nat lollapatuza::gastoTotal(Persona per)const{
     return _punterosAGastos.at(per);
 }
 
-Persona lollapatuza::quienGastoMas()const{
-    Persona per = _gastosPersona.proximo().getPersona();
-    return per;
+const Persona lollapatuza::quienGastoMas()const{
+    return _gastosPersona.proximo();
 }
 
 IdPuesto lollapatuza::menorStock(Producto producto) const{
