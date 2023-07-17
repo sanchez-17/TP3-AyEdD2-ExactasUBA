@@ -52,7 +52,7 @@ void lollapatuza::hackear(Persona per, Producto producto){
     }
     Nat gastoAnterior = _gastosPorPersona[per];
     Nat precioItem = puesto->precio(producto);
-    tuplaPersona<Nat,Persona> gastoPer(gastoAnterior-precioItem,per); // no es solo por el precio del prod, es por la cant comprada tmb. igual parece q da bien
+    tuplaPersona<Nat,Persona> gastoPer(gastoAnterior-precioItem,per);
     Nat gastoActual = _colaDeGastos.encolar(gastoPer);
     _gastosPorPersona[per] = gastoActual;
 

@@ -116,7 +116,7 @@ TEST(colaPriorATest, desencolarMayor) {
     ASSERT_TRUE(q.vacia());
     tuplaPersona<Nat, Persona> per1(100,1);
     tuplaPersona<Nat, Persona> per2(200,2);
-    tuplaPersona<Nat, Persona> per3(300,3); //da este
+    tuplaPersona<Nat, Persona> per3(300,3);
     tuplaPersona<Nat, Persona> per4(400,4);
     tuplaPersona<Nat, Persona> per5(500,5);
     q.encolar(per1);
@@ -209,9 +209,6 @@ TEST(colaPriorATest, punterosCorrectos_valores_modificados) {
     EXPECT_EQ(puntero50, 500);
 }
 
-// ??????
-// anda bien
-// ?????????entonces pq anda mal en lolla
 TEST(colaPriorATest, simulacro_hackear) {
     colaPriorA<Nat,Persona> q(4);
     ASSERT_TRUE(q.vacia());
@@ -237,14 +234,11 @@ TEST(colaPriorATest, simulacro_hackear) {
     ASSERT_EQ(q.proximo(),8);
     // 2da compra.
     // en vender ya calculamos cuanto seria el total. compra algo de 3500. por lo cual encolo 11500
-    tuplaPersona<Nat, Persona> per8compra2(11500,8); //no c reescribir tuplasPersonas q.q
+    tuplaPersona<Nat, Persona> per8compra2(11500,8);
     gasto8 = q.encolar(per8compra2);
     EXPECT_EQ(gasto8, 11500);
     ASSERT_EQ(q.proximo(),8);
     // hackeo los 3500. regresa a tener 8000
-    // si falla aca es el heapifyDown
-    // si falla antes sigue siendo heapifyUp
-    // si falla los 2 bueno...........
     tuplaPersona<Nat, Persona> per8hackeo(8000,8);
     gasto8 = q.encolar(per8hackeo);
     EXPECT_EQ(gasto8, 8000);
