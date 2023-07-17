@@ -63,22 +63,15 @@ Nat colaPriorA<alpha,beta>::heapifyUp(Nat i) {
         tuplaPersona<alpha,beta> tuplaPadre((*_heap[indexPadre]).first,(*_heap[indexPadre]).second->first);
 
         while (tuplaI > tuplaPadre && i!=0){
-            //indexPadre = floor((i-1)/2);
             //Intercambiamos indices, y luego las tuplas con los indices correspondientes.
             (*_heap[i]).second->second = indexPadre;
             (*_heap[indexPadre]).second->second = i;
             swap(_heap[i], _heap[indexPadre]);
-            i = indexPadre; //ahora yo soy mi padre
-            if(indexPadre != 0){ //es necesario este if? yo pq capaz la cuenta se rompe
-                indexPadre = floor((i-1)/2); //quiero mi nuevo padre
-                //y me creo a la tupla padre, ahora con el indice correcto
+            i = indexPadre;
+            if(indexPadre != 0){
+                indexPadre = floor((i-1)/2);
                 tuplaPadre = tuplaPersona<alpha,beta>((*_heap[indexPadre]).first,(*_heap[indexPadre]).second->first);
             }
-            //else: ya no quiero q hagas nada, ya estoy en el 0
-            //pero esto deberia detectarlo la guarda del while
-
-            //tuplaPadre = tuplaPersona<alpha,beta>(_heap[indexPadre].first,_heap[indexPadre].second->first);
-            //i = indexPadre;
         }
     }
     return i;
