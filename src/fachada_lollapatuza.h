@@ -1,7 +1,6 @@
 #ifndef FACHADA_LOLLAPATUZA_H
 #define FACHADA_LOLLAPATUZA_H
 
-//#include <set> ya esta en puesto.h
 #include "tipos.h"
 #include <string>
 #include <map>
