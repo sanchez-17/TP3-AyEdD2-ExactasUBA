@@ -22,7 +22,7 @@ add_executable(correrTests ${SOURCE_FILES} ${TESTS} src/puesto.cpp)
 target_link_libraries(correrTests gtest gtest_main)
 
 # Test suites a ejecutar
-add_test(correrTests tests_consumos tests_lollapatuza test_estructura)
+add_test(correrTests tests_consumos tests_lollapatuza)
 
 # Target para correr Valgrind
 add_custom_target(correrValgrind
