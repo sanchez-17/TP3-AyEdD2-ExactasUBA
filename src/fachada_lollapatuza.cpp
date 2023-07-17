@@ -7,7 +7,8 @@ FachadaLollapatuza::FachadaLollapatuza(const set<Persona> &personas, const map<I
         Menu menu = it->second.menu;
         Stock stock = it->second.stock;
         Promociones promos = it->second.promociones;
-        puestos.insert(make_pair(it->first, nuevoPuesto.crearPuesto(menu, stock, promos)));
+        puesto nuevoPuesto(menu, stock, promos);
+        puestos.insert(make_pair(it->first, nuevoPuesto));
     }
     _lolla = lollapatuza(puestos, personas);
 }

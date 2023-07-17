@@ -1,24 +1,15 @@
 #include "puesto.h"
 
-//puesto::puesto() = default;
-puesto::puesto(){}
+puesto::puesto() = default;
 
-puesto::puesto(Menu menu,Stock stock,map<Producto, vector<Nat>> promos):
-_menu(menu),
-_stock(stock),
-_descuentos(promos),
-_ventasSinDesc(),
-_ventas(),
-_gastosDe()
-{}
-
-puesto puesto::crearPuesto(Menu menu, Stock stock, Promociones promos){
+puesto::puesto(Menu& menu, Stock& stock, Promociones& promos):_menu(menu),
+                                                              _stock(stock){
     map<Producto, vector<Nat>> promociones;
-    for (Promociones::iterator it = promos.begin(); it != promos.end(); ++it){
-        Nat stockItem = stock[it->first];
-        vector<Nat> arr (stockItem+1,0); //vector<Nat>(stockItem+1);
-        map<Nat, Nat> promosPorCant = it->second;
-        map<Nat, Nat>::iterator itCantXPrm = promosPorCant.begin();//primera clave es la minima
+    for (auto it: promos){
+        Nat stockItem = stock[it.first];
+        vector<Nat> arr (stockItem+1,0);
+        map<Nat, Nat> promosPorCant = it.second;
+        auto itCantXPrm = promosPorCant.begin();//La primera clave es la minima
         vector<Nat> cantidades;
         while(itCantXPrm != promosPorCant.end()){
             arr[itCantXPrm->first] = itCantXPrm->second;
@@ -36,10 +27,11 @@ puesto puesto::crearPuesto(Menu menu, Stock stock, Promociones promos){
             }
             ultCant++;
         }
-        promociones[it->first] = arr;
+        promociones[it.first] = arr;
     }
-    return puesto(menu,stock,promociones);
+    _descuentos = promociones;
 }
+
 
 pair<bool,Nat> puesto::vender(Persona per, Producto producto, Nat cant) {//Complejidad:O(log(A)+log(I))
     Nat puestoHackeable = false;                                                            //O(1)
@@ -91,7 +83,7 @@ Nat puesto::descuento(Producto producto, Nat cant)const {
     }
 }
 
-Nat puesto::gastosDe(Persona per)const {
+const Nat puesto::gastosDe(Persona per)const {
     if(_gastosDe.count(per)==1){
         return _gastosDe.at(per);
     } else {

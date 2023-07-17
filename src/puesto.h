@@ -10,14 +10,15 @@
 class puesto{
 public:
     puesto();
-    puesto(Menu menu,Stock stock,map<Producto, vector<Nat>> promos);
-    puesto crearPuesto(Menu m,Stock s,Promociones prms);
+    //puesto(Menu menu,Stock stock,map<Producto, vector<Nat>> promos);
+    puesto(Menu& menu,Stock& stock,Promociones& prms);
+    //puesto crearPuesto(Menu m,Stock s,Promociones prms);
     pair<bool,Nat> vender(Persona per, Producto producto, Nat cant);
     set<Producto> menu()const;
     Nat precio(Producto producto)const;
     Nat stock(Producto producto)const;
     Nat descuento(Producto producto, Nat cant)const ;
-    Nat gastosDe(Persona per)const ;
+    const Nat gastosDe(Persona per)const ;
     bool reponerItem(Producto producto, Persona persona);
 
 private:
