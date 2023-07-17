@@ -10,9 +10,7 @@
 class puesto{
 public:
     puesto();
-    //puesto(Menu menu,Stock stock,map<Producto, vector<Nat>> promos);
     puesto(Menu& menu,Stock& stock,Promociones& prms);
-    //puesto crearPuesto(Menu m,Stock s,Promociones prms);
     pair<bool,Nat> vender(Persona per, Producto producto, Nat cant);
     set<Producto> menu()const;
     Nat precio(Producto producto)const;

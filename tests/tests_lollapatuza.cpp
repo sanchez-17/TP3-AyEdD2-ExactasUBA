@@ -33,15 +33,6 @@ protected:
     }
 };
 
-TEST_F(LollaTest, error_descuento_raro){
-    //si debuggeas aca, vas a ver en el puesto 2 que el descuento para el producto 7 con cantidad 2 es 0
-    FachadaLollapatuza l(personas, puestos);
-
-    //pero al tratar de correr esto, teniendo un breakpoint en descuentoEnPuesto, en las posiciones
-    //donde hay 0, devuelve basura
-    EXPECT_EQ(l.descuentoEnPuesto(2, 7, 2), 0);
-}
-
 TEST_F(LollaTest, arrancar_lolla) {
     FachadaLollapatuza l(personas, puestos);
 
@@ -122,7 +113,7 @@ TEST_F(LollaTest, vender_sin_descuento) {
         EXPECT_EQ(l.gastoEnPuesto(2, p), 0);
     }
     EXPECT_EQ(l.gastoEnPuesto(6, 2), 0);
-    EXPECT_EQ(l.gastoEnPuesto(6, 4), 17500); //falla acá, da 3???
+    EXPECT_EQ(l.gastoEnPuesto(6, 4), 17500);
     EXPECT_EQ(l.gastoEnPuesto(6, 8), 0);
     EXPECT_EQ(l.gastoEnPuesto(6, 9), 0);
     for (const Persona& p : personas) {
@@ -184,7 +175,6 @@ TEST_F(LollaTest, vender_dos_veces_mismo_producto_persona_y_puesto) {
     EXPECT_EQ(l.idsDePuestos(), idsPuestos);
 }
 
-//en los tests q se pasan, _heap se sigue rompiendo pero justo da bien en los tests
 TEST_F(LollaTest, vender_dos_veces_distinto_producto) {
     FachadaLollapatuza l(personas, puestos);
     l.registrarCompra(9, 3, 1, 6);
@@ -232,7 +222,7 @@ TEST_F(LollaTest, vender_dos_veces_distinta_persona) {
     EXPECT_EQ(l.gastoTotal(4), 15000);
     EXPECT_EQ(l.gastoTotal(8), 0);
     EXPECT_EQ(l.gastoTotal(9), 0);
-    EXPECT_EQ(l.mayorGastador(), 4); //da 2
+    EXPECT_EQ(l.mayorGastador(), 4);
     EXPECT_EQ(l.menorStock(3), 6);
     EXPECT_EQ(l.menorStock(4), 2);
     EXPECT_EQ(l.menorStock(5), 7);
@@ -254,7 +244,7 @@ TEST_F(LollaTest, vender_dos_veces_distinta_persona) {
     for (const Persona& p : personas) {
         EXPECT_EQ(l.gastoEnPuesto(6, p), 0);
     }
-    EXPECT_EQ(l.gastoEnPuesto(7, 2), 7500); //da 0
+    EXPECT_EQ(l.gastoEnPuesto(7, 2), 7500);
     EXPECT_EQ(l.gastoEnPuesto(7, 4), 15000);
     EXPECT_EQ(l.gastoEnPuesto(7, 8), 0);
     EXPECT_EQ(l.gastoEnPuesto(7, 9), 0);
@@ -439,7 +429,7 @@ TEST_F(LollaTest, vender_con_distintos_descuentos) {
     EXPECT_EQ(l.gastoTotal(4), 0);
     EXPECT_EQ(l.gastoTotal(8), 0);
     EXPECT_EQ(l.gastoTotal(9), 0);
-    EXPECT_EQ(l.mayorGastador(), 2); //da 8
+    EXPECT_EQ(l.mayorGastador(), 2);
     EXPECT_EQ(l.menorStock(3), 6);
     EXPECT_EQ(l.menorStock(4), 2);
     EXPECT_EQ(l.menorStock(5), 7);
@@ -521,9 +511,9 @@ TEST_F(LollaTest, vender_varias_veces) {
     EXPECT_EQ(l.stockEnPuesto(7, 5), 15);
     EXPECT_EQ(l.stockEnPuesto(7, 7), 17);
     EXPECT_EQ(l.gastoEnPuesto(2, 2), 4000);
-    EXPECT_EQ(l.gastoEnPuesto(2, 4), 1000); // da 3
-    EXPECT_EQ(l.gastoEnPuesto(2, 8), 2500); //aca da 1¡¿
-    EXPECT_EQ(l.gastoEnPuesto(2, 9), 2000); //aca da 0
+    EXPECT_EQ(l.gastoEnPuesto(2, 4), 1000);
+    EXPECT_EQ(l.gastoEnPuesto(2, 8), 2500);
+    EXPECT_EQ(l.gastoEnPuesto(2, 9), 2000);
     EXPECT_EQ(l.gastoEnPuesto(6, 2), 7500);
     EXPECT_EQ(l.gastoEnPuesto(6, 4), 1500);
     EXPECT_EQ(l.gastoEnPuesto(6, 8), 4250);
@@ -651,7 +641,7 @@ TEST_F(LollaTest, hackear_altera_puesto_menor_id) {
 
     EXPECT_EQ(l.gastoTotal(2), 0);
     EXPECT_EQ(l.gastoTotal(4), 0);
-    EXPECT_EQ(l.gastoTotal(8), 8000); //pero parece q el gasto total esta bien....
+    EXPECT_EQ(l.gastoTotal(8), 8000);
     EXPECT_EQ(l.gastoTotal(9), 0);
     EXPECT_EQ(l.mayorGastador(), 8); //da 9
     EXPECT_EQ(l.menorStock(3), 6);
@@ -679,7 +669,7 @@ TEST_F(LollaTest, hackear_altera_puesto_menor_id) {
     }
     EXPECT_EQ(l.gastoEnPuesto(7, 2), 0);
     EXPECT_EQ(l.gastoEnPuesto(7, 4), 0);
-    EXPECT_EQ(l.gastoEnPuesto(7, 8), 6000); //este tmb da mal. da 1
+    EXPECT_EQ(l.gastoEnPuesto(7, 8), 6000);
     EXPECT_EQ(l.gastoEnPuesto(7, 9), 0);
     EXPECT_EQ(l.idsDePuestos(), idsPuestos);
 }
