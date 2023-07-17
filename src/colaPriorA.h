@@ -12,7 +12,7 @@ public:
     // Constructor. Genera una cola vacía de cota posiciones.
     colaPriorA(int cota);
 
-    // Obtiene una referencia constante al próximo elemento.
+    // Obtiene una el siguiente elemento beta de la cola de prioridad.
     const beta proximo() const;
 
     // Encola un elemento en la cola.
@@ -24,8 +24,7 @@ public:
     void desencolar();
 
     // Decide si la cola esta vacía o no.
-    bool vacia();
-
+    bool vacia() const;
 private:
     std::vector<pair<alpha,typename map<beta, Nat>::iterator>*> _heap;
     std::vector<pair<alpha,typename map<beta, Nat>::iterator> > _tuplas;

@@ -28,10 +28,10 @@ alpha colaPriorA<alpha,beta>::encolar(tuplaPersona<alpha, beta> gastoActualizado
             index = heapifyDown(i);
         }
     }else{
+        //Definimos la persona con su nuevo indice, guardamos el iterador para almacenarlo en _tuplas
         auto iterador = _indices.insert({gastoActualizado.getPersona(), _longitud}).first;
-        //_indices[gastoActualizado.getPersona()] = _longitud;
-        //Nat* it = &_indices.at(gastoActualizado.getPersona());
         _tuplas[_longitud] = make_pair(gastoActualizado.getGastoPersona(), iterador);
+        //Obtenemos un puntero a la nueva tupla y la guardamos en _heap
         auto puntero = &_tuplas[_longitud];
         _heap[_longitud] = puntero;
         index = heapifyUp( _longitud);
@@ -51,7 +51,7 @@ void colaPriorA<alpha,beta>::desencolar(){
 }
 
 template<class alpha, class beta>
-bool colaPriorA<alpha,beta>::vacia(){
+bool colaPriorA<alpha,beta>::vacia()const{
     return _longitud == 0;
 }
 
