@@ -21,7 +21,7 @@ puesto::puesto(Menu& menu, Stock& stock, Promociones& promos):_menu(menu),
         Nat ultDesc = arr[cantidades[0]];
         while(ultCant < arr.size()){
             arr[ultCant]=ultDesc;
-            if(ultCant+1==cantidades[j+1]){
+            if(j+1<cantidades.size() && ultCant+1==cantidades[j+1]){
                 j++;
                 ultDesc=arr[cantidades[j]];
             }
